@@ -4,7 +4,7 @@ import { subscribeSchema } from "@/lib/validators";
 import { sendEmail, addToAudience } from "@/lib/resend";
 import { newsletterWelcomeEmail } from "@/lib/email-templates";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {

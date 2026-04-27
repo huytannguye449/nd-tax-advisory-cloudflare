@@ -11,6 +11,7 @@ import type { PostWithMeta, Category } from "@/lib/supabase/types";
 import { BookOpen, Tag } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+export const runtime = "edge";
 export const revalidate = 60;
 
 export const metadata: Metadata = {

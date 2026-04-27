@@ -20,6 +20,7 @@ import { RelatedArticles } from "@/components/blog/related-articles";
 import { mdxComponents } from "@/components/blog/mdx-components";
 import { formatDate, SITE } from "@/lib/utils";
 
+export const runtime = "edge";
 export const revalidate = 60;
 
 interface Props {

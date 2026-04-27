@@ -11,6 +11,8 @@ import { HomeSubscribe } from "@/components/home/subscribe-section";
 import { Testimonials } from "@/components/home/testimonials";
 import { FinalCta } from "@/components/home/final-cta";
 
+export const runtime = "edge";
+
 export const metadata: Metadata = {
   title: `${SITE.name} — ${SITE.tagline}`,
   description:

@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { randomUUID } from "node:crypto";
 import { createClient } from "@/lib/supabase/server";
 import { bookingSchema } from "@/lib/validators";
 import { verifyTurnstile } from "@/lib/turnstile";
@@ -8,7 +7,9 @@ import { bookingConfirmEmail, bookingNotifyEmail } from "@/lib/email-templates";
 import { generateIcs } from "@/lib/ics";
 import { SITE } from "@/lib/utils";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
+
+const randomUUID = () => crypto.randomUUID();
 
 export async function POST(req: Request) {
   try {
@@ -94,9 +95,14 @@ export async function POST(req: Request) {
       attendeeName: data.full_name,
     });
 
+    // Edge-compatible base64 encoding
+    const icsBytes = new TextEncoder().encode(ics);
+    let binary = "";
+    for (let i = 0; i < icsBytes.length; i++) binary += String.fromCharCode(icsBytes[i]);
+    const icsBase64 = btoa(binary);
     const icsAttachment = {
       filename: "n-d-tu-van.ics",
-      content: Buffer.from(ics).toString("base64"),
+      content: icsBase64,
       contentType: "text/calendar",
     };
 

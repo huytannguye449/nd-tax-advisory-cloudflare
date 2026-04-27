@@ -5,7 +5,7 @@ import { verifyTurnstile } from "@/lib/turnstile";
 import { sendEmail, NOTIFY_EMAIL } from "@/lib/resend";
 import { leadNotifyEmail, leadAutoReplyEmail } from "@/lib/email-templates";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
