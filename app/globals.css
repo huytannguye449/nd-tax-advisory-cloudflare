@@ -1,0 +1,146 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* Brand colors — N&D Tax Advisory Brand Guidelines 2026 */
+  --color-navy-50:  #F0F4F8;
+  --color-navy-100: #D9E2EC;
+  --color-navy-200: #BCCCDC;
+  --color-navy-300: #9FB3C8;
+  --color-navy-400: #486581;
+  --color-navy-500: #0F2B46;
+  --color-navy:     #0F2B46;
+  --color-navy-600: #0C2238;
+  --color-navy-700: #0A1F33;
+  --color-navy-800: #07182A;
+  --color-navy-900: #05111C;
+
+  --color-gold-50:  #FBF7EE;
+  --color-gold-100: #F5EBD2;
+  --color-gold-200: #ECDAB0;
+  --color-gold-300: #E2CC9C;
+  --color-gold-400: #D5B97E;
+  --color-gold-500: #C9A961;
+  --color-gold:     #C9A961;
+  --color-gold-600: #B6964F;
+  --color-gold-700: #9C8044;
+  --color-gold-800: #7F6936;
+  --color-gold-900: #5E4E28;
+
+  --color-cream-50:  #FEFCF7;
+  --color-cream-100: #FAF7F0;
+  --color-cream:     #FAF7F0;
+  --color-cream-200: #F0EBDD;
+  --color-cream-300: #E5DFCD;
+
+  /* Typography */
+  --font-heading: var(--font-playfair), Georgia, serif;
+  --font-body:    var(--font-inter), system-ui, -apple-system, sans-serif;
+
+  /* Spacing */
+  --spacing-section: 5rem;
+  --spacing-section-md: 7rem;
+
+  /* Container */
+  --container-prose: 65ch;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-navy);
+    font-family: var(--font-body);
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-navy);
+    letter-spacing: -0.01em;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+  }
+
+  /* Focus ring */
+  *:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* iOS form font size to prevent zoom */
+  input, textarea, select {
+    font-size: 16px;
+  }
+
+  @media (min-width: 768px) {
+    input, textarea, select {
+      font-size: inherit;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .container-narrow {
+    max-width: 65ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Marquee animation for client logo carousel */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+}
+
+/* Radix Accordion animations */
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+.animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+  overflow: hidden;
+}
+.animate-accordion-up {
+  animation: accordion-up 0.2s ease-out;
+  overflow: hidden;
+}
