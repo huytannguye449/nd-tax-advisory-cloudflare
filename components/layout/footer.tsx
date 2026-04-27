@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail, Phone, MapPin, Linkedin, Facebook } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { Container } from "@/components/shared/container";
@@ -33,6 +36,8 @@ const FOOTER_NAV = [
 ];
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
   return (
     <footer className="bg-navy text-cream">
       <Container size="xl" className="py-12 md:py-16">

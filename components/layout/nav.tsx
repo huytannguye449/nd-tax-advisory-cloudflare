@@ -32,6 +32,9 @@ export function Nav() {
   // Close mobile menu on route change
   useEffect(() => setOpen(false), [pathname]);
 
+  // Hide nav on admin routes (admin has its own shell)
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <header
       className={cn(
