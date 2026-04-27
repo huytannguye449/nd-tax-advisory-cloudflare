@@ -42,10 +42,10 @@ export function Nav() {
       )}
     >
       <Container size="xl" className="!px-4 sm:!px-6 lg:!px-8">
-        <div className="flex h-16 md:h-20 items-center justify-between gap-4">
+        <div className="flex h-20 md:h-24 items-center justify-between gap-4">
           <Link href="/" aria-label="N&D Tax Advisory — Trang chủ" className="shrink-0">
-            <Logo variant="horizontal" size="sm" className="md:hidden" />
-            <Logo variant="primary" size="md" className="hidden md:block" />
+            <Logo variant="horizontal" size="md" className="md:hidden" />
+            <Logo variant="primary" size="lg" className="hidden md:block" />
           </Link>
 
           {/* Desktop nav */}
@@ -94,7 +94,7 @@ export function Nav() {
                 >
                   <div className="flex items-center justify-between px-5 h-16 border-b border-cream-300">
                     <Dialog.Title className="sr-only">Menu</Dialog.Title>
-                    <Logo variant="horizontal" size="sm" />
+                    <Logo variant="horizontal" size="md" />
                     <Dialog.Close asChild>
                       <button
                         className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md text-navy hover:bg-navy/5"

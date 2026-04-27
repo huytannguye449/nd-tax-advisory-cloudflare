@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SERVICES } from "@/lib/data";
+import { Sparkles, ArrowRight } from "lucide-react";
+import { SERVICES, SERVICE_BUNDLE } from "@/lib/data";
 import { Section } from "@/components/shared/section";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
@@ -75,6 +76,46 @@ export default function DichVuPage() {
           </nav>
         </Container>
       </div>
+
+      {/* Bundle banner */}
+      <Section bg="cream-100" spacing="sm">
+        <Container size="lg">
+          <div className="rounded-2xl bg-navy text-cream p-8 md:p-10 lg:p-12 grid lg:grid-cols-12 gap-6 items-center">
+            <div className="lg:col-span-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles className="size-4 text-gold" aria-hidden />
+                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                  Gói được khuyên dùng
+                </span>
+              </div>
+              <h2 className="font-heading text-2xl md:text-3xl font-bold mb-3">
+                {SERVICE_BUNDLE.title}
+              </h2>
+              <p className="text-cream/80 leading-relaxed mb-2">
+                {SERVICE_BUNDLE.description}
+              </p>
+              <p className="text-cream/55 text-xs">{SERVICE_BUNDLE.priceNote}</p>
+            </div>
+            <div className="lg:col-span-4 flex flex-col gap-4 lg:items-end lg:text-right">
+              <div>
+                <p className="text-cream/60 text-xs uppercase tracking-wider">
+                  Phí dịch vụ
+                </p>
+                <p className="font-heading text-3xl md:text-4xl font-bold text-gold mt-1">
+                  120 triệu
+                </p>
+                <p className="text-cream/60 text-sm">/ 6 tháng đồng hành</p>
+              </div>
+              <Button asChild variant="secondary" size="md">
+                <Link href="/dat-lich">
+                  Đặt lịch tư vấn
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </Section>
 
       {/* 4 Service blocks */}
       {SERVICES.map((service, idx) => (

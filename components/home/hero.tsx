@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/shared/button";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
+import { Logo } from "@/components/shared/logo";
 
 export function Hero() {
   return (
@@ -11,12 +12,20 @@ export function Hero() {
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           {/* Text column */}
           <div className="flex flex-col gap-8">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-5">
+              {/* Brand showcase */}
+              <div className="flex items-center gap-4">
+                <Logo variant="primary" size="xl" />
+                <span className="hidden sm:block h-16 w-px bg-navy/15" aria-hidden="true" />
+                <span className="hidden sm:block text-xs font-semibold uppercase tracking-[0.18em] text-navy/60 leading-snug">
+                  Tư vấn thuế<br />Chiến lược
+                </span>
+              </div>
               <h1 className="text-4xl font-bold leading-tight text-balance md:text-5xl xl:text-6xl text-navy">
                 Giúp chủ doanh nghiệp an tâm với mọi quyết định thuế.
               </h1>
               <p className="text-lg leading-relaxed text-navy/70 text-pretty md:text-xl">
-                Tư vấn thuế chiến lược cho SME &amp; FDI tại Việt Nam, dựa trên 20+ năm kinh nghiệm trong ngành.
+                Tư vấn thuế chiến lược cho SME &amp; FDI tại Việt Nam, dẫn dắt bởi đội ngũ CPA/CPTA với 20 năm kinh nghiệm tại Vingroup, MIK Group.
               </p>
             </div>
 

@@ -113,9 +113,9 @@ export function Footer() {
 
         <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-cream/60">
           <p>
-            © {new Date().getFullYear()} {SITE.name}. Mọi quyền được bảo lưu.
+            © {new Date().getFullYear()} {SITE.legalName}. Mọi quyền được bảo lưu.
           </p>
-          <p>Giấy phép kinh doanh: ĐKKD/HN/2026</p>
+          <p>CPA / CPTA · Giấy phép kinh doanh: ĐKKD/HN/2026</p>
         </div>
       </Container>
     </footer>

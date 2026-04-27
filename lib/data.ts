@@ -30,13 +30,21 @@ export const VALUES = [
   },
 ] as const;
 
+export const SERVICE_BUNDLE = {
+  title: "Gói đồng hành 6 tháng — Trọn gói",
+  price: "120.000.000 VND",
+  priceNote: "Chưa bao gồm thuế GTGT/TNCN. Hai bên có thể thoả thuận thời gian phù hợp, tối thiểu 3 tháng.",
+  description:
+    "Phù hợp với doanh nghiệp cần đồng hành toàn diện cả 3 mảng: kiện toàn bộ máy kế toán, tư vấn pháp lý-thuế, và lựa chọn mô hình kinh doanh. Bao gồm giải đáp vướng mắc phát sinh không giới hạn trong thời gian dịch vụ.",
+} as const;
+
 export const SERVICES = [
   {
     slug: "kien-toan-ke-toan",
     title: "Kiện toàn bộ máy kế toán",
-    short: "Audit hiện trạng, chuẩn hóa quy trình, training đội kế toán nội bộ.",
+    short: "Cơ cấu nhân sự, quy chế nội bộ, nâng cao nghiệp vụ chuyên môn.",
     description:
-      "Doanh nghiệp đang vận hành nhưng quy trình kế toán rời rạc, báo cáo chậm, rủi ro tuân thủ tiềm ẩn? N&D giúp bạn rà soát toàn bộ hệ thống từ chart of accounts, quy trình ghi nhận, đến quy trình duyệt — biến kế toán từ chi phí thành công cụ ra quyết định.",
+      "Doanh nghiệp đang vận hành nhưng quy trình kế toán rời rạc, báo cáo chậm, rủi ro tuân thủ tiềm ẩn? Với 8 năm kinh nghiệm vai trò Kế toán Trưởng tập đoàn MIK Group, anh Ngọc trực tiếp dẫn dắt quá trình rà soát toàn bộ hệ thống — từ cơ cấu nhân sự, sơ đồ tổ chức, đến chart of accounts và quy chế chi tiêu tài chính. Mục tiêu: biến kế toán từ chi phí vận hành thành công cụ ra quyết định cho ban lãnh đạo.",
     when: [
       "Đội kế toán mới thành lập, chưa có quy trình chuẩn",
       "Doanh nghiệp scale nhanh, hệ thống cũ quá tải",
@@ -57,7 +65,7 @@ export const SERVICES = [
       "Template báo cáo quản trị hàng tháng",
       "Tài liệu đào tạo + 3 buổi workshop nội bộ",
     ],
-    pricing: "Từ 80 triệu đồng cho doanh nghiệp dưới 50 nhân sự",
+    pricing: "Trọn gói 3 tháng từ 60 triệu — 6 tháng từ 120 triệu",
   },
   {
     slug: "tu-van-phap-ly",
@@ -84,14 +92,14 @@ export const SERVICES = [
       "Phương án triển khai từng bước",
       "Hỗ trợ 30 ngày sau khi bàn giao",
     ],
-    pricing: "Theo gói retainer hoặc theo dự án — từ 30 triệu/tháng",
+    pricing: "Bundle với gói đồng hành 120tr/6 tháng — hoặc theo dự án từ 30 triệu",
   },
   {
     slug: "cau-truc-kinh-doanh",
-    title: "Cấu trúc kinh doanh",
-    short: "Chọn loại hình DN, M&A, holding structure, transfer pricing, IP planning.",
+    title: "Cấu trúc kinh doanh & Cross-border",
+    short: "Chọn mô hình kinh doanh khi dịch chuyển doanh thu nước ngoài về Việt Nam.",
     description:
-      "Cấu trúc đúng từ đầu giúp doanh nghiệp tiết kiệm hàng tỷ đồng thuế trong dài hạn — và tránh được rất nhiều rủi ro pháp lý khi mở rộng. N&D thiết kế cấu trúc phù hợp với mục tiêu kinh doanh, nguồn vốn, và kế hoạch exit của bạn.",
+      "Khi doanh nghiệp có hoạt động cross-border — từ e-commerce nhận thanh toán quốc tế, dịch vụ digital cho khách FDI, đến dịch chuyển doanh thu từ thị trường nước ngoài về Việt Nam — việc lựa chọn mô hình kinh doanh đúng từ đầu có thể tiết kiệm hàng tỷ đồng thuế dài hạn và tránh rủi ro pháp lý. N&D cung cấp báo cáo phân tích các mô hình kinh doanh kèm cảnh báo rủi ro pháp lý, rủi ro thuế, đồng thời đồng hành lựa chọn và vận hành mô hình tối ưu.",
     when: [
       "Khởi nghiệp, chưa biết chọn loại hình DN nào",
       "Đang chuẩn bị gọi vốn và cần holding structure minh bạch",
@@ -111,14 +119,14 @@ export const SERVICES = [
       "Mô hình thuế ước tính 3-5 năm",
       "Hỗ trợ setup pháp lý từ A-Z",
     ],
-    pricing: "Tùy độ phức tạp — từ 150 triệu đồng cho 1 dự án",
+    pricing: "Theo dự án — từ 80 triệu đồng",
   },
   {
     slug: "dao-tao",
     title: "Đào tạo doanh nghiệp",
-    short: "Workshop in-house cho CFO/kế toán, cập nhật luật mới, case study thực tế.",
+    short: "Workshop in-house thuế-kế toán + khóa học tại Xleaders Academy.",
     description:
-      "Luật thuế Việt Nam thay đổi liên tục — đội kế toán giỏi không chỉ là làm đúng hôm nay, mà còn phải chủ động cập nhật để không lỗi thời. N&D tổ chức workshop in-house được thiết kế riêng theo ngành nghề và pain point thực tế của từng doanh nghiệp.",
+      "Luật thuế Việt Nam thay đổi liên tục — đội kế toán giỏi không chỉ là làm đúng hôm nay, mà còn phải chủ động cập nhật để không lỗi thời. Anh Ngọc đã có hơn 10 năm liên tục giảng dạy thuế tại doanh nghiệp (từ 2015) và là Giảng viên cao cấp tại Xleaders Academy. N&D tổ chức workshop in-house thiết kế riêng theo ngành nghề và pain point thực tế. Khách hàng của gói tư vấn được giảm giá hoặc miễn phí các khóa học do N&D tổ chức (kể cả sau khi dịch vụ kết thúc).",
     when: [
       "Đội kế toán cần update kiến thức sau Luật Thuế mới",
       "Founder/CFO muốn nâng cao tax literacy để ra quyết định nhanh hơn",
@@ -201,19 +209,53 @@ export const TESTIMONIALS = [
   },
 ];
 
+/**
+ * Khách hàng tiêu biểu — danh sách thực từ proposal NHN&D 2026.
+ * Anh Ngọc đã trực tiếp tư vấn / đảm nhiệm vai trò tại các đơn vị này.
+ */
 export const CLIENTS = [
+  // Vingroup ecosystem (anh Ngọc làm Trưởng nhóm Thuế tại Vingroup 2015-2017)
   "Vingroup",
+  "Vinhomes",
+  "Vinpearl",
+  "Vincom Retail",
+  "VinMec",
+  "VinShop",
+  "VinID",
+  "One Mount",
+  // MIK Group (Kế toán Trưởng 2019-2025)
   "MIK Group",
-  "FPT",
-  "Masan",
-  "VietJet",
-  "Deloitte",
-  "EY",
-  "KPMG",
+  // Real estate
+  "DOJI Land",
+  "Empire Group",
+  "TASECO",
   "Sun Group",
-  "Techcombank",
-  "VPBank",
-  "Lotte",
+  "Gami Group",
+  "1369",
+  // Banking & Finance
+  "VietinBank",
+  // Manufacturing
+  "Mitsubishi Motors",
+  "Casper",
+  "Vimaflour",
+  "Japfa",
+  "Vaquarius",
+  "Garco 10",
+  "CPC1HN",
+  // Tech / Digital
+  "VietDigital",
+  "Printway.io",
+  "3S Media",
+  // Distribution
+  "SNB Distribution",
+  // Audit (anh Ngọc xuất thân)
+  "Mekong LLC",
+  "IAC Hà Nội",
+  // Engineering
+  "Construction Army Engineering",
+  // Education (anh Ngọc giảng dạy)
+  "Đại học Thương mại",
+  "Học viện Ngân hàng",
 ];
 
 export const FAQ_GENERAL = [
@@ -270,14 +312,109 @@ export const FAQ_CONTACT = [
   },
 ];
 
-export const FOUNDER_BIO = `Anh Ngọc là người sáng lập và CEO của N&D Tax Advisory, mang theo hơn 20 năm kinh nghiệm tư vấn thuế và tài chính chiến lược tại Việt Nam.
+export const FOUNDER_BIO = `Anh Nguyễn Hoài Ngọc là người sáng lập và Giám đốc điều hành Công ty TNHH Tư vấn thuế NHN&D, sở hữu chứng chỉ Kiểm toán viên Việt Nam (CPA) và Chứng chỉ hành nghề thuế (CPTA). Anh tốt nghiệp Cử nhân kinh tế Đại học Thương mại.
 
-Sự nghiệp của anh bắt đầu tại Big4 (Deloitte / EY) trong 6 năm, nơi anh phụ trách audit và tax cho các tập đoàn niêm yết và FDI lớn. Sau đó, anh chuyển sang vai trò CFO tại các tập đoàn corporate cấp Vingroup-tier, trực tiếp dẫn dắt các dự án M&A, IPO, và tái cấu trúc đa hệ với tổng giá trị giao dịch trên 500 triệu USD.
+Hai mươi năm sự nghiệp của anh được chia thành bốn giai đoạn rõ rệt — mỗi giai đoạn mang lại một tầng chuyên môn khác nhau, hợp lại thành góc nhìn 360 độ về thuế và kế toán doanh nghiệp Việt Nam.
 
-Bốn năm cuối trước khi sáng lập N&D, anh hoạt động độc lập với vai trò strategic tax advisor cho hơn 50 SME và founder. Trải nghiệm này cho anh nhận thấy: phần lớn doanh nghiệp Việt không thiếu kế toán giỏi — họ thiếu một cố vấn thuế chiến lược ở vai trò ngang hàng với CEO, người vừa hiểu sâu luật, vừa hiểu kinh doanh.
+GIAI ĐOẠN KIỂM TOÁN (2006 – 2015)
 
-Đó là lý do N&D ra đời năm 2026 — một advisory boutique tập trung không phải vào việc làm tax compliance đơn thuần, mà vào việc giúp founder và CFO ra quyết định thuế đúng đắn ngay từ đầu.
+Khởi đầu sự nghiệp tại Mekong LLC từ tháng 11/2006 với vai trò Kiểm toán viên, anh thăng tiến lên Phó Trưởng phòng Tư vấn vào năm 2011. Cùng năm đó, anh trở thành thành viên sáng lập và Trưởng phòng Tư vấn-Kiểm toán tại IAC Hà Nội. Chín năm Big4-style audit và advisory rèn cho anh kỹ năng đánh giá rủi ro thuế và kế toán theo chuẩn mực quốc tế.
 
-Chuyên môn của anh tập trung vào: thuế TNDN cho mid-market, M&A tax, transfer pricing, FDI structuring, và resolution các vụ tranh chấp với cơ quan thuế. Anh thường xuyên là speaker tại các workshop CFO summit, mentor cho cộng đồng founder SME Việt Nam.
+GIAI ĐOẠN VINGROUP (2015 – 2017)
 
-Triết lý của anh: "Sai sót thuế là rủi ro lớn nhất với CEO Việt — vì luật phức tạp, thay đổi nhanh, và hậu quả tài chính nặng nề. Cố vấn tốt phải dự đoán được những rủi ro đó trước khi chúng phát sinh."`;
+Tháng 5/2015, anh gia nhập Tập đoàn Vingroup với vai trò Trưởng nhóm Thuế — Ban Tài chính. Hai năm tại đây, anh trực tiếp xử lý các vấn đề thuế phức tạp xuyên suốt hệ sinh thái: Vinhomes, Vinpearl, Vincom Retail, VinMec — quy mô và độ phức tạp đặc trưng của tập đoàn đa ngành lớn nhất Việt Nam.
+
+GIAI ĐOẠN MIK GROUP (2017 – 2025)
+
+Tháng 7/2017, anh chuyển sang MIK Group — một trong những tập đoàn bất động sản hàng đầu — với vai trò Trưởng Bộ phận Thuế. Đến tháng 4/2019, anh được bổ nhiệm Kế toán Trưởng Tập đoàn, chịu trách nhiệm toàn bộ hệ thống kế toán-thuế trong sáu năm rưỡi. Đây là giai đoạn anh đối diện với mọi loại thử thách của một CFO/Kế toán Trưởng cấp tập đoàn: M&A, tái cấu trúc, kiểm toán độc lập, thanh tra thuế, transfer pricing, và quan trọng nhất — kiện toàn bộ máy kế toán trong môi trường tăng trưởng nhanh.
+
+GIAI ĐOẠN HIỆN TẠI (2026 – nay)
+
+Năm 2026, anh sáng lập NHN&D với mục tiêu mang chuyên môn corporate tier 1 đến với SME và doanh nghiệp tư nhân Việt Nam. Cùng đội ngũ chuyên gia CPA/CPTA giàu kinh nghiệm, anh tin rằng nhiều doanh nghiệp Việt không thiếu kế toán giỏi — họ thiếu một cố vấn thuế chiến lược ở vai trò ngang hàng với CEO, người vừa hiểu sâu luật, vừa hiểu kinh doanh và có thể đồng hành lâu dài.
+
+Song song với điều hành NHN&D, anh là Giảng viên chính các khóa đào tạo thuế tại doanh nghiệp (từ 2015) và Giảng viên cao cấp tại Xleaders Academy (từ 6/2025) — học viện đào tạo CEO và quản lý doanh nghiệp hàng đầu Việt Nam.
+
+Chuyên môn lõi của anh tập trung vào: kiện toàn bộ máy kế toán cấp tập đoàn, quản trị thuế chiến lược, tư vấn mô hình kinh doanh cross-border, và đào tạo đội ngũ kế toán in-house.`;
+
+export const TIMELINE = [
+  {
+    period: "11/2006 – 10/2011",
+    title: "Kiểm toán viên → Phó Trưởng phòng Tư vấn",
+    org: "Mekong LLC",
+    description:
+      "Khởi đầu sự nghiệp với 5 năm thực chiến audit và advisory tại một trong những công ty kiểm toán hàng đầu Việt Nam.",
+  },
+  {
+    period: "11/2011 – 4/2015",
+    title: "Thành viên sáng lập, Trưởng phòng Tư vấn-Kiểm toán",
+    org: "IAC Hà Nội",
+    description:
+      "Đồng sáng lập IAC Hà Nội — một công ty kiểm toán độc lập, dẫn dắt phòng Tư vấn-Kiểm toán phục vụ doanh nghiệp tư nhân.",
+  },
+  {
+    period: "5/2015 – 6/2017",
+    title: "Trưởng nhóm Thuế — Ban Tài chính",
+    org: "Tập đoàn Vingroup",
+    description:
+      "Trực tiếp xử lý các vấn đề thuế phức tạp xuyên suốt hệ sinh thái Vinhomes, Vinpearl, Vincom Retail, VinMec.",
+  },
+  {
+    period: "7/2017 – 3/2019",
+    title: "Trưởng Bộ phận Thuế — Ban Tài chính",
+    org: "Tập đoàn MIK Group",
+    description:
+      "Phụ trách toàn bộ chiến lược thuế cho một trong những tập đoàn bất động sản hàng đầu.",
+  },
+  {
+    period: "4/2019 – 10/2025",
+    title: "Kế toán Trưởng",
+    org: "Tập đoàn MIK Group",
+    description:
+      "Chịu trách nhiệm toàn bộ hệ thống kế toán-thuế của tập đoàn trong 6.5 năm — qua mọi giai đoạn từ M&A, tái cấu trúc đến thanh tra.",
+  },
+  {
+    period: "5/2015 – nay",
+    title: "Giảng viên chính",
+    org: "Khóa đào tạo thuế tại doanh nghiệp",
+    description:
+      "Hơn 10 năm liên tục giảng dạy in-house cho team kế toán và CFO của các doanh nghiệp khắp Việt Nam.",
+  },
+  {
+    period: "6/2025 – nay",
+    title: "Giảng viên cao cấp",
+    org: "Xleaders Academy",
+    description:
+      "Giảng viên chương trình đào tạo CEO và quản lý cấp cao tại học viện hàng đầu Việt Nam.",
+  },
+  {
+    period: "2026 – nay",
+    title: "Sáng lập & Giám đốc điều hành",
+    org: "Công ty TNHH Tư vấn thuế NHN&D",
+    description:
+      "Mang chuyên môn corporate tier 1 đến với cộng đồng SME và doanh nghiệp tư nhân Việt Nam.",
+  },
+] as const;
+
+export const TEAM = [
+  {
+    slug: "anh-ngoc",
+    name: "Nguyễn Hoài Ngọc",
+    title: "Founder & CEO",
+    credentials: ["CPA — Kiểm toán viên Việt Nam", "CPTA — Chứng chỉ hành nghề thuế", "Cử nhân kinh tế ĐH Thương mại"],
+    bio: "20 năm kinh nghiệm xuyên suốt từ Big4-style audit (Mekong, IAC) đến vai trò Kế toán Trưởng tại Vingroup và MIK Group. Đồng thời là giảng viên cao cấp tại Xleaders Academy.",
+  },
+  {
+    slug: "chi-trang",
+    name: "Phan Thị Trang",
+    title: "Senior Manager",
+    credentials: ["CPA — Kiểm toán viên Việt Nam", "CPTA — Chứng chỉ hành nghề thuế", "Thạc sỹ kinh tế ĐH Kinh tế Quốc dân"],
+    bio: "Hơn 15 năm kinh nghiệm tax compliance và audit. Trang phụ trách quy trình kiện toàn kế toán và đảm bảo chất lượng deliverable cho khách hàng SME — phương châm: chính xác đến từng dòng, đúng hạn đến từng giờ.",
+  },
+  {
+    slug: "chi-phuong",
+    name: "Nguyễn Thị Thu Phương",
+    title: "Senior Consultant",
+    credentials: ["CPA — Kiểm toán viên Việt Nam", "CPTA — Chứng chỉ hành nghề thuế", "Cử nhân kinh tế ĐH Kinh tế Quốc dân"],
+    bio: "Chuyên môn về tax health check, đánh giá hồ sơ pháp lý-thuế, và tư vấn cấu trúc kinh doanh cross-border. Phương đồng hành nhiều dự án M&A và transfer pricing cho doanh nghiệp FDI.",
+  },
+] as const;
