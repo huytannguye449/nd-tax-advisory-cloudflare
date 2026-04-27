@@ -7,7 +7,7 @@ import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { ChevronRight, Calendar, Clock, User } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
+import { createStaticClient as createClient } from "@/lib/supabase/static";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
 import { Eyebrow } from "@/components/shared/eyebrow";
@@ -20,8 +20,17 @@ import { RelatedArticles } from "@/components/blog/related-articles";
 import { mdxComponents } from "@/components/blog/mdx-components";
 import { formatDate, SITE } from "@/lib/utils";
 
-export const runtime = "edge";
-export const revalidate = 60;
+export const dynamic = "force-static";
+
+export async function generateStaticParams() {
+  const supabase = createClient();
+  const { data } = await supabase
+    .from("posts")
+    .select("slug")
+    .eq("status", "published")
+    .returns<{ slug: string }[]>();
+  return (data ?? []).map((p) => ({ slug: p.slug }));
+}
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -29,7 +38,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const supabase = await createClient();
+  const supabase = createClient();
   const { data: post } = await supabase
     .from("posts")
     .select("title, excerpt, cover_url, seo_title, seo_description, published_at")
@@ -58,7 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PostPage({ params }: Props) {
   const { slug } = await params;
-  const supabase = await createClient();
+  const supabase = createClient();
 
   type PostDetail = {
     id: string;

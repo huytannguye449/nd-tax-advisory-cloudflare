@@ -1,0 +1,143 @@
+/**
+ * POST /api/lead — Cloudflare Pages Function
+ * Validate + insert vào Supabase + gửi email notify + auto-reply
+ */
+
+import { z } from "zod";
+import { createClient } from "@supabase/supabase-js";
+
+interface Env {
+  NEXT_PUBLIC_SUPABASE_URL: string;
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: string;
+  RESEND_API_KEY?: string;
+  RESEND_FROM_EMAIL?: string;
+  RESEND_NOTIFY_EMAIL?: string;
+  TURNSTILE_SECRET_KEY?: string;
+}
+
+const PHONE_VN = /^(\+84|0)\d{9,10}$/;
+
+const leadSchema = z.object({
+  full_name: z.string().min(2).max(100),
+  email: z.string().email(),
+  phone: z.string().regex(PHONE_VN),
+  company: z.string().max(200).optional().or(z.literal("")),
+  company_size: z.enum(["<10", "10-50", "50-200", ">200"]).optional(),
+  services: z.array(z.string()).max(10).optional(),
+  message: z.string().max(2000).optional().or(z.literal("")),
+  source: z.string().max(100).optional(),
+  consent: z.literal(true),
+  turnstileToken: z.string().min(1),
+});
+
+const json = (data: unknown, init?: ResponseInit) =>
+  new Response(JSON.stringify(data), {
+    ...init,
+    headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
+  });
+
+async function verifyTurnstile(token: string, secret: string | undefined, ip: string | null) {
+  if (!secret) return true;
+  const body = new URLSearchParams({ secret, response: token });
+  if (ip) body.append("remoteip", ip);
+  const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    body,
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  });
+  const data = (await res.json()) as { success: boolean };
+  return data.success;
+}
+
+async function sendEmail(env: Env, args: { to: string; subject: string; html: string; replyTo?: string }) {
+  if (!env.RESEND_API_KEY) {
+    console.log("[email-mock]", { to: args.to, subject: args.subject });
+    return;
+  }
+  await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: `N&D Tax Advisory <${env.RESEND_FROM_EMAIL ?? "noreply@ndtax.vn"}>`,
+      to: args.to,
+      subject: args.subject,
+      html: args.html,
+      reply_to: args.replyTo,
+    }),
+  });
+}
+
+const wrap = (body: string) => `<!DOCTYPE html><html lang="vi"><body style="background:#FAF7F0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0F2B46;padding:32px"><div style="max-width:600px;margin:0 auto;background:#fff;border-radius:8px;padding:32px;border:1px solid #F0EBDD"><div style="text-align:center;padding-bottom:20px;border-bottom:1px solid #F0EBDD"><span style="font-family:Georgia,serif;font-size:24px;font-weight:700">N<span style="color:#C9A961">&amp;</span>D</span><div style="font-size:11px;letter-spacing:3px;margin-top:2px">TAX ADVISORY</div></div>${body}</div></body></html>`;
+
+export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  try {
+    const data = leadSchema.safeParse(await request.json());
+    if (!data.success) {
+      return json({ ok: false, error: data.error.issues[0]?.message ?? "Dữ liệu không hợp lệ" }, { status: 400 });
+    }
+    const lead = data.data;
+
+    const ip = request.headers.get("CF-Connecting-IP") || request.headers.get("x-forwarded-for");
+    const captchaOk = await verifyTurnstile(lead.turnstileToken, env.TURNSTILE_SECRET_KEY, ip);
+    if (!captchaOk) return json({ ok: false, error: "Captcha thất bại" }, { status: 403 });
+
+    const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+    const { error } = await supabase.from("leads").insert({
+      full_name: lead.full_name,
+      email: lead.email,
+      phone: lead.phone,
+      company: lead.company || null,
+      company_size: lead.company_size ?? null,
+      services: lead.services?.length ? lead.services : null,
+      message: lead.message || null,
+      source: lead.source ?? "lien-he",
+      ip_address: ip,
+      user_agent: request.headers.get("user-agent"),
+    });
+    if (error) {
+      console.error("[lead-insert]", error);
+      return json({ ok: false, error: "Không lưu được" }, { status: 500 });
+    }
+
+    const notifyTo = env.RESEND_NOTIFY_EMAIL ?? "hello@ndtax.vn";
+    const tableRows = `
+      <tr><td style="background:#F0EBDD;font-weight:600;width:140px;padding:8px">Họ tên</td><td style="padding:8px">${lead.full_name}</td></tr>
+      <tr><td style="background:#F0EBDD;font-weight:600;padding:8px">Email</td><td style="padding:8px">${lead.email}</td></tr>
+      <tr><td style="background:#F0EBDD;font-weight:600;padding:8px">SĐT</td><td style="padding:8px">${lead.phone}</td></tr>
+      ${lead.company ? `<tr><td style="background:#F0EBDD;font-weight:600;padding:8px">Công ty</td><td style="padding:8px">${lead.company}</td></tr>` : ""}
+      ${lead.services?.length ? `<tr><td style="background:#F0EBDD;font-weight:600;padding:8px">Dịch vụ</td><td style="padding:8px">${lead.services.join(", ")}</td></tr>` : ""}
+    `;
+    const notifyHtml = wrap(`
+      <h1 style="font-family:Georgia,serif;font-size:22px;margin:24px 0 16px">Có lead mới từ website</h1>
+      <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px">${tableRows}</table>
+      ${lead.message ? `<div style="margin-top:20px;padding:16px;background:#FAF7F0;border-left:3px solid #C9A961"><strong>Lời nhắn:</strong><br>${lead.message.replace(/\n/g, "<br>")}</div>` : ""}
+    `);
+    const replyHtml = wrap(`
+      <h1 style="font-family:Georgia,serif;font-size:22px;margin:24px 0 16px">Cảm ơn ${lead.full_name}.</h1>
+      <p style="font-size:15px;line-height:1.7">Chúng tôi đã nhận được yêu cầu của bạn và sẽ phản hồi trong vòng <strong>4 giờ làm việc</strong> (T2-T6, 9h-18h).</p>
+      <p style="font-size:15px">Trân trọng,<br><strong>Anh Ngọc</strong><br>Founder &amp; CEO, N&amp;D Tax Advisory</p>
+    `);
+
+    await Promise.allSettled([
+      sendEmail(env, { to: notifyTo, subject: `[Lead mới] ${lead.full_name}`, html: notifyHtml, replyTo: lead.email }),
+      sendEmail(env, { to: lead.email, subject: "Cảm ơn bạn đã liên hệ N&D Tax Advisory", html: replyHtml }),
+    ]);
+
+    return json({ ok: true });
+  } catch (err) {
+    console.error("[lead-fn]", err);
+    return json({ ok: false, error: "Đã có lỗi xảy ra" }, { status: 500 });
+  }
+};
+
+export const onRequestOptions: PagesFunction = async () =>
+  new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });

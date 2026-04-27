@@ -4,14 +4,14 @@ import { Button } from "@/components/shared/button";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
 import { Eyebrow } from "@/components/shared/eyebrow";
-import { createClient } from "@/lib/supabase/server";
+import { createStaticClient as createClient } from "@/lib/supabase/static";
 import type { PostWithMeta } from "@/lib/supabase/types";
 import { formatDate } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
 async function getRecentPosts(): Promise<PostWithMeta[]> {
   try {
-    const supabase = await createClient();
+    const supabase = createClient();
     const { data, error } = await supabase
       .from("posts")
       .select(
