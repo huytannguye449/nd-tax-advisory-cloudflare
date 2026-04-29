@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Logo } from "@/components/shared/logo";
 import { Button } from "@/components/shared/button";
@@ -75,6 +75,14 @@ export function Nav() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <Link
+              href="/admin/login"
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-navy/70 hover:text-gold-700 transition-colors min-h-[44px] rounded-md"
+              aria-label="Đăng nhập quản trị"
+            >
+              <LogIn className="size-4" aria-hidden />
+              Đăng nhập
+            </Link>
             <Button asChild variant="secondary" size="sm" className="hidden sm:inline-flex">
               <Link href="/dat-lich">Đặt lịch tư vấn</Link>
             </Button>
@@ -131,10 +139,16 @@ export function Nav() {
                       })}
                     </ul>
                   </nav>
-                  <div className="p-5 border-t border-cream-300">
+                  <div className="p-5 border-t border-cream-300 space-y-3">
                     <Button asChild variant="secondary" size="md" fullWidth>
                       <Link href="/dat-lich">Đặt lịch tư vấn</Link>
                     </Button>
+                    <Link
+                      href="/admin/login"
+                      className="flex items-center justify-center gap-2 w-full py-2.5 text-sm text-navy/70 hover:text-gold-700 min-h-[44px]"
+                    >
+                      <LogIn className="size-4" aria-hidden /> Đăng nhập quản trị
+                    </Link>
                   </div>
                 </Dialog.Content>
               </Dialog.Portal>

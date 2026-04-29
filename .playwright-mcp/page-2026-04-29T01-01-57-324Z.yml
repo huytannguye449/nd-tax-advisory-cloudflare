@@ -1,0 +1,394 @@
+- generic [active] [ref=e1]:
+  - link "Bỏ qua đến nội dung chính" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - link "N&D Tax Advisory — Trang chủ" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "N&D Tax Advisory" [ref=e7]:
+          - generic [ref=e8]: "N"
+          - generic [ref=e9]: "&"
+          - generic [ref=e10]: D
+          - generic [ref=e11]: TAX ADVISORY
+      - navigation "Điều hướng chính" [ref=e12]:
+        - link "Dịch vụ" [ref=e13] [cursor=pointer]:
+          - /url: /dich-vu
+        - link "Về chúng tôi" [ref=e14] [cursor=pointer]:
+          - /url: /ve-chung-toi
+        - link "Kiến thức" [ref=e15] [cursor=pointer]:
+          - /url: /kien-thuc
+        - link "Liên hệ" [ref=e16] [cursor=pointer]:
+          - /url: /lien-he
+      - generic [ref=e17]:
+        - link "Đăng nhập quản trị" [ref=e18] [cursor=pointer]:
+          - /url: /admin/login
+          - img [ref=e19]
+          - text: Đăng nhập
+        - link "Đặt lịch tư vấn" [ref=e22] [cursor=pointer]:
+          - /url: /dat-lich
+  - main [ref=e23]:
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - img "N&D Tax Advisory" [ref=e29]:
+            - generic [ref=e30]: "N"
+            - generic [ref=e31]: "&"
+            - generic [ref=e32]: D
+            - generic [ref=e33]: TAX ADVISORY
+          - heading "Giúp chủ doanh nghiệp an tâm với mọi quyết định thuế." [level=1] [ref=e34]
+          - paragraph [ref=e35]: Tư vấn thuế chiến lược cho SME & FDI tại Việt Nam, dẫn dắt bởi đội ngũ CPA/CPTA với 20 năm kinh nghiệm tại Vingroup & MIK Group.
+        - generic [ref=e36]:
+          - link "Đặt lịch tư vấn" [ref=e37] [cursor=pointer]:
+            - /url: /dat-lich
+          - link "Xem dịch vụ" [ref=e38] [cursor=pointer]:
+            - /url: /dich-vu
+        - generic [ref=e41]: Buổi tư vấn đầu tiên 45 phút miễn phí
+      - img "Văn phòng tư vấn chuyên nghiệp — N&D Tax Advisory" [ref=e43]
+    - generic [ref=e47]:
+      - generic [ref=e48]: Được tin tưởng bởi
+      - generic "Danh sách khách hàng" [ref=e49]:
+        - generic [ref=e50]:
+          - generic [ref=e51]: Vingroup
+          - generic [ref=e52]: Vinhomes
+          - generic [ref=e53]: Vinpearl
+          - generic [ref=e54]: Vincom Retail
+          - generic [ref=e55]: VinMec
+          - generic [ref=e56]: VinShop
+          - generic [ref=e57]: VinID
+          - generic [ref=e58]: One Mount
+          - generic [ref=e59]: MIK Group
+          - generic [ref=e60]: DOJI Land
+          - generic [ref=e61]: Empire Group
+          - generic [ref=e62]: TASECO
+          - generic [ref=e63]: Sun Group
+          - generic [ref=e64]: Gami Group
+          - generic [ref=e65]: "1369"
+          - generic [ref=e66]: VietinBank
+          - generic [ref=e67]: Mitsubishi Motors
+          - generic [ref=e68]: Casper
+          - generic [ref=e69]: Vimaflour
+          - generic [ref=e70]: Japfa
+          - generic [ref=e71]: Vaquarius
+          - generic [ref=e72]: Garco 10
+          - generic [ref=e73]: CPC1HN
+          - generic [ref=e74]: VietDigital
+          - generic [ref=e75]: Printway.io
+          - generic [ref=e76]: 3S Media
+          - generic [ref=e77]: SNB Distribution
+          - generic [ref=e78]: Mekong LLC
+          - generic [ref=e79]: IAC Hà Nội
+          - generic [ref=e80]: Construction Army Engineering
+          - generic [ref=e81]: Đại học Thương mại
+          - generic [ref=e82]: Học viện Ngân hàng
+          - generic [ref=e83]: Vingroup
+          - generic [ref=e84]: Vinhomes
+          - generic [ref=e85]: Vinpearl
+          - generic [ref=e86]: Vincom Retail
+          - generic [ref=e87]: VinMec
+          - generic [ref=e88]: VinShop
+          - generic [ref=e89]: VinID
+          - generic [ref=e90]: One Mount
+          - generic [ref=e91]: MIK Group
+          - generic [ref=e92]: DOJI Land
+          - generic [ref=e93]: Empire Group
+          - generic [ref=e94]: TASECO
+          - generic [ref=e95]: Sun Group
+          - generic [ref=e96]: Gami Group
+          - generic [ref=e97]: "1369"
+          - generic [ref=e98]: VietinBank
+          - generic [ref=e99]: Mitsubishi Motors
+          - generic [ref=e100]: Casper
+          - generic [ref=e101]: Vimaflour
+          - generic [ref=e102]: Japfa
+          - generic [ref=e103]: Vaquarius
+          - generic [ref=e104]: Garco 10
+          - generic [ref=e105]: CPC1HN
+          - generic [ref=e106]: VietDigital
+          - generic [ref=e107]: Printway.io
+          - generic [ref=e108]: 3S Media
+          - generic [ref=e109]: SNB Distribution
+          - generic [ref=e110]: Mekong LLC
+          - generic [ref=e111]: IAC Hà Nội
+          - generic [ref=e112]: Construction Army Engineering
+          - generic [ref=e113]: Đại học Thương mại
+          - generic [ref=e114]: Học viện Ngân hàng
+    - generic [ref=e117]:
+      - generic [ref=e118]: Về N&D
+      - heading "Đối tác cố vấn cho doanh nghiệp Việt" [level=2] [ref=e119]
+      - generic [ref=e120]:
+        - paragraph [ref=e121]: "N&D Tax Advisory ra đời từ một nhận định đơn giản: rủi ro thuế là rào cản lớn nhất khiến nhiều doanh nghiệp Việt không dám mở rộng. Sau 20 năm trong ngành — từ Big4 đến vai trò CFO tại các tập đoàn lớn — chúng tôi tin rằng tư vấn thuế tốt không chỉ là tránh sai sót, mà là chiến lược tài chính giúp chủ doanh nghiệp ra quyết định nhanh, đúng, và an tâm."
+        - paragraph [ref=e122]: Mỗi khách hàng của N&D nhận được không chỉ một đối tác kế toán, mà một cố vấn đồng hành dài hạn — am hiểu luật, sắc bén với thị trường, và tận tâm với từng chi tiết.
+    - generic [ref=e125]:
+      - generic [ref=e126]:
+        - generic [ref=e127]: Dịch vụ
+        - heading "Bốn lĩnh vực chuyên sâu" [level=2] [ref=e128]
+      - generic [ref=e129]:
+        - article [ref=e130]:
+          - img [ref=e132]
+          - generic [ref=e135]:
+            - heading "Kiện toàn bộ máy kế toán" [level=3] [ref=e136]
+            - paragraph [ref=e137]: Cơ cấu nhân sự, quy chế nội bộ, nâng cao nghiệp vụ chuyên môn.
+          - link "Tìm hiểu thêm về Kiện toàn bộ máy kế toán" [ref=e138] [cursor=pointer]:
+            - /url: /dich-vu#kien-toan-ke-toan
+            - text: Tìm hiểu
+            - img [ref=e139]
+        - article [ref=e141]:
+          - img [ref=e143]
+          - generic [ref=e147]:
+            - heading "Tư vấn pháp lý & thuế" [level=3] [ref=e148]
+            - paragraph [ref=e149]: TNDN, TNCN, GTGT, FCT, ưu đãi thuế, tax health check, dispute resolution.
+          - link "Tìm hiểu thêm về Tư vấn pháp lý & thuế" [ref=e150] [cursor=pointer]:
+            - /url: /dich-vu#tu-van-phap-ly
+            - text: Tìm hiểu
+            - img [ref=e151]
+        - article [ref=e153]:
+          - img [ref=e155]
+          - generic [ref=e159]:
+            - heading "Cấu trúc kinh doanh & Cross-border" [level=3] [ref=e160]
+            - paragraph [ref=e161]: Chọn mô hình kinh doanh khi dịch chuyển doanh thu nước ngoài về Việt Nam.
+          - link "Tìm hiểu thêm về Cấu trúc kinh doanh & Cross-border" [ref=e162] [cursor=pointer]:
+            - /url: /dich-vu#cau-truc-kinh-doanh
+            - text: Tìm hiểu
+            - img [ref=e163]
+        - article [ref=e165]:
+          - img [ref=e167]
+          - generic [ref=e170]:
+            - heading "Đào tạo doanh nghiệp" [level=3] [ref=e171]
+            - paragraph [ref=e172]: Workshop in-house thuế-kế toán + khóa học tại Xleaders Academy.
+          - link "Tìm hiểu thêm về Đào tạo doanh nghiệp" [ref=e173] [cursor=pointer]:
+            - /url: /dich-vu#dao-tao
+            - text: Tìm hiểu
+            - img [ref=e174]
+    - generic [ref=e177]:
+      - generic [ref=e178]:
+        - generic [ref=e179]: Giá trị cốt lõi
+        - heading "Bốn nguyên tắc dẫn lối" [level=2] [ref=e180]
+      - generic [ref=e181]:
+        - generic [ref=e182]:
+          - img [ref=e184]
+          - generic [ref=e188]:
+            - heading "Chính xác" [level=3] [ref=e189]
+            - paragraph [ref=e190]: Sai sót về thuế là rủi ro lớn nhất. Chúng tôi lấy sự chuẩn xác làm thước đo giá trị cao nhất trong từng báo cáo, từng quyết định.
+        - generic [ref=e191]:
+          - img [ref=e193]
+          - generic [ref=e196]:
+            - heading "Bảo mật" [level=3] [ref=e197]
+            - paragraph [ref=e198]: Dữ liệu của khách hàng là tài sản quý giá nhất, được bảo vệ bởi tiêu chuẩn khắt khe và quy trình kiểm soát truy cập nghiêm ngặt.
+        - generic [ref=e199]:
+          - img [ref=e201]
+          - generic [ref=e206]:
+            - heading "Tận tâm" [level=3] [ref=e207]
+            - paragraph [ref=e208]: Chúng tôi đồng hành cùng doanh nghiệp không chỉ như một đối tác, mà như một người cố vấn tin cẩn cho từng quyết định quan trọng.
+        - generic [ref=e209]:
+          - img [ref=e211]
+          - generic [ref=e213]:
+            - heading "Sắc bén" [level=3] [ref=e214]
+            - paragraph [ref=e215]: Am hiểu luật pháp, nhạy bén với sự thay đổi của thị trường để đưa ra lời khuyên tối ưu cho từng giai đoạn phát triển.
+    - generic [ref=e218]:
+      - generic [ref=e219]:
+        - generic [ref=e220]: 20+
+        - generic [ref=e221]: Năm kinh nghiệm trong ngành
+      - generic [ref=e222]:
+        - generic [ref=e223]: 200+
+        - generic [ref=e224]: Khách hàng đã đồng hành
+      - generic [ref=e225]:
+        - generic [ref=e226]: 50+
+        - generic [ref=e227]: Doanh nghiệp FDI đã tư vấn
+      - generic [ref=e228]:
+        - generic [ref=e229]: 100%
+        - generic [ref=e230]: Tuân thủ chuẩn pháp lý
+    - generic [ref=e232]:
+      - generic [ref=e233]:
+        - generic [ref=e234]: Kiến thức
+        - heading "Bài viết mới" [level=2] [ref=e235]
+        - paragraph [ref=e236]: Insights thuế chiến lược, cập nhật chính sách, và case study thực tế từ đội ngũ N&D.
+      - generic [ref=e237]:
+        - article [ref=e238]:
+          - link [ref=e239] [cursor=pointer]:
+            - /url: /kien-thuc/10-sai-lam-thue-pho-bien-cua-sme
+            - img [ref=e240]
+          - generic [ref=e241]:
+            - generic [ref=e242]: Tin tức
+            - heading "10 sai lầm thuế phổ biến nhất của SME Việt Nam (và cách tránh)" [level=3] [ref=e243]:
+              - link "10 sai lầm thuế phổ biến nhất của SME Việt Nam (và cách tránh)" [ref=e244] [cursor=pointer]:
+                - /url: /kien-thuc/10-sai-lam-thue-pho-bien-cua-sme
+            - paragraph [ref=e245]: Sau hơn 20 năm tư vấn cho hàng trăm SME Việt, chúng tôi nhận thấy 10 lỗi thuế phổ biến đến mức gần như doanh nghiệp nào cũng mắc ít nhất 3-4 lỗi. Đây là danh sách — và cách phòng tránh.
+            - generic [ref=e246]:
+              - generic [ref=e247]: Anh Ngọc
+              - generic [ref=e248]: ·
+              - time [ref=e249]: 26 tháng 4, 2026
+              - generic [ref=e250]: ·
+              - generic [ref=e251]: 8 phút đọc
+        - article [ref=e252]:
+          - link [ref=e253] [cursor=pointer]:
+            - /url: /kien-thuc/huong-dan-quyet-toan-thue-tndn-2026
+            - img [ref=e254]
+          - generic [ref=e255]:
+            - generic [ref=e256]: Thuế TNDN
+            - 'heading "Hướng dẫn quyết toán thuế TNDN 2026 cho SME: Từng bước thực hiện" [level=3] [ref=e257]':
+              - 'link "Hướng dẫn quyết toán thuế TNDN 2026 cho SME: Từng bước thực hiện" [ref=e258] [cursor=pointer]':
+                - /url: /kien-thuc/huong-dan-quyet-toan-thue-tndn-2026
+            - paragraph [ref=e259]: Mùa quyết toán thuế TNDN luôn là thời điểm áp lực nhất với đội kế toán. Hướng dẫn chi tiết 7 bước, kèm checklist hồ sơ và những lỗi cần tránh.
+            - generic [ref=e260]:
+              - generic [ref=e261]: Anh Ngọc
+              - generic [ref=e262]: ·
+              - time [ref=e263]: 25 tháng 4, 2026
+              - generic [ref=e264]: ·
+              - generic [ref=e265]: 10 phút đọc
+        - article [ref=e266]:
+          - link [ref=e267] [cursor=pointer]:
+            - /url: /kien-thuc/toi-uu-thue-tncn-cho-founder-co-dong
+            - img [ref=e268]
+          - generic [ref=e269]:
+            - generic [ref=e270]: Thuế TNCN
+            - 'heading "Tối ưu thuế TNCN cho founder và cổ đông: 5 chiến lược hợp pháp" [level=3] [ref=e271]':
+              - 'link "Tối ưu thuế TNCN cho founder và cổ đông: 5 chiến lược hợp pháp" [ref=e272] [cursor=pointer]':
+                - /url: /kien-thuc/toi-uu-thue-tncn-cho-founder-co-dong
+            - paragraph [ref=e273]: Mức thuế TNCN của Việt Nam thuộc hàng cao trong khu vực. Founder và cổ đông có nhiều cơ hội tối ưu hợp pháp — nhưng cần hiểu đúng để không vượt ranh giới.
+            - generic [ref=e274]:
+              - generic [ref=e275]: Anh Ngọc
+              - generic [ref=e276]: ·
+              - time [ref=e277]: 24 tháng 4, 2026
+              - generic [ref=e278]: ·
+              - generic [ref=e279]: 9 phút đọc
+      - link "Xem tất cả bài viết" [ref=e281] [cursor=pointer]:
+        - /url: /kien-thuc
+    - generic [ref=e284]:
+      - generic [ref=e285]: Newsletter
+      - heading "Insights thuế hàng tuần cho founder" [level=2] [ref=e286]
+      - paragraph [ref=e287]: Mỗi tuần một bài viết về thuế chiến lược, cập nhật chính sách, và case study thực tế. Miễn phí, hủy bất cứ lúc nào.
+      - form "Đăng ký nhận newsletter" [ref=e288]:
+        - generic [ref=e289]: Địa chỉ email
+        - textbox "Địa chỉ email" [ref=e290]:
+          - /placeholder: email@congty.vn
+        - button "Đăng ký" [ref=e291]
+    - generic [ref=e293]:
+      - generic [ref=e294]:
+        - generic [ref=e295]: Khách hàng nói
+        - heading "Câu chuyện từ những doanh nghiệp đã tin tưởng" [level=2] [ref=e296]
+      - generic [ref=e297]:
+        - blockquote [ref=e298]:
+          - img [ref=e299]
+          - paragraph [ref=e302]: Sau khi N&D kiện toàn quy trình kế toán, chúng tôi cắt được 40% thời gian báo cáo và tránh được khoản phạt 800 triệu trong đợt thanh tra. Đầu tư xứng đáng nhất trong năm.
+          - generic [ref=e303]:
+            - generic [ref=e304]: Anh M.
+            - generic [ref=e305]: CEO chuỗi F&B 30 outlet
+            - generic [ref=e306]: F&B
+        - blockquote [ref=e307]:
+          - img [ref=e308]
+          - paragraph [ref=e311]: N&D giúp chúng tôi cấu trúc lại holding để gọi vốn series A — minh bạch và tối ưu thuế cùng lúc. Investor đặc biệt ấn tượng với due diligence prep.
+          - generic [ref=e312]:
+            - generic [ref=e313]: Chị L.
+            - generic [ref=e314]: Founder startup tech
+            - generic [ref=e315]: Technology
+        - blockquote [ref=e316]:
+          - img [ref=e317]
+          - paragraph [ref=e320]: Transfer pricing report của N&D đạt chuẩn quốc tế — chúng tôi pass kiểm toán Big4 không có observation. Anh Ngọc thực sự hiểu cả góc độ tax authority và investor.
+          - generic [ref=e321]:
+            - generic [ref=e322]: Ms. K.
+            - generic [ref=e323]: CFO công ty FDI 200 nhân sự
+            - generic [ref=e324]: Manufacturing FDI
+        - blockquote [ref=e325]:
+          - img [ref=e326]
+          - paragraph [ref=e329]: Trước khi gặp anh Ngọc, tôi nghĩ mình tuân thủ tốt. Sau audit của N&D, mới biết đang ngồi trên 2 tỷ rủi ro tiềm ẩn. May là phát hiện sớm.
+          - generic [ref=e330]:
+            - generic [ref=e331]: Anh T.
+            - generic [ref=e332]: Chủ chuỗi spa 15 chi nhánh
+            - generic [ref=e333]: Beauty & Wellness
+        - blockquote [ref=e334]:
+          - img [ref=e335]
+          - paragraph [ref=e338]: Workshop thuế cho team kế toán nội bộ rất thực chiến — không phải lý thuyết suông. Team tôi áp dụng được ngay từ ngày đầu sau khóa.
+          - generic [ref=e339]:
+            - generic [ref=e340]: Anh H.
+            - generic [ref=e341]: Founder e-commerce
+            - generic [ref=e342]: E-commerce
+        - blockquote [ref=e343]:
+          - img [ref=e344]
+          - paragraph [ref=e347]: M&A của chúng tôi tiết kiệm 5 tỷ thuế nhờ tư vấn cấu trúc đúng từ đầu của N&D. Khoản tiết kiệm này gấp 30 lần phí tư vấn.
+          - generic [ref=e348]:
+            - generic [ref=e349]: Anh D.
+            - generic [ref=e350]: CEO real estate SME
+            - generic [ref=e351]: Real Estate
+    - generic [ref=e354]:
+      - generic [ref=e355]: Bắt đầu ngay
+      - heading "Sẵn sàng bắt đầu?" [level=2] [ref=e356]
+      - paragraph [ref=e357]: Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí. Đặt lịch ngay hôm nay.
+      - generic [ref=e358]:
+        - link "Đặt lịch tư vấn" [ref=e359] [cursor=pointer]:
+          - /url: /dat-lich
+        - link "Liên hệ trực tiếp" [ref=e360] [cursor=pointer]:
+          - /url: /lien-he
+  - contentinfo [ref=e361]:
+    - generic [ref=e362]:
+      - generic [ref=e363]:
+        - generic [ref=e364]:
+          - img "N&D Tax Advisory" [ref=e365]:
+            - generic [ref=e366]: "N"
+            - generic [ref=e367]: "&"
+            - generic [ref=e368]: D
+            - generic [ref=e369]: TAX ADVISORY
+          - paragraph [ref=e370]: Tư vấn thuế chiến lược cho SME & FDI tại Việt Nam. Chính xác, bảo mật, tận tâm, sắc bén.
+          - list [ref=e371]:
+            - listitem [ref=e372]:
+              - img [ref=e373]
+              - generic [ref=e376]: Hà Nội, Việt Nam
+            - listitem [ref=e377]:
+              - img [ref=e378]
+              - link "Hoaingoc.sa@gmail.com" [ref=e381] [cursor=pointer]:
+                - /url: mailto:Hoaingoc.sa@gmail.com
+            - listitem [ref=e382]:
+              - img [ref=e383]
+              - link "+84 986 032 472" [ref=e385] [cursor=pointer]:
+                - /url: tel:+84986032472
+          - generic [ref=e386]:
+            - link "LinkedIn" [ref=e387] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/nd-tax-advisory
+              - img [ref=e388]
+            - link "Facebook" [ref=e392] [cursor=pointer]:
+              - /url: https://www.facebook.com/ndtaxadvisory
+              - img [ref=e393]
+        - generic [ref=e395]:
+          - navigation "Dịch vụ" [ref=e396]:
+            - heading "Dịch vụ" [level=3] [ref=e397]
+            - list [ref=e398]:
+              - listitem [ref=e399]:
+                - link "Kiện toàn kế toán" [ref=e400] [cursor=pointer]:
+                  - /url: /dich-vu#kien-toan-ke-toan
+              - listitem [ref=e401]:
+                - link "Tư vấn pháp lý & thuế" [ref=e402] [cursor=pointer]:
+                  - /url: /dich-vu#tu-van-phap-ly
+              - listitem [ref=e403]:
+                - link "Cấu trúc kinh doanh" [ref=e404] [cursor=pointer]:
+                  - /url: /dich-vu#cau-truc-kinh-doanh
+              - listitem [ref=e405]:
+                - link "Đào tạo doanh nghiệp" [ref=e406] [cursor=pointer]:
+                  - /url: /dich-vu#dao-tao
+          - navigation "Công ty" [ref=e407]:
+            - heading "Công ty" [level=3] [ref=e408]
+            - list [ref=e409]:
+              - listitem [ref=e410]:
+                - link "Về chúng tôi" [ref=e411] [cursor=pointer]:
+                  - /url: /ve-chung-toi
+              - listitem [ref=e412]:
+                - link "Kiến thức" [ref=e413] [cursor=pointer]:
+                  - /url: /kien-thuc
+              - listitem [ref=e414]:
+                - link "Liên hệ" [ref=e415] [cursor=pointer]:
+                  - /url: /lien-he
+              - listitem [ref=e416]:
+                - link "Đặt lịch tư vấn" [ref=e417] [cursor=pointer]:
+                  - /url: /dat-lich
+          - navigation "Pháp lý" [ref=e418]:
+            - heading "Pháp lý" [level=3] [ref=e419]
+            - list [ref=e420]:
+              - listitem [ref=e421]:
+                - link "Chính sách bảo mật" [ref=e422] [cursor=pointer]:
+                  - /url: /chinh-sach-bao-mat
+              - listitem [ref=e423]:
+                - link "Điều khoản sử dụng" [ref=e424] [cursor=pointer]:
+                  - /url: /dieu-khoan
+      - separator [ref=e425]
+      - generic [ref=e426]:
+        - paragraph [ref=e427]: © 2026 Công ty TNHH Tư vấn thuế NHN&D. Mọi quyền được bảo lưu.
+        - paragraph [ref=e428]: "CPA / CPTA · Giấy phép kinh doanh: ĐKKD/HN/2026"
+  - alert [ref=e429]
