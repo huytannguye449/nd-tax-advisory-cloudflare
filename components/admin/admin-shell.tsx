@@ -121,7 +121,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex lg:flex-col w-72 bg-white border-r border-cream-300 fixed inset-y-0">
         <div className="h-20 flex items-center px-6 border-b border-cream-300">
-          <Link href="/admin" aria-label="N&D Admin">
+          <Link href="/admin" aria-label="NHN&D Admin">
             <Logo variant="primary" size="md" />
           </Link>
         </div>

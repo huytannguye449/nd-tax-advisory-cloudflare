@@ -6,7 +6,7 @@ import { SITE } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Chính sách bảo mật",
-  description: "Chính sách bảo mật và xử lý dữ liệu cá nhân của N&D Tax Advisory.",
+  description: "Chính sách bảo mật và xử lý dữ liệu cá nhân của NHN&D Tax Advisory.",
 };
 
 export default function PrivacyPage() {

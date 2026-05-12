@@ -1,3 +1,4 @@
+// TODO(logo-swap): 4 PNG ở public/logo/ là logo cũ N&D, swap khi design team giao file NHN&D variant B (stacked NHN/&D + Tax Advisory). Sizes target h-9..h-32.
 import { cn } from "@/lib/utils";
 
 type LogoVariant = "primary" | "horizontal" | "mono" | "reversed";
@@ -29,7 +30,7 @@ export function Logo({ variant = "primary", size = "md", className }: LogoProps)
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={LOGO_SRC[variant]}
-      alt="N&D Tax Advisory"
+      alt="NHN&D Tax Advisory"
       className={cn("w-auto", SIZE_CLASS[size], className)}
     />
   );

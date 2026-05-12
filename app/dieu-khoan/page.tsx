@@ -6,7 +6,7 @@ import { SITE } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Điều khoản sử dụng",
-  description: "Điều khoản sử dụng website và dịch vụ của N&D Tax Advisory.",
+  description: "Điều khoản sử dụng website và dịch vụ của NHN&D Tax Advisory.",
 };
 
 export default function TermsPage() {

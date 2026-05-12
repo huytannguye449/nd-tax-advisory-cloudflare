@@ -101,7 +101,7 @@ export default function AdminLoginPage() {
           </Button>
 
           <p className="text-xs text-navy/40 text-center pt-2">
-            Khu vực dành cho quản trị viên N&D Tax Advisory
+            Khu vực dành cho quản trị viên NHN&D Tax Advisory
           </p>
         </form>
       </div>

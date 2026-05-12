@@ -37,7 +37,7 @@ export default function HomePage() {
       {/* 4. Services preview */}
       <ServicesPreview />
 
-      {/* 5. Why N&D / Values */}
+      {/* 5. Why NHN&D / Values */}
       <WhyUs />
 
       {/* 6. Stats */}

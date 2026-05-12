@@ -62,7 +62,7 @@ export function truncate(text: string, max: number): string {
 }
 
 export const SITE = {
-  name: "N&D Tax Advisory",
+  name: "NHN&D Tax Advisory",
   legalName: "Công ty TNHH Tư vấn thuế NHN&D",
   tagline: "Giúp chủ doanh nghiệp an tâm với mọi quyết định thuế.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ndtax.vn",
@@ -74,7 +74,9 @@ export const SITE = {
   founder: "Nguyễn Hoài Ngọc",
   founderTitle: "CPA / CPTA — Founder & CEO",
   social: {
+    // TODO: swap khi a Ngọc tạo profile NHN&D
     linkedin: "https://www.linkedin.com/company/nd-tax-advisory",
+    // TODO: swap khi a Ngọc tạo profile NHN&D
     facebook: "https://www.facebook.com/ndtaxadvisory",
   },
 } as const;

@@ -48,7 +48,7 @@ export default async function KienThucPage() {
             </h1>
             <p className="text-base leading-relaxed text-navy/65 md:text-lg max-w-xl">
               Bài viết chuyên sâu về chiến lược thuế, cập nhật chính sách, và case
-              study thực tế từ đội ngũ N&amp;D Tax Advisory.
+              study thực tế từ đội ngũ NHN&amp;D Tax Advisory.
             </p>
           </div>
         </Container>

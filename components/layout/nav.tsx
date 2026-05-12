@@ -46,7 +46,7 @@ export function Nav() {
     >
       <Container size="xl" className="!px-4 sm:!px-6 lg:!px-8">
         <div className="flex h-20 md:h-24 items-center justify-between gap-4">
-          <Link href="/" aria-label="N&D Tax Advisory — Trang chủ" className="shrink-0">
+          <Link href="/" aria-label="NHN&D Tax Advisory — Trang chủ" className="shrink-0">
             <Logo variant="horizontal" size="md" className="md:hidden" />
             <Logo variant="primary" size="lg" className="hidden md:block" />
           </Link>

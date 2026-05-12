@@ -44,7 +44,7 @@ export function Hero() {
           <div className="relative overflow-hidden rounded-2xl shadow-2xl aspect-[4/3] lg:aspect-auto lg:h-[560px]">
             <Image
               src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&q=80"
-              alt="Văn phòng tư vấn chuyên nghiệp — N&D Tax Advisory"
+              alt="Văn phòng tư vấn chuyên nghiệp — NHN&D Tax Advisory"
               fill
               className="object-cover"
               priority

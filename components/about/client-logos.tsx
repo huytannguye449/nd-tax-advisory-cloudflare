@@ -14,7 +14,7 @@ export function ClientLogos() {
             id="clients-heading"
             className="font-heading text-3xl md:text-4xl font-bold text-navy mt-2"
           >
-            Những doanh nghiệp đã tin tưởng N&amp;D
+            Những doanh nghiệp đã tin tưởng NHN&amp;D
           </h2>
         </div>
 

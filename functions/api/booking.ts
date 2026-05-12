@@ -76,7 +76,7 @@ function generateIcs(args: {
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//N&D Tax Advisory//VI",
+    "PRODID:-//NHN&D Tax Advisory//VI",
     "METHOD:REQUEST",
     "BEGIN:VEVENT",
     `UID:${args.uid}`,
@@ -105,7 +105,7 @@ async function sendEmail(env: Env, args: { to: string; subject: string; html: st
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: `N&D Tax Advisory <${env.RESEND_FROM_EMAIL ?? "noreply@ndtax.vn"}>`,
+      from: `NHN&D Tax Advisory <${env.RESEND_FROM_EMAIL ?? "noreply@ndtax.vn"}>`,
       to: args.to,
       subject: args.subject,
       html: args.html,
@@ -174,7 +174,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       uid: icsUid,
       start: scheduledAt,
       durationMin: 30,
-      summary: `Tư vấn N&D — ${data.service}`,
+      summary: `Tư vấn NHN&D — ${data.service}`,
       description: `Buổi tư vấn 30 phút với anh Ngọc. Khách: ${data.full_name}. SĐT: ${data.phone}.`,
       location: data.meeting_type === "online" ? "Online (link sẽ được gửi sau)" : "Hà Nội, Việt Nam",
       attendeeEmail: data.email,
@@ -186,14 +186,14 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     const icsBase64 = btoa(bin);
 
     const date = scheduledAt.toLocaleString("vi-VN", { dateStyle: "full", timeStyle: "short" });
-    const wrap = (body: string) => `<!DOCTYPE html><html lang="vi"><body style="background:#FAF7F0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0F2B46;padding:32px;margin:0"><div style="max-width:640px;margin:0 auto;background:#fff;border-radius:12px;padding:48px 40px;border:1px solid #F0EBDD;box-shadow:0 1px 3px rgba(15,43,70,0.06)"><div style="text-align:center;padding-bottom:32px;border-bottom:1px solid #F0EBDD"><div style="font-family:Georgia,serif;font-size:56px;font-weight:700;line-height:1;letter-spacing:-2px">N<span style="color:#C9A961;margin:0 4px">&amp;</span>D</div><div style="font-size:13px;letter-spacing:5px;margin-top:8px;font-weight:600">TAX ADVISORY</div></div>${body}<div style="margin-top:32px;padding-top:24px;border-top:1px solid #F0EBDD;text-align:center;font-size:12px;color:#486581"><p style="margin:0">Công ty TNHH Tư vấn thuế NHN&D · Hà Nội, Việt Nam</p><p style="margin:6px 0 0">Hoaingoc.sa@gmail.com · 0986 032 472</p></div></div></body></html>`;
+    const wrap = (body: string) => `<!DOCTYPE html><html lang="vi"><body style="background:#FAF7F0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0F2B46;padding:32px;margin:0"><div style="max-width:640px;margin:0 auto;background:#fff;border-radius:12px;padding:48px 40px;border:1px solid #F0EBDD;box-shadow:0 1px 3px rgba(15,43,70,0.06)"><div style="text-align:center;padding-bottom:32px;border-bottom:1px solid #F0EBDD"><div style="font-family:Georgia,serif;font-size:56px;font-weight:700;line-height:1;letter-spacing:-2px">NHN<span style="color:#C9A961;margin:0 4px">&amp;</span>D</div><div style="font-size:13px;letter-spacing:5px;margin-top:8px;font-weight:600">TAX ADVISORY</div></div>${body}<div style="margin-top:32px;padding-top:24px;border-top:1px solid #F0EBDD;text-align:center;font-size:12px;color:#486581"><p style="margin:0">Công ty TNHH Tư vấn thuế NHN&D · Hà Nội, Việt Nam</p><p style="margin:6px 0 0">Hoaingoc.sa@gmail.com · 0986 032 472</p></div></div></body></html>`;
     const customerHtml = wrap(`<h1 style="font-family:Georgia,serif">Đã ghi nhận lịch hẹn của bạn</h1><p>Cảm ơn ${data.full_name}.</p><p><strong>Thời gian:</strong> ${date}<br><strong>Dịch vụ:</strong> ${data.service}<br><strong>Hình thức:</strong> ${data.meeting_type === "online" ? "Trực tuyến" : "Tại văn phòng"}</p><p>File lịch (.ics) đính kèm. Anh Ngọc sẽ confirm slot và gửi link Zoom (nếu online) trong 4 giờ.</p>`);
     const internalHtml = wrap(`<h1 style="font-family:Georgia,serif">Booking mới</h1><p><strong>${data.full_name}</strong> · ${data.email} · ${data.phone}</p><p>${data.company ?? ""}</p><p><strong>${date}</strong> — ${data.service} (${data.meeting_type})</p>${data.message ? `<blockquote>${data.message}</blockquote>` : ""}`);
 
     const attachments = [{ filename: "n-d-tu-van.ics", content: icsBase64, contentType: "text/calendar" }];
 
     await Promise.allSettled([
-      sendEmail(env, { to: data.email, subject: "Xác nhận lịch tư vấn N&D Tax Advisory", html: customerHtml, attachments }),
+      sendEmail(env, { to: data.email, subject: "Xác nhận lịch tư vấn NHN&D Tax Advisory", html: customerHtml, attachments }),
       sendEmail(env, {
         to: env.RESEND_NOTIFY_EMAIL ?? "hello@ndtax.vn",
         subject: `[Booking] ${date} — ${data.full_name}`,

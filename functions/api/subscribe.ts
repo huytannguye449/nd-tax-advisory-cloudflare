@@ -64,7 +64,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     }
 
     if (env.RESEND_API_KEY) {
-      const welcome = `<!DOCTYPE html><html lang="vi"><body style="background:#FAF7F0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0F2B46;padding:32px;margin:0"><div style="max-width:640px;margin:0 auto;background:#fff;border-radius:12px;padding:48px 40px;border:1px solid #F0EBDD"><div style="text-align:center;padding-bottom:32px;border-bottom:1px solid #F0EBDD"><div style="font-family:Georgia,serif;font-size:56px;font-weight:700;line-height:1;letter-spacing:-2px">N<span style="color:#C9A961;margin:0 4px">&amp;</span>D</div><div style="font-size:13px;letter-spacing:5px;margin-top:8px;font-weight:600">TAX ADVISORY</div></div><h1 style="font-family:Georgia,serif;font-size:24px;margin:24px 0 16px">Cảm ơn bạn đã đăng ký.</h1><p style="font-size:15px;line-height:1.7">Mỗi tuần, bạn sẽ nhận một bài viết về thuế chiến lược, cập nhật chính sách, và case study thực tế — biên soạn bởi đội ngũ NHN&D.</p><p style="font-size:15px;margin-top:24px">Số đầu tiên sẽ đến trong tuần này.</p></div></body></html>`;
+      const welcome = `<!DOCTYPE html><html lang="vi"><body style="background:#FAF7F0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0F2B46;padding:32px;margin:0"><div style="max-width:640px;margin:0 auto;background:#fff;border-radius:12px;padding:48px 40px;border:1px solid #F0EBDD"><div style="text-align:center;padding-bottom:32px;border-bottom:1px solid #F0EBDD"><div style="font-family:Georgia,serif;font-size:56px;font-weight:700;line-height:1;letter-spacing:-2px">NHN<span style="color:#C9A961;margin:0 4px">&amp;</span>D</div><div style="font-size:13px;letter-spacing:5px;margin-top:8px;font-weight:600">TAX ADVISORY</div></div><h1 style="font-family:Georgia,serif;font-size:24px;margin:24px 0 16px">Cảm ơn bạn đã đăng ký.</h1><p style="font-size:15px;line-height:1.7">Mỗi tuần, bạn sẽ nhận một bài viết về thuế chiến lược, cập nhật chính sách, và case study thực tế — biên soạn bởi đội ngũ NHN&D.</p><p style="font-size:15px;margin-top:24px">Số đầu tiên sẽ đến trong tuần này.</p></div></body></html>`;
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -72,9 +72,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: `N&D Tax Advisory <${env.RESEND_FROM_EMAIL ?? "noreply@ndtax.vn"}>`,
+          from: `NHN&D Tax Advisory <${env.RESEND_FROM_EMAIL ?? "noreply@ndtax.vn"}>`,
           to: email,
-          subject: "Chào mừng đến N&D Insights",
+          subject: "Chào mừng đến NHN&D Insights",
           html: welcome,
         }),
       });

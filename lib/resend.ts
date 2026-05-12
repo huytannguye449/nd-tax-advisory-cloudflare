@@ -29,7 +29,7 @@ export async function sendEmail(args: SendArgs): Promise<{ ok: boolean; id?: str
   }
   try {
     const result = await resend.emails.send({
-      from: `N&D Tax Advisory <${FROM_EMAIL}>`,
+      from: `NHN&D Tax Advisory <${FROM_EMAIL}>`,
       to: args.to,
       subject: args.subject,
       html: args.html,

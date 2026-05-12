@@ -13,7 +13,7 @@ import { FAQ_CONTACT } from "@/lib/data";
 export const metadata: Metadata = {
   title: "Liên hệ",
   description:
-    "Liên hệ N&D Tax Advisory để được tư vấn thuế chiến lược. Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí.",
+    "Liên hệ NHN&D Tax Advisory để được tư vấn thuế chiến lược. Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí.",
 };
 
 export default function ContactPage() {
@@ -25,7 +25,7 @@ export default function ContactPage() {
           <div className="max-w-2xl">
             <Eyebrow>LIÊN HỆ</Eyebrow>
             <h1 className="mt-3 text-4xl md:text-5xl font-bold leading-tight text-balance">
-              Bắt đầu cuộc trò chuyện với N&D
+              Bắt đầu cuộc trò chuyện với NHN&D
             </h1>
             <p className="mt-5 text-lg text-navy/75 leading-relaxed text-pretty">
               Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí. Hãy chia sẻ với chúng tôi
@@ -76,7 +76,7 @@ export default function ContactPage() {
         <Container size="lg">
           <div className="rounded-xl overflow-hidden border border-cream-300 bg-cream-200">
             <iframe
-              title="Bản đồ văn phòng N&D Tax Advisory"
+              title="Bản đồ văn phòng NHN&D Tax Advisory"
               src="https://www.openstreetmap.org/export/embed.html?bbox=105.8342%2C21.0285%2C105.8542%2C21.0385&layer=mapnik&marker=21.0335%2C105.8442"
               loading="lazy"
               className="w-full h-[300px] md:h-[400px] border-0"

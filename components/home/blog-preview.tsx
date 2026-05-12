@@ -63,7 +63,7 @@ function PostCard({ post }: { post: PostWithMeta }) {
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-cream-200">
-            <span className="font-heading text-2xl font-bold text-navy/20">N&amp;D</span>
+            <span className="font-heading text-2xl font-bold text-navy/20">NHN&amp;D</span>
           </div>
         )}
       </Link>
@@ -122,7 +122,7 @@ export async function BlogPreview() {
           <Eyebrow color="gold">Kiến thức</Eyebrow>
           <h2 className="text-3xl font-bold text-navy md:text-4xl">Bài viết mới</h2>
           <p className="text-base text-navy/60 max-w-xl">
-            Insights thuế chiến lược, cập nhật chính sách, và case study thực tế từ đội ngũ N&amp;D.
+            Insights thuế chiến lược, cập nhật chính sách, và case study thực tế từ đội ngũ NHN&amp;D.
           </p>
         </div>
 

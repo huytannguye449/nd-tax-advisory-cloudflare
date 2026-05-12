@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "transfer pricing",
     "thuế TNDN",
     "thuế GTGT",
-    "N&D Tax Advisory",
+    "NHN&D Tax Advisory",
   ],
   authors: [{ name: SITE.name }],
   creator: SITE.name,

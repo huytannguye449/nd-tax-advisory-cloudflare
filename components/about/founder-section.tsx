@@ -15,7 +15,7 @@ export function FounderSection() {
             <div className="rounded-xl overflow-hidden shadow-lg aspect-square max-w-md mx-auto lg:mx-0">
               <Image
                 src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=900&q=80"
-                alt="Nguyễn Hoài Ngọc — Founder & CEO N&D Tax Advisory"
+                alt="Nguyễn Hoài Ngọc — Founder & CEO NHN&D Tax Advisory"
                 width={900}
                 height={900}
                 className="object-cover w-full h-full"

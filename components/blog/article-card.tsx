@@ -38,7 +38,7 @@ export function ArticleCard({ post, variant = "default", className }: ArticleCar
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center bg-cream-200">
-              <span className="font-heading text-4xl font-bold text-navy/20">N&amp;D</span>
+              <span className="font-heading text-4xl font-bold text-navy/20">NHN&amp;D</span>
             </div>
           )}
           {post.is_featured && (
@@ -140,7 +140,7 @@ export function ArticleCard({ post, variant = "default", className }: ArticleCar
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-cream-200">
-            <span className="font-heading text-2xl font-bold text-navy/20">N&amp;D</span>
+            <span className="font-heading text-2xl font-bold text-navy/20">NHN&amp;D</span>
           </div>
         )}
       </Link>

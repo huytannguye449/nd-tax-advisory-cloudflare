@@ -7,7 +7,7 @@ import { BookingForm } from "@/components/contact/booking-form";
 export const metadata: Metadata = {
   title: "Đặt lịch tư vấn",
   description:
-    "Đặt lịch tư vấn miễn phí 45 phút với N&D Tax Advisory. Chọn slot phù hợp — chúng tôi sẽ confirm trong 4 giờ.",
+    "Đặt lịch tư vấn miễn phí 45 phút với NHN&D Tax Advisory. Chọn slot phù hợp — chúng tôi sẽ confirm trong 4 giờ.",
 };
 
 export default function BookingPage() {

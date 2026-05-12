@@ -13,7 +13,7 @@ import { ClientLogos } from "@/components/about/client-logos";
 export const metadata: Metadata = {
   title: "Về chúng tôi",
   description:
-    "Câu chuyện và đội ngũ N&D Tax Advisory — 20+ năm kinh nghiệm tư vấn thuế chiến lược tại Việt Nam.",
+    "Câu chuyện và đội ngũ NHN&D Tax Advisory — 20+ năm kinh nghiệm tư vấn thuế chiến lược tại Việt Nam.",
 };
 
 export default function VeChungToiPage() {
@@ -31,7 +31,7 @@ export default function VeChungToiPage() {
                 Cố vấn thuế bạn có thể tin cậy
               </h1>
               <p className="text-navy/70 text-lg md:text-xl leading-relaxed">
-                N&amp;D Tax Advisory là advisory boutique chuyên tư vấn thuế chiến lược
+                NHN&amp;D Tax Advisory là advisory boutique chuyên tư vấn thuế chiến lược
                 cho SME và FDI tại Việt Nam. Chúng tôi không chỉ đảm bảo tuân thủ —
                 chúng tôi đồng hành cùng doanh nghiệp trong mọi quyết định thuế quan trọng,
                 từ giai đoạn khởi nghiệp đến tái cấu trúc và M&amp;A.
@@ -40,7 +40,7 @@ export default function VeChungToiPage() {
             <div className="relative rounded-xl overflow-hidden shadow-lg aspect-[4/3]">
               <Image
                 src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80"
-                alt="Đội ngũ N&D Tax Advisory"
+                alt="Đội ngũ NHN&D Tax Advisory"
                 width={1600}
                 height={1200}
                 className="object-cover w-full h-full"
@@ -59,19 +59,19 @@ export default function VeChungToiPage() {
               CÂU CHUYỆN
             </Eyebrow>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-navy mt-2">
-              Tại sao chúng tôi thành lập N&amp;D
+              Tại sao chúng tôi thành lập NHN&amp;D
             </h2>
           </div>
           <div className="space-y-5 text-navy/80 leading-relaxed text-lg">
             <p>
-              N&amp;D Tax Advisory được thành lập năm 2026 từ một nhận thức đơn giản — sau hơn
+              NHN&amp;D Tax Advisory được thành lập năm 2026 từ một nhận thức đơn giản — sau hơn
               20 năm trong nghề tư vấn thuế tại Việt Nam, chúng tôi nhận ra: phần lớn doanh
               nghiệp Việt không thiếu kế toán giỏi. Họ thiếu một cố vấn thuế chiến lược ở vai
               trò ngang hàng với CEO — người vừa hiểu sâu luật pháp, vừa hiểu kinh doanh, và
               có thể đồng hành lâu dài qua từng quyết định lớn.
             </p>
             <p>
-              N&amp;D ra đời để lấp khoảng trống đó. Chúng tôi không cạnh tranh với Big4 ở
+              NHN&amp;D ra đời để lấp khoảng trống đó. Chúng tôi không cạnh tranh với Big4 ở
               quy mô. Chúng tôi cạnh tranh ở chiều sâu — cam kết phục vụ một số lượng giới hạn
               khách hàng để đảm bảo mỗi doanh nghiệp đều nhận được sự chú ý xứng đáng từ những
               chuyên gia hàng đầu của chúng tôi.

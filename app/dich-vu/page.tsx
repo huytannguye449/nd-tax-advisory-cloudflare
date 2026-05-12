@@ -48,7 +48,7 @@ export default function DichVuPage() {
               Bốn lĩnh vực chuyên sâu phục vụ doanh nghiệp
             </h1>
             <p className="text-navy/70 text-lg md:text-xl leading-relaxed">
-              N&amp;D Tax Advisory cung cấp bốn nhóm dịch vụ cốt lõi, được thiết kế để
+              NHN&amp;D Tax Advisory cung cấp bốn nhóm dịch vụ cốt lõi, được thiết kế để
               đáp ứng toàn diện nhu cầu tư vấn thuế và tài chính của doanh nghiệp SME và FDI
               tại Việt Nam. Từ kiện toàn quy trình kế toán đến cấu trúc chiến lược dài hạn —
               mỗi giải pháp đều được cá nhân hóa theo thực tế của từng doanh nghiệp.
@@ -133,7 +133,7 @@ export default function DichVuPage() {
               BẮT ĐẦU NGAY HÔM NAY
             </Eyebrow>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-cream mb-4">
-              Bắt đầu hành trình tối ưu thuế cùng N&amp;D
+              Bắt đầu hành trình tối ưu thuế cùng NHN&amp;D
             </h2>
             <p className="text-cream/70 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
               Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí. Chúng tôi sẽ lắng nghe

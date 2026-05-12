@@ -57,7 +57,7 @@ export function leadNotifyEmail(lead: {
 export function leadAutoReplyEmail(lead: {
   full_name: string;
 }): { subject: string; html: string; text: string } {
-  const subject = "Cảm ơn bạn đã liên hệ với N&D Tax Advisory";
+  const subject = "Cảm ơn bạn đã liên hệ với NHN&D Tax Advisory";
   const body = `
     <h1 style="font-family:Georgia,serif;font-size:22px;margin:0 0 16px;color:#0F2B46">Cảm ơn bạn, ${lead.full_name}.</h1>
     <p style="font-size:15px;line-height:1.7">Chúng tôi đã nhận được yêu cầu của bạn và sẽ phản hồi trong vòng <strong>4 giờ làm việc</strong> (T2-T6, 9h-18h).</p>
@@ -70,7 +70,7 @@ export function leadAutoReplyEmail(lead: {
     <div style="margin-top:32px;padding-top:24px;border-top:1px solid #F0EBDD;font-size:14px;color:#486581">
       <p style="margin:0 0 8px">Trân trọng,</p>
       <p style="margin:0;font-weight:600;color:#0F2B46">Anh Ngọc</p>
-      <p style="margin:0">Founder &amp; CEO, N&amp;D Tax Advisory</p>
+      <p style="margin:0">Founder &amp; CEO, NHN&amp;D Tax Advisory</p>
     </div>
   `;
   const text = `Cảm ơn ${lead.full_name}. Chúng tôi sẽ phản hồi trong 4 giờ làm việc.`;
@@ -84,7 +84,7 @@ export function bookingConfirmEmail(booking: {
   meeting_type: string;
   meeting_link?: string | null;
 }): { subject: string; html: string; text: string } {
-  const subject = "Xác nhận lịch tư vấn tại N&D Tax Advisory";
+  const subject = "Xác nhận lịch tư vấn tại NHN&D Tax Advisory";
   const date = new Date(booking.scheduled_at);
   const dateStr = date.toLocaleString("vi-VN", { dateStyle: "full", timeStyle: "short" });
   const body = `
@@ -141,17 +141,17 @@ export function newsletterWelcomeEmail(unsubToken: string): {
   html: string;
   text: string;
 } {
-  const subject = "Chào mừng bạn đến với N&D Insights";
+  const subject = "Chào mừng bạn đến với NHN&D Insights";
   const unsubUrl = `${SITE.url}/api/unsubscribe?token=${unsubToken}`;
   const body = `
     <h1 style="font-family:Georgia,serif;font-size:22px;margin:0 0 16px">Cảm ơn bạn đã đăng ký.</h1>
-    <p style="font-size:15px">Mỗi tuần, bạn sẽ nhận một bài viết về thuế chiến lược, cập nhật chính sách, và case study thực tế — biên soạn bởi đội ngũ N&D.</p>
+    <p style="font-size:15px">Mỗi tuần, bạn sẽ nhận một bài viết về thuế chiến lược, cập nhật chính sách, và case study thực tế — biên soạn bởi đội ngũ NHN&D.</p>
     <p style="font-size:15px">Số đầu tiên sẽ đến trong tuần này.</p>
     <div style="margin-top:32px;text-align:center">
       <a href="${SITE.url}/kien-thuc" style="display:inline-block;background:#0F2B46;color:#FAF7F0;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:600">Đọc bài viết mới nhất</a>
     </div>
     <p style="margin-top:32px;font-size:12px;color:#486581;text-align:center"><a href="${unsubUrl}" style="color:#486581">Hủy đăng ký</a></p>
   `;
-  const text = `Chào mừng. Bạn đã đăng ký newsletter N&D. Hủy: ${unsubUrl}`;
+  const text = `Chào mừng. Bạn đã đăng ký newsletter NHN&D. Hủy: ${unsubUrl}`;
   return { subject, html: wrap(subject, body), text };
 }

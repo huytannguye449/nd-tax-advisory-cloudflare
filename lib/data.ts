@@ -1,5 +1,5 @@
 /**
- * Centralized content data for N&D Tax Advisory website.
+ * Centralized content data for NHN&D Tax Advisory website.
  * Edit here to update homepage / services / about / etc.
  */
 
@@ -72,7 +72,7 @@ export const SERVICES = [
     title: "Tư vấn pháp lý & thuế",
     short: "TNDN, TNCN, GTGT, FCT, ưu đãi thuế, tax health check, dispute resolution.",
     description:
-      "Mọi quyết định kinh doanh đều có hệ quả thuế. N&D cung cấp tư vấn ad-hoc và thường xuyên về toàn bộ phạm vi thuế tại Việt Nam — từ câu hỏi nhanh hàng ngày đến các vấn đề chiến lược lớn như tái cấu trúc, M&A, hay xử lý tranh chấp với cơ quan thuế.",
+      "Mọi quyết định kinh doanh đều có hệ quả thuế. NHN&D cung cấp tư vấn ad-hoc và thường xuyên về toàn bộ phạm vi thuế tại Việt Nam — từ câu hỏi nhanh hàng ngày đến các vấn đề chiến lược lớn như tái cấu trúc, M&A, hay xử lý tranh chấp với cơ quan thuế.",
     when: [
       "Đang đối mặt với câu hỏi/quyết định thuế phức tạp",
       "Muốn rà soát tổng thể tình hình tuân thủ trước thanh tra",
@@ -99,7 +99,7 @@ export const SERVICES = [
     title: "Cấu trúc kinh doanh & Cross-border",
     short: "Chọn mô hình kinh doanh khi dịch chuyển doanh thu nước ngoài về Việt Nam.",
     description:
-      "Khi doanh nghiệp có hoạt động cross-border — từ e-commerce nhận thanh toán quốc tế, dịch vụ digital cho khách FDI, đến dịch chuyển doanh thu từ thị trường nước ngoài về Việt Nam — việc lựa chọn mô hình kinh doanh đúng từ đầu có thể tiết kiệm hàng tỷ đồng thuế dài hạn và tránh rủi ro pháp lý. N&D cung cấp báo cáo phân tích các mô hình kinh doanh kèm cảnh báo rủi ro pháp lý, rủi ro thuế, đồng thời đồng hành lựa chọn và vận hành mô hình tối ưu.",
+      "Khi doanh nghiệp có hoạt động cross-border — từ e-commerce nhận thanh toán quốc tế, dịch vụ digital cho khách FDI, đến dịch chuyển doanh thu từ thị trường nước ngoài về Việt Nam — việc lựa chọn mô hình kinh doanh đúng từ đầu có thể tiết kiệm hàng tỷ đồng thuế dài hạn và tránh rủi ro pháp lý. NHN&D cung cấp báo cáo phân tích các mô hình kinh doanh kèm cảnh báo rủi ro pháp lý, rủi ro thuế, đồng thời đồng hành lựa chọn và vận hành mô hình tối ưu.",
     when: [
       "Khởi nghiệp, chưa biết chọn loại hình DN nào",
       "Đang chuẩn bị gọi vốn và cần holding structure minh bạch",
@@ -126,7 +126,7 @@ export const SERVICES = [
     title: "Đào tạo doanh nghiệp",
     short: "Workshop in-house thuế-kế toán + khóa học tại Xleaders Academy.",
     description:
-      "Luật thuế Việt Nam thay đổi liên tục — đội kế toán giỏi không chỉ là làm đúng hôm nay, mà còn phải chủ động cập nhật để không lỗi thời. Anh Ngọc đã có hơn 10 năm liên tục giảng dạy thuế tại doanh nghiệp (từ 2015) và là Giảng viên cao cấp tại Xleaders Academy. N&D tổ chức workshop in-house thiết kế riêng theo ngành nghề và pain point thực tế. Khách hàng của gói tư vấn được giảm giá hoặc miễn phí các khóa học do N&D tổ chức (kể cả sau khi dịch vụ kết thúc).",
+      "Luật thuế Việt Nam thay đổi liên tục — đội kế toán giỏi không chỉ là làm đúng hôm nay, mà còn phải chủ động cập nhật để không lỗi thời. Anh Ngọc đã có hơn 10 năm liên tục giảng dạy thuế tại doanh nghiệp (từ 2015) và là Giảng viên cao cấp tại Xleaders Academy. NHN&D tổ chức workshop in-house thiết kế riêng theo ngành nghề và pain point thực tế. Khách hàng của gói tư vấn được giảm giá hoặc miễn phí các khóa học do NHN&D tổ chức (kể cả sau khi dịch vụ kết thúc).",
     when: [
       "Đội kế toán cần update kiến thức sau Luật Thuế mới",
       "Founder/CFO muốn nâng cao tax literacy để ra quyết định nhanh hơn",
@@ -160,28 +160,28 @@ export const STATS = [
 export const TESTIMONIALS = [
   {
     quote:
-      "Sau khi N&D kiện toàn quy trình kế toán, chúng tôi cắt được 40% thời gian báo cáo và tránh được khoản phạt 800 triệu trong đợt thanh tra. Đầu tư xứng đáng nhất trong năm.",
+      "Sau khi NHN&D kiện toàn quy trình kế toán, chúng tôi cắt được 40% thời gian báo cáo và tránh được khoản phạt 800 triệu trong đợt thanh tra. Đầu tư xứng đáng nhất trong năm.",
     author: "Anh M.",
     title: "CEO chuỗi F&B 30 outlet",
     industry: "F&B",
   },
   {
     quote:
-      "N&D giúp chúng tôi cấu trúc lại holding để gọi vốn series A — minh bạch và tối ưu thuế cùng lúc. Investor đặc biệt ấn tượng với due diligence prep.",
+      "NHN&D giúp chúng tôi cấu trúc lại holding để gọi vốn series A — minh bạch và tối ưu thuế cùng lúc. Investor đặc biệt ấn tượng với due diligence prep.",
     author: "Chị L.",
     title: "Founder startup tech",
     industry: "Technology",
   },
   {
     quote:
-      "Transfer pricing report của N&D đạt chuẩn quốc tế — chúng tôi pass kiểm toán Big4 không có observation. Anh Ngọc thực sự hiểu cả góc độ tax authority và investor.",
+      "Transfer pricing report của NHN&D đạt chuẩn quốc tế — chúng tôi pass kiểm toán Big4 không có observation. Anh Ngọc thực sự hiểu cả góc độ tax authority và investor.",
     author: "Ms. K.",
     title: "CFO công ty FDI 200 nhân sự",
     industry: "Manufacturing FDI",
   },
   {
     quote:
-      "Trước khi gặp anh Ngọc, tôi nghĩ mình tuân thủ tốt. Sau audit của N&D, mới biết đang ngồi trên 2 tỷ rủi ro tiềm ẩn. May là phát hiện sớm.",
+      "Trước khi gặp anh Ngọc, tôi nghĩ mình tuân thủ tốt. Sau audit của NHN&D, mới biết đang ngồi trên 2 tỷ rủi ro tiềm ẩn. May là phát hiện sớm.",
     author: "Anh T.",
     title: "Chủ chuỗi spa 15 chi nhánh",
     industry: "Beauty & Wellness",
@@ -195,14 +195,14 @@ export const TESTIMONIALS = [
   },
   {
     quote:
-      "M&A của chúng tôi tiết kiệm 5 tỷ thuế nhờ tư vấn cấu trúc đúng từ đầu của N&D. Khoản tiết kiệm này gấp 30 lần phí tư vấn.",
+      "M&A của chúng tôi tiết kiệm 5 tỷ thuế nhờ tư vấn cấu trúc đúng từ đầu của NHN&D. Khoản tiết kiệm này gấp 30 lần phí tư vấn.",
     author: "Anh D.",
     title: "CEO real estate SME",
     industry: "Real Estate",
   },
   {
     quote:
-      "N&D không chỉ làm thuế — họ giải thích từng quyết định để tôi hiểu và tự tin. Đó là điều khác biệt lớn nhất so với những đối tác trước đây.",
+      "NHN&D không chỉ làm thuế — họ giải thích từng quyết định để tôi hiểu và tự tin. Đó là điều khác biệt lớn nhất so với những đối tác trước đây.",
     author: "Chị N.",
     title: "Founder DN sản xuất xuất khẩu",
     industry: "Manufacturing Export",
@@ -260,7 +260,7 @@ export const CLIENTS = [
 
 export const FAQ_GENERAL = [
   {
-    q: "N&D phù hợp với quy mô doanh nghiệp nào?",
+    q: "NHN&D phù hợp với quy mô doanh nghiệp nào?",
     a: "Khách hàng chính của chúng tôi là SME (10-500 nhân sự) và doanh nghiệp FDI mid-size. Chúng tôi cũng nhận tư vấn cho startup giai đoạn pre-Series A khi có vấn đề thuế chiến lược cần giải quyết.",
   },
   {
@@ -273,11 +273,11 @@ export const FAQ_GENERAL = [
   },
   {
     q: "Có làm cho công ty FDI không?",
-    a: "Có. Khoảng 25% khách hàng của N&D là công ty FDI (Hàn Quốc, Nhật Bản, Singapore, EU). Chúng tôi am hiểu transfer pricing, FCT, và các vấn đề cross-border đặc thù của FDI.",
+    a: "Có. Khoảng 25% khách hàng của NHN&D là công ty FDI (Hàn Quốc, Nhật Bản, Singapore, EU). Chúng tôi am hiểu transfer pricing, FCT, và các vấn đề cross-border đặc thù của FDI.",
   },
   {
     q: "Có làm bằng tiếng Anh không?",
-    a: "Có. Tất cả senior consultant của N&D giao tiếp được tiếng Anh. Tài liệu tư vấn có thể được phát hành song ngữ Anh-Việt theo yêu cầu.",
+    a: "Có. Tất cả senior consultant của NHN&D giao tiếp được tiếng Anh. Tài liệu tư vấn có thể được phát hành song ngữ Anh-Việt theo yêu cầu.",
   },
   {
     q: "Bao lâu nhận được đề xuất sau buổi tư vấn?",
@@ -285,25 +285,25 @@ export const FAQ_GENERAL = [
   },
   {
     q: "Có hỗ trợ đại diện làm việc trực tiếp với cơ quan thuế?",
-    a: "Có — đây là một trong những thế mạnh của N&D. Chúng tôi hỗ trợ chuẩn bị hồ sơ, cử người đại diện tham gia các buổi giải trình, và hỗ trợ khiếu nại / khiếu kiện hành chính khi cần thiết.",
+    a: "Có — đây là một trong những thế mạnh của NHN&D. Chúng tôi hỗ trợ chuẩn bị hồ sơ, cử người đại diện tham gia các buổi giải trình, và hỗ trợ khiếu nại / khiếu kiện hành chính khi cần thiết.",
   },
 ];
 
 export const FAQ_CONTACT = [
   {
-    q: "Bao lâu thì N&D phản hồi sau khi tôi điền form?",
-    a: "Trong giờ làm việc (T2-T6, 9h-18h), team N&D phản hồi trong vòng 4 tiếng. Ngoài giờ, chúng tôi sẽ liên hệ vào sáng ngày làm việc tiếp theo.",
+    q: "Bao lâu thì NHN&D phản hồi sau khi tôi điền form?",
+    a: "Trong giờ làm việc (T2-T6, 9h-18h), team NHN&D phản hồi trong vòng 4 tiếng. Ngoài giờ, chúng tôi sẽ liên hệ vào sáng ngày làm việc tiếp theo.",
   },
   {
     q: "Tư vấn ban đầu có tính phí không?",
-    a: "Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí. Đây là cơ hội để chúng ta cùng đánh giá liệu N&D có phù hợp với nhu cầu của bạn hay không.",
+    a: "Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí. Đây là cơ hội để chúng ta cùng đánh giá liệu NHN&D có phù hợp với nhu cầu của bạn hay không.",
   },
   {
     q: "Tôi có thể đặt lịch online qua Zoom/Google Meet được không?",
     a: "Hoàn toàn có thể. Khi đặt lịch qua trang Đặt lịch, bạn chọn 'Online' và sẽ nhận được link Zoom/Meet trong email confirmation.",
   },
   {
-    q: "Văn phòng N&D ở đâu?",
+    q: "Văn phòng NHN&D ở đâu?",
     a: "Văn phòng chính tại Hà Nội. Chúng tôi cũng phục vụ khách hàng tại TP.HCM, Đà Nẵng, và các tỉnh thành khác qua kênh online + di chuyển on-site khi cần.",
   },
   {
