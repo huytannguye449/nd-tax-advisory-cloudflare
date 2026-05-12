@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="NHN&D">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;display=swap');
+      .wordmark { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; text-anchor: middle; }
+      .navy { fill: #0F2B46; }
+      .gold { fill: #C9A961; }
+      .gold-stroke { stroke: #C9A961; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Rounded square cream background -->
+  <rect x="0" y="0" width="100" height="100" rx="14" ry="14" fill="#FAF7F0" />
+
+  <!-- Subtle gold border -->
+  <rect x="1" y="1" width="98" height="98" rx="13" ry="13" fill="none" stroke="#C9A961" stroke-width="1.5" opacity="0.6" />
+
+  <!-- Wordmark NHN (navy, top) -->
+  <text x="50" y="48" class="wordmark navy" font-size="32">NHN</text>
+
+  <!-- Wordmark &D (gold, bottom) -->
+  <text x="50" y="82" class="wordmark gold" font-size="32">&amp;D</text>
+</svg>

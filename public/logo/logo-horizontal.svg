@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 90" role="img" aria-label="NHN&D Tax Advisory">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@500&amp;display=swap');
+      .wordmark { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; }
+      .tagline  { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; letter-spacing: 0.04em; }
+      .navy { fill: #0F2B46; }
+      .gold { fill: #C9A961; }
+      .gold-stroke { stroke: #C9A961; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Checkmark accent above &D -->
+  <path d="M 196 14 L 206 24 L 224 4" class="gold-stroke" stroke-width="2.4" />
+
+  <!-- Wordmark NHN -->
+  <text x="0" y="70" class="wordmark navy" font-size="58">NHN</text>
+
+  <!-- Wordmark &D -->
+  <text x="178" y="70" class="wordmark gold" font-size="58">&amp;D</text>
+
+  <!-- Vertical divider -->
+  <line x1="296" y1="20" x2="296" y2="76" stroke="#C9A961" stroke-width="1.5" />
+
+  <!-- Tagline -->
+  <text x="314" y="56" class="tagline navy" font-size="22">Tax Advisory</text>
+</svg>
