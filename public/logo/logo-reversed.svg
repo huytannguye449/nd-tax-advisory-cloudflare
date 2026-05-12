@@ -1,8 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 130" role="img" aria-label="NHN&D Tax Advisory">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 144" role="img" aria-label="NHN&D Tax Advisory">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@500&amp;display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Inter:wght@500&amp;display=swap');
       .wordmark { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; }
+      .wordmark-italic { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; font-style: italic; letter-spacing: -0.02em; }
       .tagline  { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; letter-spacing: 0.04em; }
       .cream { fill: #FAF7F0; }
       .gold { fill: #C9A961; }
@@ -11,21 +12,29 @@
   </defs>
 
   <!-- Navy background -->
-  <rect width="380" height="130" fill="#0F2B46" />
+  <rect width="400" height="144" fill="#0F2B46" />
+
+  <!-- Corner brackets gold -->
+  <path d="M 18 38 L 18 20 L 36 20" class="gold-stroke" stroke-width="1.6" />
+  <path d="M 182 20 L 200 20 L 200 38" class="gold-stroke" stroke-width="1.6" />
+  <path d="M 18 106 L 18 124 L 36 124" class="gold-stroke" stroke-width="1.6" />
+  <path d="M 182 124 L 200 124 L 200 106" class="gold-stroke" stroke-width="1.6" />
 
   <!-- Checkmark accent gold -->
-  <path d="M 168 28 L 178 38 L 196 18" class="gold-stroke" stroke-width="2.6" transform="translate(0, 0)" />
+  <path d="M 154 34 L 164 44 L 182 24" class="gold-stroke" stroke-width="2.4" />
 
-  <!-- Wordmark NHN (cream, top) -->
-  <text x="18" y="70" class="wordmark cream" font-size="60">NHN</text>
+  <!-- Wordmark NHN (cream) -->
+  <text x="30" y="76" class="wordmark cream" font-size="56">NHN</text>
 
-  <!-- Wordmark &D (gold, bottom — accent preserved) -->
-  <text x="18" y="124" class="wordmark gold" font-size="60">&amp;D</text>
+  <!-- Wordmark &D (gold, & italic) -->
+  <text x="30" y="116" font-size="56" class="gold">
+    <tspan class="wordmark-italic">&amp;</tspan><tspan class="wordmark" dx="2">D</tspan>
+  </text>
 
   <!-- Vertical divider gold -->
-  <line x1="190" y1="34" x2="190" y2="120" stroke="#C9A961" stroke-width="1.5" />
+  <line x1="200" y1="46" x2="200" y2="98" stroke="#C9A961" stroke-width="1.5" />
 
   <!-- Tagline cream -->
-  <text x="208" y="72" class="tagline cream" font-size="22">Tax</text>
-  <text x="208" y="104" class="tagline cream" font-size="22">Advisory</text>
+  <text x="218" y="80" class="tagline cream" font-size="22">Tax</text>
+  <text x="218" y="106" class="tagline cream" font-size="22">Advisory</text>
 </svg>

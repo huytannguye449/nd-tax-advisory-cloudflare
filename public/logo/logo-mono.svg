@@ -1,27 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 130" role="img" aria-label="NHN&D Tax Advisory">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 144" role="img" aria-label="NHN&D Tax Advisory">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@500&amp;display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Inter:wght@500&amp;display=swap');
       .wordmark { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; }
+      .wordmark-italic { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; font-style: italic; letter-spacing: -0.02em; }
       .tagline  { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; letter-spacing: 0.04em; }
       .navy { fill: #0F2B46; }
       .navy-stroke { stroke: #0F2B46; stroke-linecap: round; stroke-linejoin: round; fill: none; }
     </style>
   </defs>
 
-  <!-- Checkmark accent (mono navy) -->
-  <path d="M 150 14 L 160 24 L 178 4" class="navy-stroke" stroke-width="2.6" />
+  <!-- Corner brackets mono navy -->
+  <path d="M 6 26 L 6 8 L 24 8" class="navy-stroke" stroke-width="1.6" />
+  <path d="M 170 8 L 188 8 L 188 26" class="navy-stroke" stroke-width="1.6" />
+  <path d="M 6 118 L 6 136 L 24 136" class="navy-stroke" stroke-width="1.6" />
+  <path d="M 170 136 L 188 136 L 188 118" class="navy-stroke" stroke-width="1.6" />
+
+  <!-- Checkmark accent mono -->
+  <path d="M 142 22 L 152 32 L 170 12" class="navy-stroke" stroke-width="2.4" />
 
   <!-- Wordmark NHN -->
-  <text x="0" y="66" class="wordmark navy" font-size="60">NHN</text>
+  <text x="18" y="68" class="wordmark navy" font-size="56">NHN</text>
 
-  <!-- Wordmark &D (mono — same navy) -->
-  <text x="0" y="120" class="wordmark navy" font-size="60">&amp;D</text>
+  <!-- Wordmark &D — mono navy, & italic decorative -->
+  <text x="18" y="124" font-size="56" class="navy">
+    <tspan class="wordmark-italic">&amp;</tspan><tspan class="wordmark" dx="2">D</tspan>
+  </text>
 
-  <!-- Vertical divider (mono navy) -->
-  <line x1="172" y1="30" x2="172" y2="116" stroke="#0F2B46" stroke-width="1.5" />
+  <!-- Vertical divider -->
+  <line x1="188" y1="34" x2="188" y2="110" stroke="#0F2B46" stroke-width="1.5" />
 
   <!-- Tagline -->
-  <text x="190" y="68" class="tagline navy" font-size="22">Tax</text>
-  <text x="190" y="100" class="tagline navy" font-size="22">Advisory</text>
+  <text x="206" y="78" class="tagline navy" font-size="22">Tax</text>
+  <text x="206" y="104" class="tagline navy" font-size="22">Advisory</text>
 </svg>

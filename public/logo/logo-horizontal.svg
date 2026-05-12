@@ -1,8 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 90" role="img" aria-label="NHN&D Tax Advisory">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 100" role="img" aria-label="NHN&D Tax Advisory">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@500&amp;display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Inter:wght@500&amp;display=swap');
       .wordmark { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; }
+      .wordmark-italic { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; font-style: italic; letter-spacing: -0.02em; }
       .tagline  { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; letter-spacing: 0.04em; }
       .navy { fill: #0F2B46; }
       .gold { fill: #C9A961; }
@@ -10,18 +11,26 @@
     </style>
   </defs>
 
-  <!-- Checkmark accent above &D -->
-  <path d="M 196 14 L 206 24 L 224 4" class="gold-stroke" stroke-width="2.4" />
+  <!-- Corner brackets around wordmark NHN&D (single line) -->
+  <path d="M 6 24 L 6 10 L 20 10" class="gold-stroke" stroke-width="1.6" />
+  <path d="M 318 10 L 332 10 L 332 24" class="gold-stroke" stroke-width="1.6" />
+  <path d="M 6 76 L 6 90 L 20 90" class="gold-stroke" stroke-width="1.6" />
+  <path d="M 318 90 L 332 90 L 332 76" class="gold-stroke" stroke-width="1.6" />
+
+  <!-- Checkmark accent -->
+  <path d="M 246 18 L 256 28 L 274 8" class="gold-stroke" stroke-width="2.2" />
 
   <!-- Wordmark NHN -->
-  <text x="0" y="70" class="wordmark navy" font-size="58">NHN</text>
+  <text x="20" y="72" class="wordmark navy" font-size="58">NHN</text>
 
-  <!-- Wordmark &D -->
-  <text x="178" y="70" class="wordmark gold" font-size="58">&amp;D</text>
+  <!-- Wordmark &D — & italic, D regular, gold -->
+  <text x="208" y="72" font-size="58" class="gold">
+    <tspan class="wordmark-italic">&amp;</tspan><tspan class="wordmark" dx="2">D</tspan>
+  </text>
 
   <!-- Vertical divider -->
-  <line x1="296" y1="20" x2="296" y2="76" stroke="#C9A961" stroke-width="1.5" />
+  <line x1="332" y1="32" x2="332" y2="68" stroke="#C9A961" stroke-width="1.5" />
 
   <!-- Tagline -->
-  <text x="314" y="56" class="tagline navy" font-size="22">Tax Advisory</text>
+  <text x="350" y="58" class="tagline navy" font-size="22">Tax Advisory</text>
 </svg>
