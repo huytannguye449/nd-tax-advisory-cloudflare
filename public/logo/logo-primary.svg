@@ -1,37 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 144" role="img" aria-label="NHN&D Tax Advisory">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" role="img" aria-label="NHN&D Tax Advisory">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Inter:wght@500&amp;display=swap');
-      .wordmark { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; }
-      .wordmark-italic { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; font-style: italic; letter-spacing: -0.02em; }
-      .tagline  { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; letter-spacing: 0.04em; }
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&amp;family=Inter:wght@500;700&amp;display=swap');
+      .wm  { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; }
+      .tg  { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 700; }
       .navy { fill: #0F2B46; }
       .gold { fill: #C9A961; }
-      .gold-stroke { stroke: #C9A961; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .charcoal { fill: #1A1A1A; }
     </style>
   </defs>
 
-  <!-- Corner brackets — 4 L-shape gold thin line around NHN/&D block -->
-  <path d="M 6 26 L 6 8 L 24 8" class="gold-stroke" stroke-width="1.6" />
-  <path d="M 170 8 L 188 8 L 188 26" class="gold-stroke" stroke-width="1.6" />
-  <path d="M 6 118 L 6 136 L 24 136" class="gold-stroke" stroke-width="1.6" />
-  <path d="M 170 136 L 188 136 L 188 118" class="gold-stroke" stroke-width="1.6" />
+  <!-- Cream background -->
+  <rect width="600" height="240" fill="#FAF7F0"/>
 
-  <!-- Checkmark accent above wordmark, near top-right bracket -->
-  <path d="M 142 22 L 152 32 L 170 12" class="gold-stroke" stroke-width="2.4" />
+  <!-- NHN stacked (Playfair bold, navy) -->
+  <text x="40" y="105" class="wm navy" font-size="95">NHN</text>
+  <!-- &D stacked (Playfair bold, gold) -->
+  <text x="40" y="195" class="wm gold" font-size="95">&amp;D</text>
 
-  <!-- Wordmark NHN (navy, top) -->
-  <text x="18" y="68" class="wordmark navy" font-size="56">NHN</text>
+  <!-- Vertical gold divider -->
+  <line x1="280" y1="45" x2="280" y2="195" stroke="#C9A961" stroke-width="4"/>
 
-  <!-- Wordmark &D — & in italic Playfair (decorative), D in regular -->
-  <text x="18" y="124" font-size="56" class="gold">
-    <tspan class="wordmark-italic">&amp;</tspan><tspan class="wordmark" dx="2">D</tspan>
-  </text>
-
-  <!-- Vertical divider (right edge of frame) -->
-  <line x1="188" y1="34" x2="188" y2="110" stroke="#C9A961" stroke-width="1.5" />
-
-  <!-- Tagline Tax / Advisory — center-aligned vertically with NHN/&D block -->
-  <text x="206" y="78" class="tagline navy" font-size="22">Tax</text>
-  <text x="206" y="104" class="tagline navy" font-size="22">Advisory</text>
+  <!-- Tax / Advisory (Inter bold, charcoal) -->
+  <text x="310" y="115" class="tg charcoal" font-size="48">Tax</text>
+  <text x="310" y="175" class="tg charcoal" font-size="48">Advisory</text>
 </svg>

@@ -1,29 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="NHN&D">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="NHN&amp;D">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&amp;display=swap');
-      .wordmark { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; text-anchor: middle; }
-      .wordmark-italic { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; font-style: italic; letter-spacing: -0.02em; }
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&amp;display=swap');
+      .wm { font-family: Helvetica, Arial, sans-serif; font-weight: 700; letter-spacing: -0.02em; text-anchor: middle; }
+      .amp { font-family: 'Playfair Display', 'Times New Roman', serif; font-style: italic; font-weight: 400; }
       .navy { fill: #0F2B46; }
       .gold { fill: #C9A961; }
-      .gold-stroke { stroke: #C9A961; stroke-linecap: round; stroke-linejoin: round; fill: none; }
     </style>
   </defs>
 
-  <!-- Rounded square cream background, no border -->
+  <!-- Rounded square cream background -->
   <rect x="0" y="0" width="100" height="100" rx="14" ry="14" fill="#FAF7F0" />
 
-  <!-- 4 corner brackets mini -->
-  <path d="M 10 22 L 10 12 L 20 12" class="gold-stroke" stroke-width="1.4" />
-  <path d="M 80 12 L 90 12 L 90 22" class="gold-stroke" stroke-width="1.4" />
-  <path d="M 10 78 L 10 88 L 20 88" class="gold-stroke" stroke-width="1.4" />
-  <path d="M 80 88 L 90 88 L 90 78" class="gold-stroke" stroke-width="1.4" />
+  <!-- NHN (Helvetica bold, navy, top) -->
+  <text x="50" y="48" class="wm navy" font-size="28">NHN</text>
 
-  <!-- Wordmark NHN (navy, top) -->
-  <text x="50" y="48" class="wordmark navy" font-size="30">NHN</text>
-
-  <!-- Wordmark &D (gold, & italic) -->
-  <text x="50" y="80" font-size="30" class="gold" text-anchor="middle">
-    <tspan class="wordmark-italic">&amp;</tspan><tspan class="wordmark">D</tspan>
+  <!-- &D (& Playfair italic gold, D Helvetica bold navy) -->
+  <text x="50" y="78" font-size="28" text-anchor="middle" class="navy">
+    <tspan class="amp gold">&amp;</tspan><tspan class="wm" dx="1">D</tspan>
   </text>
 </svg>

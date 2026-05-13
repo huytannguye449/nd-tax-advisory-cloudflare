@@ -1,36 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 100" role="img" aria-label="NHN&D Tax Advisory">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 100" role="img" aria-label="NHN&D Tax Advisory">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Inter:wght@500&amp;display=swap');
-      .wordmark { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; }
-      .wordmark-italic { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; font-style: italic; letter-spacing: -0.02em; }
-      .tagline  { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; letter-spacing: 0.04em; }
-      .navy { fill: #0F2B46; }
-      .gold { fill: #C9A961; }
-      .gold-stroke { stroke: #C9A961; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&amp;family=Inter:wght@500;700&amp;display=swap');
+      .wm-sans { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 700; letter-spacing: -0.01em; }
+      .amp     { font-family: 'Playfair Display', 'Times New Roman', serif; font-style: italic; font-weight: 400; }
+      .tg      { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; letter-spacing: 0.1em; }
+      .navy    { fill: #0F2B46; }
+      .gold    { fill: #C9A961; }
     </style>
   </defs>
 
-  <!-- Corner brackets around wordmark NHN&D (single line) -->
-  <path d="M 6 24 L 6 10 L 20 10" class="gold-stroke" stroke-width="1.6" />
-  <path d="M 318 10 L 332 10 L 332 24" class="gold-stroke" stroke-width="1.6" />
-  <path d="M 6 76 L 6 90 L 20 90" class="gold-stroke" stroke-width="1.6" />
-  <path d="M 318 90 L 332 90 L 332 76" class="gold-stroke" stroke-width="1.6" />
-
-  <!-- Checkmark accent -->
-  <path d="M 246 18 L 256 28 L 274 8" class="gold-stroke" stroke-width="2.2" />
-
-  <!-- Wordmark NHN -->
-  <text x="20" y="72" class="wordmark navy" font-size="58">NHN</text>
-
-  <!-- Wordmark &D — & italic, D regular, gold -->
-  <text x="208" y="72" font-size="58" class="gold">
-    <tspan class="wordmark-italic">&amp;</tspan><tspan class="wordmark" dx="2">D</tspan>
-  </text>
-
-  <!-- Vertical divider -->
-  <line x1="332" y1="32" x2="332" y2="68" stroke="#C9A961" stroke-width="1.5" />
-
-  <!-- Tagline -->
-  <text x="350" y="58" class="tagline navy" font-size="22">Tax Advisory</text>
+  <!-- NHN (Inter bold, navy) -->
+  <text x="10" y="65" class="wm-sans navy" font-size="56">NHN</text>
+  <!-- & (Playfair italic, gold) -->
+  <text x="156" y="67" class="amp gold" font-size="64">&amp;</text>
+  <!-- D (Inter bold, navy) -->
+  <text x="196" y="65" class="wm-sans navy" font-size="56">D</text>
+  <!-- TAX ADVISORY — Inter medium small-caps below -->
+  <text x="10" y="88" class="tg navy" font-size="11">TAX ADVISORY</text>
 </svg>

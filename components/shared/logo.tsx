@@ -43,80 +43,65 @@ const CREAM = "#FAF7F0";
 
 function PrimarySvg() {
   return (
-    <svg viewBox="0 0 400 144" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NHN&D Tax Advisory" className="h-full w-auto">
-      <path d="M 6 26 L 6 8 L 24 8" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 170 8 L 188 8 L 188 26" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 6 118 L 6 136 L 24 136" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 170 136 L 188 136 L 188 118" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 142 22 L 152 32 L 170 12" stroke={GOLD} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <text x="18" y="68" fontSize="56" fill={NAVY} style={WORDMARK_STYLE}>NHN</text>
-      <text x="18" y="124" fontSize="56" fill={GOLD}>
+    <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NHN&D Tax Advisory" className="h-full w-auto">
+      {/* Stacked wordmark: NHN (navy) / &D (gold) — Playfair Display */}
+      <text x="14" y="52" fontSize="47" fill={NAVY} style={WORDMARK_STYLE}>NHN</text>
+      <text x="14" y="97" fontSize="47" fill={GOLD}>
         <tspan style={WORDMARK_ITALIC_STYLE}>&amp;</tspan>
-        <tspan style={WORDMARK_STYLE} dx="2">D</tspan>
+        <tspan style={WORDMARK_STYLE} dx="1">D</tspan>
       </text>
-      <line x1="188" y1="34" x2="188" y2="110" stroke={GOLD} strokeWidth={1.5} />
-      <text x="206" y="78" fontSize="22" fill={NAVY} style={TAGLINE_STYLE}>Tax</text>
-      <text x="206" y="104" fontSize="22" fill={NAVY} style={TAGLINE_STYLE}>Advisory</text>
+      {/* Vertical gold divider */}
+      <line x1="140" y1="18" x2="140" y2="97" stroke={GOLD} strokeWidth={2} />
+      {/* Tagline: Tax / Advisory — Inter medium */}
+      <text x="155" y="57" fontSize="24" fill="#1A1A1A" style={TAGLINE_STYLE}>Tax</text>
+      <text x="155" y="86" fontSize="24" fill="#1A1A1A" style={TAGLINE_STYLE}>Advisory</text>
     </svg>
   );
 }
 
 function HorizontalSvg() {
   return (
-    <svg viewBox="0 0 560 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NHN&D Tax Advisory" className="h-full w-auto">
-      <path d="M 6 24 L 6 10 L 20 10" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 318 10 L 332 10 L 332 24" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 6 76 L 6 90 L 20 90" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 318 90 L 332 90 L 332 76" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 246 18 L 256 28 L 274 8" stroke={GOLD} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <text x="20" y="72" fontSize="58" fill={NAVY} style={WORDMARK_STYLE}>NHN</text>
-      <text x="208" y="72" fontSize="58" fill={GOLD}>
-        <tspan style={WORDMARK_ITALIC_STYLE}>&amp;</tspan>
-        <tspan style={WORDMARK_STYLE} dx="2">D</tspan>
-      </text>
-      <line x1="332" y1="32" x2="332" y2="68" stroke={GOLD} strokeWidth={1.5} />
-      <text x="350" y="58" fontSize="22" fill={NAVY} style={TAGLINE_STYLE}>Tax Advisory</text>
+    <svg viewBox="0 0 600 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NHN&D Tax Advisory" className="h-full w-auto">
+      {/* Inline wordmark: NHN (Inter bold, navy) */}
+      <text x="10" y="67" fontSize="56" fill={NAVY} style={{ fontFamily: "var(--font-inter), 'Inter', 'Helvetica Neue', Arial, sans-serif", fontWeight: 700 }}>NHN</text>
+      {/* & (Playfair italic, gold) + D (Inter bold, navy) */}
+      <text x="156" y="67" fontSize="64" fill={GOLD} style={WORDMARK_ITALIC_STYLE}>&amp;</text>
+      <text x="196" y="67" fontSize="56" fill={NAVY} style={{ fontFamily: "var(--font-inter), 'Inter', 'Helvetica Neue', Arial, sans-serif", fontWeight: 700 }}>D</text>
+      {/* TAX ADVISORY — Inter medium small-caps below */}
+      <text x="10" y="88" fontSize="11" fill={NAVY} style={TAGLINE_STYLE} letterSpacing="1">TAX ADVISORY</text>
     </svg>
   );
 }
 
 function MonoSvg() {
   return (
-    <svg viewBox="0 0 400 144" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NHN&D Tax Advisory" className="h-full w-auto">
-      <path d="M 6 26 L 6 8 L 24 8" stroke={NAVY} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 170 8 L 188 8 L 188 26" stroke={NAVY} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 6 118 L 6 136 L 24 136" stroke={NAVY} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 170 136 L 188 136 L 188 118" stroke={NAVY} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 142 22 L 152 32 L 170 12" stroke={NAVY} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <text x="18" y="68" fontSize="56" fill={NAVY} style={WORDMARK_STYLE}>NHN</text>
-      <text x="18" y="124" fontSize="56" fill={NAVY}>
+    <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NHN&D Tax Advisory" className="h-full w-auto">
+      {/* All navy — same layout as PrimarySvg */}
+      <text x="14" y="52" fontSize="47" fill={NAVY} style={WORDMARK_STYLE}>NHN</text>
+      <text x="14" y="97" fontSize="47" fill={NAVY}>
         <tspan style={WORDMARK_ITALIC_STYLE}>&amp;</tspan>
-        <tspan style={WORDMARK_STYLE} dx="2">D</tspan>
+        <tspan style={WORDMARK_STYLE} dx="1">D</tspan>
       </text>
-      <line x1="188" y1="34" x2="188" y2="110" stroke={NAVY} strokeWidth={1.5} />
-      <text x="206" y="78" fontSize="22" fill={NAVY} style={TAGLINE_STYLE}>Tax</text>
-      <text x="206" y="104" fontSize="22" fill={NAVY} style={TAGLINE_STYLE}>Advisory</text>
+      <line x1="140" y1="18" x2="140" y2="97" stroke={NAVY} strokeWidth={2} />
+      <text x="155" y="57" fontSize="24" fill={NAVY} style={TAGLINE_STYLE}>Tax</text>
+      <text x="155" y="86" fontSize="24" fill={NAVY} style={TAGLINE_STYLE}>Advisory</text>
     </svg>
   );
 }
 
 function ReversedSvg() {
   return (
-    <svg viewBox="0 0 400 144" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NHN&D Tax Advisory" className="h-full w-auto">
-      <rect width="400" height="144" fill={NAVY} />
-      <path d="M 18 38 L 18 20 L 36 20" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 182 20 L 200 20 L 200 38" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 18 106 L 18 124 L 36 124" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 182 124 L 200 124 L 200 106" stroke={GOLD} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <path d="M 154 34 L 164 44 L 182 24" stroke={GOLD} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <text x="30" y="76" fontSize="56" fill={CREAM} style={WORDMARK_STYLE}>NHN</text>
-      <text x="30" y="116" fontSize="56" fill={GOLD}>
+    <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NHN&D Tax Advisory" className="h-full w-auto">
+      {/* Navy background, cream NHN, gold &D, cream tagline */}
+      <rect width="300" height="120" fill={NAVY} />
+      <text x="14" y="52" fontSize="47" fill={CREAM} style={WORDMARK_STYLE}>NHN</text>
+      <text x="14" y="97" fontSize="47" fill={GOLD}>
         <tspan style={WORDMARK_ITALIC_STYLE}>&amp;</tspan>
-        <tspan style={WORDMARK_STYLE} dx="2">D</tspan>
+        <tspan style={WORDMARK_STYLE} dx="1">D</tspan>
       </text>
-      <line x1="200" y1="46" x2="200" y2="98" stroke={GOLD} strokeWidth={1.5} />
-      <text x="218" y="80" fontSize="22" fill={CREAM} style={TAGLINE_STYLE}>Tax</text>
-      <text x="218" y="106" fontSize="22" fill={CREAM} style={TAGLINE_STYLE}>Advisory</text>
+      <line x1="140" y1="18" x2="140" y2="97" stroke={GOLD} strokeWidth={2} />
+      <text x="155" y="57" fontSize="24" fill={CREAM} style={TAGLINE_STYLE}>Tax</text>
+      <text x="155" y="86" fontSize="24" fill={CREAM} style={TAGLINE_STYLE}>Advisory</text>
     </svg>
   );
 }
