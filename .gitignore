@@ -48,8 +48,18 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Claude Code (private to dev, don't commit)
-.claude/
+# AI tool state (private to dev, don't commit)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.claude/cache/
+.claude/file-history/
+.claude/session-env/
+.claude/sessions/
+.claude/projects/
+.claude/worktrees/
+
+# Playwright MCP local cache
+.playwright-mcp/
 
 # Antigravity (don't touch)
 .agent/
