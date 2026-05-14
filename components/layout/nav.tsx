@@ -42,10 +42,10 @@ export function Nav() {
       )}
     >
       <Container size="default">
-        <div className="flex h-24 md:h-32 lg:h-40 xl:h-48 items-center justify-between gap-4">
+        <div className="flex h-24 md:h-40 items-center justify-between gap-4">
           <Link href="/" aria-label="NHN&D Tax Advisory — Trang chủ" className="shrink-0">
             <Logo variant="horizontal" size="md" className="md:hidden" />
-            <Logo variant="primary" size="md" className="hidden md:block md:!h-24 lg:!h-32 xl:!h-40" />
+            <Logo variant="primary" size="lg" className="hidden md:block" />
           </Link>
 
           {/* Desktop nav — label-caps editorial menu */}
