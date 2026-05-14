@@ -8,17 +8,17 @@ export function TrustBar() {
   const doubled = [...CLIENTS, ...CLIENTS];
 
   return (
-    <Section bg="cream" spacing="sm">
-      <Container size="xl">
+    <Section bg="cream" spacing="sm" hairlineTop>
+      <Container size="default">
         <div className="flex flex-col items-center gap-6">
-          <Eyebrow color="navy">Được tin tưởng bởi</Eyebrow>
+          <Eyebrow color="gold">Đối tác tin cậy</Eyebrow>
 
           {/* Desktop — marquee */}
           <div
             className="relative hidden w-full overflow-hidden md:block"
             aria-label="Danh sách khách hàng"
           >
-            {/* Fade edges */}
+            {/* Fade edges — cream bg */}
             <div
               className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-cream to-transparent"
               aria-hidden="true"
@@ -32,7 +32,7 @@ export function TrustBar() {
               {doubled.map((name, i) => (
                 <span
                   key={`${name}-${i}`}
-                  className="whitespace-nowrap font-heading text-2xl font-bold text-navy/30 transition-colors duration-200 hover:text-navy/70"
+                  className="whitespace-nowrap font-heading text-headline-sm font-bold text-navy/30 transition-colors duration-200 hover:text-navy/70"
                   aria-hidden={i >= CLIENTS.length ? true : undefined}
                 >
                   {name}
@@ -49,7 +49,7 @@ export function TrustBar() {
             {CLIENTS.map((name) => (
               <span
                 key={name}
-                className="text-center font-heading text-base font-bold text-navy/35 transition-colors duration-200"
+                className="text-center font-heading text-headline-sm font-bold text-navy/35 transition-colors duration-200"
               >
                 {name}
               </span>
@@ -57,6 +57,9 @@ export function TrustBar() {
           </div>
         </div>
       </Container>
+
+      {/* Hairline bottom */}
+      <div className="border-b-hairline border-gold mt-[var(--spacing-section-sm)]" aria-hidden="true" />
     </Section>
   );
 }

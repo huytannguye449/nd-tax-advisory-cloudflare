@@ -1,75 +1,58 @@
 import Link from "next/link";
-import { ScrollText, Scale, Building2, GraduationCap, ArrowRight } from "lucide-react";
+import { Button } from "@/components/shared/button";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { SERVICES } from "@/lib/data";
-import { cn } from "@/lib/utils";
 
-const SERVICE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  "kien-toan-ke-toan": ScrollText,
-  "tu-van-phap-ly": Scale,
-  "cau-truc-kinh-doanh": Building2,
-  "dao-tao": GraduationCap,
-};
+// Service number labels — editorial style
+const SERVICE_NUMBERS = ["01", "02", "03", "04"];
 
 export function ServicesPreview() {
   return (
-    <Section bg="cream" spacing="md" className="bg-cream-100">
-      <Container size="xl">
-        <div className="flex flex-col items-center gap-4 text-center mb-12">
+    <Section bg="cream-100" spacing="md" hairlineTop>
+      <Container size="default">
+        {/* Section header — centered */}
+        <div className="flex flex-col items-start gap-4 mb-16">
           <Eyebrow color="gold">Dịch vụ</Eyebrow>
-          <h2 className="text-3xl font-bold text-navy md:text-4xl">
+          <h2 className="font-heading text-headline-lg text-navy text-balance">
             Bốn lĩnh vực chuyên sâu
           </h2>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((service) => {
-            const Icon = SERVICE_ICONS[service.slug] ?? ScrollText;
-            return (
-              <article
-                key={service.slug}
-                className={cn(
-                  "group flex flex-col gap-4 rounded-xl border border-cream-200 bg-white p-6",
-                  "transition-all duration-200 hover:border-gold hover:shadow-md",
-                )}
-              >
-                <div
-                  className={cn(
-                    "flex h-11 w-11 items-center justify-center rounded-lg",
-                    "bg-cream-100 text-gold-700 transition-colors duration-200",
-                    "group-hover:bg-gold/10",
-                  )}
-                  aria-hidden="true"
-                >
-                  <Icon className="h-5 w-5" />
-                </div>
+        {/* Service cards grid — hairline-top, no bg, no border sides/bottom */}
+        <div className="grid gap-[var(--spacing-gutter)] sm:grid-cols-2 lg:grid-cols-4">
+          {SERVICES.map((service, index) => (
+            <article
+              key={service.slug}
+              className="group flex flex-col gap-6 border-t-hairline border-gold pt-6"
+            >
+              {/* Service number eyebrow */}
+              <Eyebrow color="gold">
+                {SERVICE_NUMBERS[index] ?? `0${index + 1}`}
+              </Eyebrow>
 
-                <div className="flex flex-col gap-2 flex-1">
-                  <h3 className="text-lg font-bold text-navy leading-snug">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-navy/60 flex-1">
-                    {service.short}
-                  </p>
-                </div>
+              {/* Title */}
+              <h3 className="font-heading text-headline-md text-navy leading-snug flex-1">
+                {service.title}
+              </h3>
 
+              {/* Description */}
+              <p className="text-body-md text-navy/65 leading-relaxed">
+                {service.short}
+              </p>
+
+              {/* Ghost CTA */}
+              <Button variant="ghost" size="sm" asChild className="self-start px-0">
                 <Link
                   href={`/dich-vu#${service.slug}`}
-                  className={cn(
-                    "inline-flex items-center gap-1.5 text-sm font-semibold text-gold-700",
-                    "transition-colors duration-200 hover:text-navy",
-                    "min-h-[44px] self-start",
-                  )}
-                  aria-label={`Tìm hiểu thêm về ${service.title}`}
+                  aria-label={`Xem chi tiết về ${service.title}`}
                 >
-                  Tìm hiểu
-                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  Xem chi tiết →
                 </Link>
-              </article>
-            );
-          })}
+              </Button>
+            </article>
+          ))}
         </div>
       </Container>
     </Section>

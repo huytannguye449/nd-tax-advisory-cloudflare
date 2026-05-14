@@ -7,7 +7,6 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { createStaticClient as createClient } from "@/lib/supabase/static";
 import type { PostWithMeta } from "@/lib/supabase/types";
 import { formatDate } from "@/lib/utils";
-import { cn } from "@/lib/utils";
 
 async function getRecentPosts(): Promise<PostWithMeta[]> {
   try {
@@ -31,29 +30,26 @@ async function getRecentPosts(): Promise<PostWithMeta[]> {
 
 function PostSkeleton() {
   return (
-    <div className="flex flex-col gap-4 rounded-xl border border-cream-200 bg-white overflow-hidden">
-      <div className="aspect-video w-full bg-cream-200 animate-pulse" />
-      <div className="flex flex-col gap-3 p-5">
-        <div className="h-5 w-24 rounded bg-cream-200 animate-pulse" />
-        <div className="h-6 w-full rounded bg-cream-200 animate-pulse" />
-        <div className="h-4 w-3/4 rounded bg-cream-200 animate-pulse" />
-        <p className="text-sm text-navy/40 mt-2">Bài viết sắp xuất bản</p>
-      </div>
+    <div className="flex flex-col gap-5 border-t-hairline border-gold pt-6">
+      <div className="h-4 w-24 bg-cream-200 animate-pulse" />
+      <div className="h-6 w-full bg-cream-200 animate-pulse" />
+      <div className="h-4 w-3/4 bg-cream-200 animate-pulse" />
+      <p className="text-body-sm text-navy/40">Bài viết sắp xuất bản</p>
     </div>
   );
 }
 
 function PostCard({ post }: { post: PostWithMeta }) {
   return (
-    <article className="group flex flex-col rounded-xl border border-cream-200 bg-white overflow-hidden transition-all duration-200 hover:shadow-md hover:border-gold/40">
-      {/* Cover image */}
-      <Link
-        href={`/kien-thuc/${post.slug}`}
-        className="relative block aspect-video w-full overflow-hidden bg-cream-200"
-        tabIndex={-1}
-        aria-hidden="true"
-      >
-        {post.cover_url ? (
+    <article className="group flex flex-col gap-5 border-t-hairline border-gold pt-6">
+      {/* Cover image — no rounded corners */}
+      {post.cover_url && (
+        <Link
+          href={`/kien-thuc/${post.slug}`}
+          className="relative block aspect-video w-full overflow-hidden bg-cream-200"
+          tabIndex={-1}
+          aria-hidden="true"
+        >
           <Image
             src={post.cover_url}
             alt={post.title}
@@ -61,52 +57,50 @@ function PostCard({ post }: { post: PostWithMeta }) {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-cream-200">
-            <span className="font-heading text-2xl font-bold text-navy/20">NHN&amp;D</span>
-          </div>
-        )}
-      </Link>
+        </Link>
+      )}
 
-      <div className="flex flex-col gap-3 p-5 flex-1">
-        {/* Category badge */}
+      {/* Dateline — label-caps gold */}
+      <div className="flex items-center gap-3">
         {post.category && (
-          <span className="inline-block w-fit rounded-full bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gold-700">
-            {post.category.name}
-          </span>
+          <Eyebrow color="gold">{post.category.name}</Eyebrow>
         )}
-
-        {/* Title */}
-        <h3 className="text-base font-bold leading-snug text-navy line-clamp-2 md:text-lg">
-          <Link href={`/kien-thuc/${post.slug}`} className="hover:text-gold-700 transition-colors">
-            {post.title}
-          </Link>
-        </h3>
-
-        {/* Excerpt */}
-        {post.excerpt && (
-          <p className="text-sm leading-relaxed text-navy/60 line-clamp-2 flex-1">
-            {post.excerpt}
-          </p>
+        {post.published_at && (
+          <time
+            dateTime={post.published_at}
+            className="text-label-caps text-navy/45 uppercase tracking-[0.1em]"
+          >
+            {formatDate(post.published_at)}
+          </time>
         )}
+      </div>
 
-        {/* Meta */}
-        <div className="flex items-center gap-2 text-xs text-navy/45 mt-auto pt-2 border-t border-cream-200">
+      {/* Title — headline-md Playfair navy */}
+      <h3 className="font-heading text-headline-md text-navy leading-snug line-clamp-2">
+        <Link href={`/kien-thuc/${post.slug}`} className="hover:text-gold-700 transition-colors">
+          {post.title}
+        </Link>
+      </h3>
+
+      {/* Excerpt — body-sm */}
+      {post.excerpt && (
+        <p className="text-body-sm text-navy/60 line-clamp-2 leading-relaxed">
+          {post.excerpt}
+        </p>
+      )}
+
+      {/* Author meta */}
+      {(post.author || post.reading_time) && (
+        <div className="flex items-center gap-2 text-label-caps text-navy/45 uppercase tracking-[0.1em] mt-auto">
           {post.author && <span>{post.author.name}</span>}
-          {post.author && post.published_at && (
+          {post.author && post.reading_time && (
             <span aria-hidden="true">&middot;</span>
           )}
-          {post.published_at && (
-            <time dateTime={post.published_at}>{formatDate(post.published_at)}</time>
-          )}
           {post.reading_time && (
-            <>
-              <span aria-hidden="true">&middot;</span>
-              <span>{post.reading_time} phút đọc</span>
-            </>
+            <span>{post.reading_time} phút đọc</span>
           )}
         </div>
-      </div>
+      )}
     </article>
   );
 }
@@ -116,24 +110,28 @@ export async function BlogPreview() {
   const isEmpty = posts.length === 0;
 
   return (
-    <Section bg="cream" spacing="md">
-      <Container size="xl">
-        <div className="flex flex-col items-center gap-4 text-center mb-12">
+    <Section bg="cream" spacing="md" hairlineTop>
+      <Container size="default">
+        {/* Section header — left-aligned editorial style */}
+        <div className="flex flex-col gap-4 mb-16">
           <Eyebrow color="gold">Kiến thức</Eyebrow>
-          <h2 className="text-3xl font-bold text-navy md:text-4xl">Bài viết mới</h2>
-          <p className="text-base text-navy/60 max-w-xl">
-            Insights thuế chiến lược, cập nhật chính sách, và case study thực tế từ đội ngũ NHN&amp;D.
-          </p>
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <h2 className="font-heading text-headline-lg text-navy">Bài viết mới</h2>
+            <p className="text-body-md text-navy/60 max-w-md">
+              Insights thuế chiến lược, cập nhật chính sách, và case study thực tế từ đội ngũ NHN&amp;D.
+            </p>
+          </div>
         </div>
 
-        <div className={cn("grid gap-6", "grid-cols-1 md:grid-cols-3")}>
+        {/* 3-column editorial grid */}
+        <div className="grid gap-[var(--spacing-gutter)] grid-cols-1 md:grid-cols-3">
           {isEmpty
             ? Array.from({ length: 3 }).map((_, i) => <PostSkeleton key={i} />)
             : posts.map((post) => <PostCard key={post.id} post={post} />)}
         </div>
 
-        <div className="mt-10 flex justify-center">
-          <Button variant="outline" size="md" asChild>
+        <div className="mt-16 flex justify-start">
+          <Button variant="secondary" size="md" asChild>
             <Link href="/kien-thuc">Xem tất cả bài viết</Link>
           </Button>
         </div>

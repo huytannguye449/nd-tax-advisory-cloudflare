@@ -1,20 +1,25 @@
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
+import { Eyebrow } from "@/components/shared/eyebrow";
 import { STATS } from "@/lib/data";
 
 export function Stats() {
   return (
     <Section bg="navy" spacing="md">
-      <Container size="xl">
-        <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center gap-2 text-center">
-              <span className="font-heading text-5xl font-bold text-gold md:text-6xl">
+      <Container size="default">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-0">
+          {STATS.map((stat, index) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-center gap-3 text-center px-6 py-4 border-t-hairline border-gold lg:border-t-0 lg:border-l-0 lg:first:border-l-0"
+              style={index > 0 ? { borderLeft: "0.5pt solid var(--color-gold)" } : undefined}
+            >
+              {/* Large display number — Playfair on navy */}
+              <span className="font-heading text-display text-cream">
                 {stat.value}
               </span>
-              <span className="text-sm font-medium leading-snug text-cream/70 md:text-base">
-                {stat.label}
-              </span>
+              {/* Label-caps label — gold */}
+              <Eyebrow color="gold">{stat.label}</Eyebrow>
             </div>
           ))}
         </div>
