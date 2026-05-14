@@ -5,10 +5,10 @@ type LogoSize = "sm" | "md" | "lg" | "xl" | "2xl";
 
 const SIZE_CLASS: Record<LogoSize, string> = {
   sm: "h-10",
-  md: "h-16",
-  lg: "h-32",
-  xl: "h-44",
-  "2xl": "h-52",
+  md: "h-14",
+  lg: "h-20",
+  xl: "h-36",
+  "2xl": "h-44",
 };
 
 interface LogoProps {
