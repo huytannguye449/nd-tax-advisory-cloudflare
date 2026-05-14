@@ -3,35 +3,45 @@ import * as React from "react";
 
 interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   as?: "section" | "div";
-  bg?: "cream" | "cream-100" | "cream-200" | "navy" | "white" | "gold";
+  /** DESIGN.md: only two true elevations (cream base + navy callout).
+   *  cream-100 is a subtle within-cream variant for sectional rhythm. */
+  bg?: "cream" | "cream-100" | "navy";
   spacing?: "sm" | "md" | "lg";
+  /** Add 0.5pt gold hairline at top — DESIGN.md "critical component" */
+  hairlineTop?: boolean;
 }
 
 const BG = {
-  cream: "bg-cream",
-  "cream-100": "bg-cream-100",
-  "cream-200": "bg-cream-200",
+  cream: "bg-cream text-navy",
+  "cream-100": "bg-cream-100 text-navy",
   navy: "bg-navy text-cream",
-  white: "bg-white",
-  gold: "bg-gold text-navy",
 };
 
 const SPACING = {
-  sm: "py-12 md:py-16",
-  md: "py-16 md:py-24",
-  lg: "py-20 md:py-32",
+  sm: "py-[var(--spacing-section-sm)]",
+  md: "py-[var(--spacing-section-md)]",
+  lg: "py-[var(--spacing-section-lg)]",
 };
 
 export function Section({
   as: Component = "section",
   bg = "cream",
   spacing = "md",
+  hairlineTop = false,
   className,
   children,
   ...props
 }: SectionProps) {
   return (
-    <Component className={cn(BG[bg], SPACING[spacing], className)} {...props}>
+    <Component
+      className={cn(
+        BG[bg],
+        SPACING[spacing],
+        hairlineTop && "border-t-hairline border-gold",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </Component>
   );

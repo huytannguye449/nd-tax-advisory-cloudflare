@@ -6,13 +6,18 @@ interface EyebrowProps {
   color?: "navy" | "gold" | "cream";
 }
 
+/**
+ * Label-caps eyebrow per DESIGN.md typography:
+ *   12px / line 1.0 / tracking 0.1em / Inter 600 uppercase
+ * Used as section header / metadata / "rhythmic interruption" in editorial flow.
+ */
 export function Eyebrow({ children, className, color = "gold" }: EyebrowProps) {
   const colorClass =
-    color === "gold" ? "text-gold-700" : color === "cream" ? "text-cream" : "text-navy/70";
+    color === "gold" ? "text-gold-700" : color === "cream" ? "text-cream" : "text-navy";
   return (
     <span
       className={cn(
-        "inline-block text-xs sm:text-[13px] font-semibold uppercase tracking-[0.18em]",
+        "inline-block text-label-caps uppercase",
         colorClass,
         className,
       )}

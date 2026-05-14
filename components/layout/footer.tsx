@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Mail, Phone, MapPin, Linkedin, Facebook } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { Container } from "@/components/shared/container";
+import { Eyebrow } from "@/components/shared/eyebrow";
 import { SITE } from "@/lib/utils";
 
 const FOOTER_NAV = [
@@ -39,25 +40,24 @@ export function Footer() {
   const pathname = usePathname();
   if (pathname.startsWith("/admin")) return null;
   return (
-    <footer className="bg-navy text-cream">
-      <Container size="xl" className="py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
+    <footer className="bg-navy text-cream border-t-hairline border-gold">
+      <Container size="default" className="py-[var(--spacing-section-sm)] md:py-[var(--spacing-section-md)]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-[var(--spacing-gutter)]">
           {/* Brand */}
           <div className="lg:col-span-4">
             <Logo variant="reversed" size="md" />
-            <p className="mt-5 text-sm leading-relaxed text-cream/80 max-w-sm">
-              Tư vấn thuế chiến lược cho SME & FDI tại Việt Nam. Chính xác, bảo mật, tận
-              tâm, sắc bén.
+            <p className="mt-6 text-body-md text-cream/85 max-w-sm">
+              Tư vấn thuế chiến lược cho SME &amp; FDI tại Việt Nam. Chính xác, bảo mật, tận tâm, sắc bén.
             </p>
 
-            <ul className="mt-6 space-y-3 text-sm text-cream/85">
+            <ul className="mt-8 space-y-4 text-body-sm text-cream/85">
               <li className="flex items-start gap-3">
                 <MapPin className="size-4 mt-0.5 text-gold shrink-0" aria-hidden />
                 <span>{SITE.address}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="size-4 text-gold shrink-0" aria-hidden />
-                <a href={`mailto:${SITE.email}`} className="hover:text-gold transition">
+                <a href={`mailto:${SITE.email}`} className="hover:text-gold transition-colors">
                   {SITE.email}
                 </a>
               </li>
@@ -65,25 +65,25 @@ export function Footer() {
                 <Phone className="size-4 text-gold shrink-0" aria-hidden />
                 <a
                   href={`tel:${SITE.phone.replace(/\s/g, "")}`}
-                  className="hover:text-gold transition"
+                  className="hover:text-gold transition-colors"
                 >
                   {SITE.phone}
                 </a>
               </li>
             </ul>
 
-            <div className="mt-6 flex items-center gap-3">
+            <div className="mt-8 flex items-center gap-3">
               <a
                 href={SITE.social.linkedin}
                 aria-label="LinkedIn"
-                className="inline-flex size-10 items-center justify-center rounded-md border border-cream/20 hover:border-gold hover:text-gold transition"
+                className="inline-flex size-11 items-center justify-center border border-cream/25 hover:border-gold hover:text-gold transition-colors"
               >
                 <Linkedin className="size-4" />
               </a>
               <a
                 href={SITE.social.facebook}
                 aria-label="Facebook"
-                className="inline-flex size-10 items-center justify-center rounded-md border border-cream/20 hover:border-gold hover:text-gold transition"
+                className="inline-flex size-11 items-center justify-center border border-cream/25 hover:border-gold hover:text-gold transition-colors"
               >
                 <Facebook className="size-4" />
               </a>
@@ -91,19 +91,14 @@ export function Footer() {
           </div>
 
           {/* Columns */}
-          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
+          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-10 lg:gap-[var(--spacing-gutter)]">
             {FOOTER_NAV.map((col) => (
               <nav key={col.title} aria-label={col.title}>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-gold">
-                  {col.title}
-                </h3>
-                <ul className="mt-4 space-y-3 text-sm text-cream/80">
+                <Eyebrow color="gold">{col.title}</Eyebrow>
+                <ul className="mt-5 space-y-3 text-body-sm text-cream/85">
                   {col.items.map((item) => (
                     <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="hover:text-gold transition-colors"
-                      >
+                      <Link href={item.href} className="hover:text-gold transition-colors">
                         {item.label}
                       </Link>
                     </li>
@@ -114,9 +109,10 @@ export function Footer() {
           </div>
         </div>
 
-        <hr className="mt-12 border-cream/15" />
+        {/* Gold hairline divider */}
+        <div className="mt-16 border-t-hairline border-gold/40" />
 
-        <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-cream/60">
+        <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[11px] tracking-[0.05em] text-cream/65">
           <p>
             © {new Date().getFullYear()} {SITE.legalName}. Mọi quyền được bảo lưu.
           </p>

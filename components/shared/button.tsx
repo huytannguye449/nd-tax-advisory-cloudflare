@@ -2,23 +2,32 @@ import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost" | "outline";
+type Variant = "primary" | "secondary" | "outline" | "ghost";
 type Size = "sm" | "md" | "lg";
 
+/**
+ * DESIGN.md button rules:
+ *  - Primary: solid navy + cream text, hover fills GOLD
+ *  - Secondary: transparent + 1px navy border, hover fills GOLD (canonical DESIGN secondary)
+ *  - Outline: alias of secondary (kept for legacy callsites)
+ *  - Ghost: text-only, hover gold text
+ *  - Sharp 0px corners (no rounded), strictly flat (no shadow/gradient)
+ */
 const VARIANT: Record<Variant, string> = {
   primary:
-    "bg-navy text-cream hover:bg-navy-700 active:bg-navy-800 focus-visible:ring-gold disabled:bg-navy-300 shadow-sm",
+    "bg-navy text-cream border border-navy hover:bg-gold hover:text-navy hover:border-gold focus-visible:outline-gold disabled:opacity-50",
   secondary:
-    "bg-gold text-navy hover:bg-gold-600 active:bg-gold-700 focus-visible:ring-navy disabled:bg-gold-300 shadow-sm",
+    "bg-transparent text-navy border border-navy hover:bg-gold hover:text-navy hover:border-gold focus-visible:outline-gold disabled:opacity-50",
   outline:
-    "border border-navy text-navy bg-transparent hover:bg-navy hover:text-cream focus-visible:ring-gold",
-  ghost: "text-navy hover:bg-navy/5 focus-visible:ring-gold",
+    "bg-transparent text-navy border border-navy hover:bg-gold hover:text-navy hover:border-gold focus-visible:outline-gold disabled:opacity-50",
+  ghost:
+    "bg-transparent text-navy border border-transparent hover:text-gold-700 focus-visible:outline-gold disabled:opacity-50",
 };
 
 const SIZE: Record<Size, string> = {
-  sm: "h-10 px-4 text-sm gap-1.5",
-  md: "h-12 px-6 text-base gap-2",
-  lg: "h-14 px-8 text-base gap-2 md:text-lg",
+  sm: "h-10 px-5 text-[13px] gap-2",
+  md: "h-12 px-7 text-[14px] gap-2",
+  lg: "h-14 px-9 text-[15px] gap-2.5",
 };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -35,9 +44,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center font-semibold rounded-md transition-all",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-cream",
-          "disabled:cursor-not-allowed disabled:opacity-60",
+          // Editorial button: square, label-caps style, no shadow
+          "inline-flex items-center justify-center font-semibold uppercase tracking-[0.08em]",
+          "transition-colors duration-150",
+          "focus-visible:outline-2 focus-visible:outline-offset-2",
+          "disabled:cursor-not-allowed",
           "min-h-[44px] [&_svg]:size-4 [&_svg]:shrink-0",
           VARIANT[variant],
           SIZE[size],

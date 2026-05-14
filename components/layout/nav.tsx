@@ -29,30 +29,27 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => setOpen(false), [pathname]);
 
-  // Hide nav on admin routes (admin has its own shell)
   if (pathname.startsWith("/admin")) return null;
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full border-b border-transparent transition-all backdrop-blur-md",
-        scrolled
-          ? "bg-cream/85 border-cream-300 shadow-[0_1px_0_rgba(15,43,70,0.06)]"
-          : "bg-cream",
+        // Flat: no blur, no shadow. Gold hairline at bottom = "structural divider"
+        "sticky top-0 z-40 w-full bg-cream transition-colors",
+        scrolled ? "border-b-hairline border-gold" : "border-b-hairline border-transparent",
       )}
     >
-      <Container size="xl" className="!px-4 sm:!px-6 lg:!px-8">
+      <Container size="default">
         <div className="flex h-20 md:h-24 items-center justify-between gap-4">
           <Link href="/" aria-label="NHN&D Tax Advisory — Trang chủ" className="shrink-0">
             <Logo variant="horizontal" size="md" className="md:hidden" />
             <Logo variant="primary" size="lg" className="hidden md:block" />
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1" aria-label="Điều hướng chính">
+          {/* Desktop nav — label-caps editorial menu */}
+          <nav className="hidden lg:flex items-center" aria-label="Điều hướng chính">
             {NAV_ITEMS.map((item) => {
               const active =
                 pathname === item.href ||
@@ -62,10 +59,10 @@ export function Nav() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "px-4 py-2 text-sm font-medium rounded-md transition-colors",
+                    "px-5 py-3 text-label-caps uppercase transition-colors",
                     active
-                      ? "text-gold-700 bg-gold/5"
-                      : "text-navy hover:text-gold-700 hover:bg-navy/5",
+                      ? "text-gold-700"
+                      : "text-navy hover:text-gold-700",
                   )}
                 >
                   {item.label}
@@ -74,16 +71,16 @@ export function Nav() {
             })}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Link
               href="/admin/login"
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-navy/70 hover:text-gold-700 transition-colors min-h-[44px] rounded-md"
+              className="hidden md:inline-flex items-center gap-1.5 text-label-caps uppercase text-navy/70 hover:text-gold-700 transition-colors min-h-[44px] px-2"
               aria-label="Đăng nhập quản trị"
             >
-              <LogIn className="size-4" aria-hidden />
+              <LogIn className="size-3.5" aria-hidden />
               Đăng nhập
             </Link>
-            <Button asChild variant="secondary" size="sm" className="hidden sm:inline-flex">
+            <Button asChild variant="primary" size="sm" className="hidden sm:inline-flex">
               <Link href="/dat-lich">Đặt lịch tư vấn</Link>
             </Button>
 
@@ -91,24 +88,24 @@ export function Nav() {
             <Dialog.Root open={open} onOpenChange={setOpen}>
               <Dialog.Trigger asChild>
                 <button
-                  className="lg:hidden inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md text-navy hover:bg-navy/5 transition-colors"
+                  className="lg:hidden inline-flex items-center justify-center min-h-[44px] min-w-[44px] text-navy hover:text-gold-700 transition-colors"
                   aria-label="Mở menu"
                 >
                   <Menu className="size-6" />
                 </button>
               </Dialog.Trigger>
               <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 z-50 bg-navy/30 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+                <Dialog.Overlay className="fixed inset-0 z-50 bg-navy/40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
                 <Dialog.Content
-                  className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-cream shadow-2xl flex flex-col data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right"
+                  className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-cream flex flex-col border-l-hairline border-gold data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right"
                   aria-describedby={undefined}
                 >
-                  <div className="flex items-center justify-between px-5 h-16 border-b border-cream-300">
+                  <div className="flex items-center justify-between px-5 h-20 border-b-hairline border-gold">
                     <Dialog.Title className="sr-only">Menu</Dialog.Title>
                     <Logo variant="horizontal" size="md" />
                     <Dialog.Close asChild>
                       <button
-                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md text-navy hover:bg-navy/5"
+                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] text-navy hover:text-gold-700"
                         aria-label="Đóng menu"
                       >
                         <X className="size-6" />
@@ -116,20 +113,18 @@ export function Nav() {
                     </Dialog.Close>
                   </div>
                   <nav className="flex-1 overflow-y-auto p-5">
-                    <ul className="flex flex-col gap-1">
+                    <ul className="flex flex-col">
                       {NAV_ITEMS.map((item) => {
                         const active =
                           pathname === item.href ||
                           (item.href !== "/" && pathname.startsWith(item.href));
                         return (
-                          <li key={item.href}>
+                          <li key={item.href} className="border-b-hairline border-gold/40">
                             <Link
                               href={item.href}
                               className={cn(
-                                "block py-3 px-4 text-base font-medium rounded-md transition-colors min-h-[44px]",
-                                active
-                                  ? "text-gold-700 bg-gold/10"
-                                  : "text-navy hover:bg-navy/5",
+                                "block py-5 text-label-caps uppercase min-h-[44px] transition-colors",
+                                active ? "text-gold-700" : "text-navy hover:text-gold-700",
                               )}
                             >
                               {item.label}
@@ -139,15 +134,15 @@ export function Nav() {
                       })}
                     </ul>
                   </nav>
-                  <div className="p-5 border-t border-cream-300 space-y-3">
-                    <Button asChild variant="secondary" size="md" fullWidth>
+                  <div className="p-5 border-t-hairline border-gold space-y-4">
+                    <Button asChild variant="primary" size="md" fullWidth>
                       <Link href="/dat-lich">Đặt lịch tư vấn</Link>
                     </Button>
                     <Link
                       href="/admin/login"
-                      className="flex items-center justify-center gap-2 w-full py-2.5 text-sm text-navy/70 hover:text-gold-700 min-h-[44px]"
+                      className="flex items-center justify-center gap-2 w-full py-2.5 text-label-caps uppercase text-navy/70 hover:text-gold-700 min-h-[44px]"
                     >
-                      <LogIn className="size-4" aria-hidden /> Đăng nhập quản trị
+                      <LogIn className="size-3.5" aria-hidden /> Đăng nhập quản trị
                     </Link>
                   </div>
                 </Dialog.Content>
