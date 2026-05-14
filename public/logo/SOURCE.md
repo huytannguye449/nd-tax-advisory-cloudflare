@@ -6,11 +6,11 @@ All logo files in `public/logo/*.svg` (plus `app/icon.svg`, `app/apple-icon.svg`
 
 ## Stitch source mapping (synced 2026-05-14)
 
-| Local file | Stitch screen ID | Stitch title | Source kind |
-|---|---|---|---|
-| `public/logo/logo-primary.svg` | `822d5ddc1f914d4b98f544a440a9e1f1` | NHN&D Tax Advisory Corporate Logo (600×240) | Stitch download |
-| `public/logo/logo-horizontal.svg` | `0d340595a73347eda070f74951409ff5` | NHN&D Tax Advisory Logo (200×60) | Stitch download |
-| `public/logo/logo-executive.svg` | `a31f231e806d4a65bd48e43878a8ad7f` | NHN&D Executive Refined Logo (800×400) | Stitch download |
+| Local file | Source | Notes |
+|---|---|---|
+| `public/logo/logo-primary.png` | User-provided PNG (2026-05-14, ChatGPT export, alpha-transparent, 1536×1024 → resized to 800px wide) | Replaced Stitch SVG. Source preserved at `_logo-source-original.png` |
+| `public/logo/logo-horizontal.png` | Duplicate of `logo-primary.png` | Same lockup, used for mobile header |
+| `public/logo/logo-executive.png` | Duplicate of `logo-primary.png` | Same lockup, used for hero/about emphasis |
 | `public/logo/logo-app-icon.svg` | `8442b28ae1df4606837c3619ecd6a598` | NHN&D App Icon - Primary Navy (512×512) | Stitch download |
 | `public/logo/logo-social.svg` | `5092b51c04e04976850acbf977a1ece1` | NHN&D Social Avatar - Stacked Monogram (512×512) | Stitch download |
 | `public/logo/logo-favicon.svg` | `efccce7322ec45aea652faa63247a4fa` | NHN&D Favicon - Light Mode (512×512) | Stitch download |

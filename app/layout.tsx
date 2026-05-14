@@ -76,7 +76,7 @@ const orgSchema = {
   "@type": "ProfessionalService",
   name: SITE.name,
   url: SITE.url,
-  logo: `${SITE.url}/logo/logo-primary.svg`,
+  logo: `${SITE.url}/logo/logo-primary.png`,
   email: SITE.email,
   telephone: SITE.phone,
   address: {
