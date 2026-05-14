@@ -1,26 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" role="img" aria-label="NHN&D Tax Advisory">
-  <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&amp;family=Inter:wght@500;700&amp;display=swap');
-      .wm { font-family: 'Playfair Display', 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.02em; }
-      .tg { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 700; }
-      .cream  { fill: #FAF7F0; }
-      .gold   { fill: #C9A961; }
-    </style>
-  </defs>
+<svg width="600" height="240" viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg">
+  <!-- Derived from logo-primary.svg via deterministic color swap (see SOURCE.md). DO NOT EDIT BY HAND. -->
+  <!-- Background: NAVY (primary's WHITE inverted for dark-surface use) -->
+  <rect width="600" height="240" fill="#0F2B46" />
 
-  <!-- Navy background -->
-  <rect width="600" height="240" fill="#0F2B46"/>
+  <!-- Left Side: Wordmark (NHN navy -> cream; &D gold unchanged) -->
+  <text x="40" y="105" font-family="Playfair Display, serif" font-weight="700" font-size="95" fill="#FAF7F0">NHN</text>
+  <text x="40" y="195" font-family="Playfair Display, serif" font-weight="700" font-size="95" fill="#C9A961">&amp;D</text>
 
-  <!-- NHN (Playfair bold, cream) -->
-  <text x="40" y="105" class="wm cream" font-size="95">NHN</text>
-  <!-- &D (Playfair bold, gold) -->
-  <text x="40" y="195" class="wm gold" font-size="95">&amp;D</text>
+  <!-- Middle: Vertical Divider (gold unchanged) -->
+  <line x1="280" y1="45" x2="280" y2="195" stroke="#C9A961" stroke-width="4" />
 
-  <!-- Vertical gold divider -->
-  <line x1="280" y1="45" x2="280" y2="195" stroke="#C9A961" stroke-width="4"/>
-
-  <!-- Tax / Advisory (Inter bold, cream) -->
-  <text x="310" y="115" class="tg cream" font-size="48">Tax</text>
-  <text x="310" y="175" class="tg cream" font-size="48">Advisory</text>
+  <!-- Right Side: Tagline (charcoal -> cream) -->
+  <text x="310" y="115" font-family="Inter, sans-serif" font-weight="700" font-size="48" fill="#FAF7F0">Tax</text>
+  <text x="310" y="175" font-family="Inter, sans-serif" font-weight="700" font-size="48" fill="#FAF7F0">Advisory</text>
 </svg>

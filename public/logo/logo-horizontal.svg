@@ -1,21 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 100" role="img" aria-label="NHN&D Tax Advisory">
-  <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&amp;family=Inter:wght@500;700&amp;display=swap');
-      .wm-sans { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 700; letter-spacing: -0.01em; }
-      .amp     { font-family: 'Playfair Display', 'Times New Roman', serif; font-style: italic; font-weight: 400; }
-      .tg      { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; letter-spacing: 0.1em; }
-      .navy    { fill: #0F2B46; }
-      .gold    { fill: #C9A961; }
-    </style>
-  </defs>
-
-  <!-- NHN (Inter bold, navy) -->
-  <text x="10" y="65" class="wm-sans navy" font-size="56">NHN</text>
-  <!-- & (Playfair italic, gold) -->
-  <text x="156" y="67" class="amp gold" font-size="64">&amp;</text>
-  <!-- D (Inter bold, navy) -->
-  <text x="196" y="65" class="wm-sans navy" font-size="56">D</text>
-  <!-- TAX ADVISORY — Inter medium small-caps below -->
-  <text x="10" y="88" class="tg navy" font-size="11">TAX ADVISORY</text>
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <text x="10" y="40" font-family="Inter, sans-serif" font-weight="700" font-size="28" fill="#0F2B46">NHN</text>
+  <text x="78" y="40" font-family="Playfair Display, serif" font-style="italic" font-weight="400" font-size="32" fill="#C9A961">&amp;</text>
+  <text x="104" y="40" font-family="Inter, sans-serif" font-weight="700" font-size="28" fill="#0F2B46">D</text>
+  <text x="10" y="55" font-family="Inter, sans-serif" font-weight="500" font-size="10" letter-spacing="1" fill="#0F2B46">TAX ADVISORY</text>
 </svg>

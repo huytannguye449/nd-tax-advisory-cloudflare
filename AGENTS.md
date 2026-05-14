@@ -10,14 +10,14 @@ Next.js 16 website thương hiệu chuyên gia cho **anh Ngọc** (Nguyễn Hoà
 
 Khi user nhắc về **a Ngọc, NHN&D, Tax Advisory, tư vấn thuế, brand guidelines, logo NHN, ndtax** — hoặc cần lịch sử quyết định strategy — đọc các file dưới:
 
-- **Memory project**: `~/Documents/AI Agents/01-Projects/06-nhn&d-website/memory/`
-- **Decisions log**: `~/Documents/AI Agents/01-Projects/06-nhn&d-website/decisions/`
-- **Strategy + handoff**: `~/Documents/AI Agents/01-Projects/06-nhn&d-website/00-context.md`
-- **Brand Guidelines** (v1+v2+v3 .md/.html/.pdf): `~/Documents/AI Agents/01-Projects/06-nhn&d-website/brand-guidelines*.{md,html,pdf}`
-- **Stitch screens** (26 PNG/SVG): `~/Documents/AI Agents/01-Projects/06-nhn&d-website/stitch-screens/`
-- **Visual QA screenshots**: `~/Documents/AI Agents/01-Projects/06-nhn&d-website/_review-stitch-v3/`
-- **Cross-project memory**: `~/Documents/AI Agents/99-Meta/Auto-Memory/`
-- **Entity card anh Ngọc** (nếu có): `~/Documents/AI Agents/03-People/`
+- **Memory project**: `~/Documents/AI CEO/01-Projects/06-nhn&d-website/memory/`
+- **Decisions log**: `~/Documents/AI CEO/01-Projects/06-nhn&d-website/decisions/`
+- **Strategy + handoff**: `~/Documents/AI CEO/01-Projects/06-nhn&d-website/00-context.md`
+- **Brand Guidelines** (v1+v2+v3 .md/.html/.pdf): `~/Documents/AI CEO/01-Projects/06-nhn&d-website/brand-guidelines*.{md,html,pdf}`
+- **Stitch screens** (26 PNG/SVG): `~/Documents/AI CEO/01-Projects/06-nhn&d-website/stitch-screens/`
+- **Visual QA screenshots**: `~/Documents/AI CEO/01-Projects/06-nhn&d-website/_review-stitch-v3/`
+- **Cross-project memory**: `~/Documents/AI CEO/99-Meta/Auto-Memory/`
+- **Entity card anh Ngọc** (nếu có): `~/Documents/AI CEO/03-People/`
 
 **Khi user yêu cầu lưu memory project**: ghi vào brain `01-Projects/06-nhn&d-website/memory/<topic>.md`, KHÔNG trong workshop.
 
@@ -30,7 +30,7 @@ Khi user nhắc về **a Ngọc, NHN&D, Tax Advisory, tư vấn thuế, brand gu
 - Bruce xưng "**tao**", gọi "**mày**" — quyền sếp
 - AI **CHỈ xưng "em", CHỈ gọi "sếp/anh"** — KHÔNG bao giờ "tao"/"mày"
 
-(Xem `~/Documents/AI Agents/99-Meta/About-Me.md` để biết thêm.)
+(Xem `~/Documents/AI CEO/99-Meta/About-Me.md` để biết thêm.)
 
 ---
 
@@ -84,7 +84,7 @@ DESIGN.md             Stitch design system synthesis
 ### Dev local
 
 ```bash
-cd "/Users/aries/Documents/Antigravity/N&D Tax Advisory"
+cd "/Users/aries/Documents/AI Forge/N&D Tax Advisory"
 pnpm install         # nếu chưa có node_modules
 pnpm run dev         # http://localhost:3000
 ```
@@ -92,7 +92,7 @@ pnpm run dev         # http://localhost:3000
 ### Build + typecheck
 
 ```bash
-cd "/Users/aries/Documents/Antigravity/N&D Tax Advisory"
+cd "/Users/aries/Documents/AI Forge/N&D Tax Advisory"
 pnpm run typecheck   # tsc --noEmit
 pnpm run build       # tạo out/
 ```
@@ -100,7 +100,7 @@ pnpm run build       # tạo out/
 ### Deploy production (KHÔNG dùng `pnpm run deploy`)
 
 ```bash
-cd "/Users/aries/Documents/Antigravity/N&D Tax Advisory"
+cd "/Users/aries/Documents/AI Forge/N&D Tax Advisory"
 pnpm run build
 npx wrangler pages deploy out \
   --project-name=nd-tax-advisory \
@@ -114,7 +114,7 @@ Preview deploys auto-create tại `https://<hash>.nd-tax-advisory.pages.dev`.
 
 ```bash
 # Playwright MCP — screenshot tất cả route sau khi rebrand/redesign
-cd "/Users/aries/Documents/Antigravity/N&D Tax Advisory"
+cd "/Users/aries/Documents/AI Forge/N&D Tax Advisory"
 # Dùng playwright MCP tools, lưu vào _review-<feature>/
 ```
 
@@ -135,7 +135,7 @@ Wrangler auth: `~/.config/.wrangler/` (system-wide cho account `dungnq164@gmail.
 
 Hiện chưa có project-specific skill. Khi build CMS blog auto-publish hoặc deploy automation, sẽ thêm vào `.claude/skills/nhnd-*` và symlink ra brain `99-Meta/claude-skills/`.
 
-Cross-project skills (`lark-*`, `brain-*`, `markitdown`, `nb-*`, `stitch-*`) sống ở brain `~/Documents/AI Agents/99-Meta/claude-skills/`.
+Cross-project skills (`lark-*`, `brain-*`, `markitdown`, `nb-*`, `stitch-*`) sống ở brain `~/Documents/AI CEO/99-Meta/claude-skills/`.
 
 ## 🔄 Cadence / Cron
 
@@ -143,7 +143,7 @@ Hiện chưa có cron. Future: nếu CMS blog cần auto-publish theo schedule, 
 
 ## ⚠️ Critical gotchas
 
-1. **`pnpm run deploy` BỊ STALE** — Reference `@opennextjs/cloudflare` đã remove. Memory: `~/Documents/AI Agents/01-Projects/06-nhn&d-website/memory/project_nd_tax_advisory.md`.
+1. **`pnpm run deploy` BỊ STALE** — Reference `@opennextjs/cloudflare` đã remove. Memory: `~/Documents/AI CEO/01-Projects/06-nhn&d-website/memory/project_nd_tax_advisory.md`.
 2. **Cloudflare Pages slug `nd-tax-advisory` KHÔNG đổi** — Đổi sẽ mất domain `.pages.dev` + DNS pointer.
 3. **Brand display "NHN&D Tax Advisory"** — Sync với legal name `Công ty TNHH Tư vấn thuế NHN&D`. KHÔNG dùng "N&D" hoặc "NHN" lẻ. Rebrand đã hoàn tất 12/5/2026 (commit `d9b79fb`).
 4. **Logo v3 pure typography** (commit `92e174d`) — BỎ corner brackets + checkmark. Source SVG ở `components/shared/logo.tsx` + `public/logo/*.svg` + `app/icon.svg`. PNG `public/logo/*.png` còn STALE (legacy bracketed) — chờ design team regen từ SVG.
@@ -155,19 +155,38 @@ Hiện chưa có cron. Future: nếu CMS blog cần auto-publish theo schedule, 
 
 ---
 
+## 🎨 Logo Asset Pipeline (HARD RULE — 2026-05-14)
+
+Tất cả logo SVG = binary download từ Stitch project `1930340481011959365` ("NHN&D Editorial Identity"). Single source of truth, commit-locked bằng SHA256 trong `public/logo/SOURCE.md`.
+
+**Cấm tuyệt đối**:
+- ❌ Tự viết SVG `<text x="..." y="..." font-size="...">NHN` trong `.tsx` hoặc `.svg` files
+- ❌ Edit nội dung `public/logo/logo-*.svg` hoặc `app/icon.svg` / `app/apple-icon.svg` bằng tay
+- ❌ Dùng font khác Playfair/Inter, hoặc thêm rounded corners (`rx`/`ry`) trong logo SVG
+
+**Bắt buộc**:
+- ✅ React/Next consumers render qua `<Logo variant="..." />` từ `components/shared/logo.tsx` (component này dùng `<img src="/logo/...">` — KHÔNG inline SVG)
+- ✅ Variants hợp lệ: `primary | horizontal | executive | reversed` (đã drop `mono` — không nơi dùng)
+- ✅ Update logo = re-download từ Stitch MCP (xem procedure trong `public/logo/SOURCE.md`), KHÔNG sửa file trực tiếp
+- ✅ `logo-reversed.svg` là file duy nhất derive — color-swap deterministic từ primary (rule trong `SOURCE.md`)
+
+**Tại sao**: trước đây AI nhiều lần mở Stitch screenshot rồi tự vẽ SVG `<text>` path → drift mỗi lần fix → 4 logo Frankenstein cùng tồn tại trong codebase. Lock file + img-tag rule chặn cửa redraw.
+
+---
+
 ## Setup (new machine)
 
 ```bash
 git clone git@github.com:nguyenquangdung/nd-tax-advisory.git \
-  "$HOME/Documents/Antigravity/N&D Tax Advisory"
-cd "$HOME/Documents/Antigravity/N&D Tax Advisory"
+  "$HOME/Documents/AI Forge/N&D Tax Advisory"
+cd "$HOME/Documents/AI Forge/N&D Tax Advisory"
 
 cp .env.example .env.local   # fill secrets từ 1Password / Bruce
 pnpm install
 pnpm run dev                  # verify localhost:3000
 ```
 
-Brain repo (`bruce-brain`) phải có sẵn ở `~/Documents/AI Agents/` để memory/decisions/brand-guidelines truy cập được.
+Brain repo (`bruce-brain`) phải có sẵn ở `~/Documents/AI CEO/` để memory/decisions/brand-guidelines truy cập được.
 
 Wrangler auth (1 lần per machine):
 ```bash
