@@ -4,11 +4,11 @@ type LogoVariant = "primary" | "horizontal" | "executive" | "reversed";
 type LogoSize = "sm" | "md" | "lg" | "xl" | "2xl";
 
 const SIZE_CLASS: Record<LogoSize, string> = {
-  sm: "h-9",
-  md: "h-12",
-  lg: "h-16",
-  xl: "h-24",
-  "2xl": "h-32",
+  sm: "h-10",
+  md: "h-14",
+  lg: "h-20",
+  xl: "h-28",
+  "2xl": "h-36",
 };
 
 interface LogoProps {
