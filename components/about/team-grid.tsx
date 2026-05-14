@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { CheckCircle2 } from "lucide-react";
 import { TEAM } from "@/lib/data";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { Container } from "@/components/shared/container";
+import { Section } from "@/components/shared/section";
 
 const AVATARS: Record<string, string> = {
   "anh-ngoc": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80",
@@ -12,32 +12,32 @@ const AVATARS: Record<string, string> = {
 
 export function TeamGrid() {
   return (
-    <section className="bg-cream-100 py-16 md:py-24" aria-labelledby="team-heading">
-      <Container size="xl">
-        <div className="text-center mb-12 max-w-2xl mx-auto">
+    <Section bg="cream-100" spacing="md" hairlineTop aria-labelledby="team-heading">
+      <Container size="default">
+        <div className="mb-12">
           <Eyebrow color="gold" className="mb-3">
             ĐỘI NGŨ
           </Eyebrow>
           <h2
             id="team-heading"
-            className="font-heading text-3xl md:text-4xl font-bold text-navy mt-2 mb-4"
+            className="font-heading text-headline-md text-navy mt-2 mb-4"
           >
             Những chuyên gia đứng sau
           </h2>
-          <p className="text-navy/65 leading-relaxed">
+          <p className="text-body-md text-navy/65 leading-relaxed max-w-2xl">
             Mỗi thành viên đều là Kiểm toán viên Việt Nam (CPA) và sở hữu Chứng chỉ
             hành nghề thuế (CPTA), với hành trình sự nghiệp xuyên qua các Big4 firm
             và tập đoàn đa ngành lớn nhất Việt Nam.
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-[var(--spacing-gutter)] md:grid-cols-3">
           {TEAM.map((member) => (
             <article
               key={member.slug}
-              className="bg-white rounded-xl p-7 border border-cream-300 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow"
+              className="flex flex-col border-t-hairline border-gold pt-6"
             >
-              <div className="size-32 rounded-full overflow-hidden mb-5 border-2 border-cream-300 ring-4 ring-cream-100">
+              <div className="size-24 overflow-hidden mb-5 border border-cream-300">
                 <Image
                   src={AVATARS[member.slug]}
                   alt={`Ảnh đại diện ${member.name}`}
@@ -46,35 +46,29 @@ export function TeamGrid() {
                   className="object-cover w-full h-full"
                 />
               </div>
-              <h3 className="font-heading text-xl font-bold text-navy mb-1">
+              <h3 className="font-heading text-headline-sm text-navy mb-1">
                 {member.name}
               </h3>
-              <p className="text-gold-700 font-semibold text-sm mb-4">
+              <p className="text-label-caps text-gold-700 uppercase tracking-[0.1em] mb-4">
                 {member.title}
               </p>
 
-              <ul className="text-xs text-navy/70 space-y-1.5 mb-5 self-stretch">
+              <ul className="text-body-sm text-navy/70 space-y-1.5 mb-5">
                 {member.credentials.map((cred) => (
-                  <li
-                    key={cred}
-                    className="flex items-start gap-1.5 justify-center"
-                  >
-                    <CheckCircle2
-                      className="size-3.5 text-gold-700 shrink-0 mt-0.5"
-                      aria-hidden="true"
-                    />
-                    <span className="text-left">{cred}</span>
+                  <li key={cred} className="flex items-start gap-1.5">
+                    <span className="text-gold-700 shrink-0 mt-0.5" aria-hidden="true">—</span>
+                    <span>{cred}</span>
                   </li>
                 ))}
               </ul>
 
-              <p className="text-navy/70 text-sm leading-relaxed flex-1">
+              <p className="text-body-sm text-navy/70 leading-relaxed flex-1">
                 {member.bio}
               </p>
             </article>
           ))}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

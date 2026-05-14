@@ -141,14 +141,14 @@ export default async function PostPage({ params }: Props) {
       <article className="bg-cream">
         {/* Breadcrumb */}
         <Container size="lg" className="pt-6 md:pt-8">
-          <nav aria-label="Breadcrumb" className="text-sm text-navy/60 flex items-center gap-2 flex-wrap">
-            <Link href="/" className="hover:text-gold-700">Trang chủ</Link>
+          <nav aria-label="Breadcrumb" className="text-body-sm text-navy/60 flex items-center gap-2 flex-wrap">
+            <Link href="/" className="hover:text-gold-700 transition-colors">Trang chủ</Link>
             <ChevronRight className="size-3.5" aria-hidden />
-            <Link href="/kien-thuc" className="hover:text-gold-700">Kiến thức</Link>
+            <Link href="/kien-thuc" className="hover:text-gold-700 transition-colors">Kiến thức</Link>
             {post.category && (
               <>
                 <ChevronRight className="size-3.5" aria-hidden />
-                <Link href={`/kien-thuc?category=${post.category.slug}`} className="hover:text-gold-700">
+                <Link href={`/kien-thuc?category=${post.category.slug}`} className="hover:text-gold-700 transition-colors">
                   {post.category.name}
                 </Link>
               </>
@@ -156,22 +156,22 @@ export default async function PostPage({ params }: Props) {
           </nav>
         </Container>
 
-        {/* Header */}
-        <Container size="md" className="pt-6 md:pt-10 pb-8">
+        {/* Article header — container-narrow for readability */}
+        <Container size="narrow" className="pt-6 md:pt-10 pb-8">
           {post.category && (
-            <Eyebrow className="mb-4">{post.category.name}</Eyebrow>
+            <Eyebrow color="gold" className="mb-4">{post.category.name}</Eyebrow>
           )}
-          <h1 className="text-3xl md:text-5xl font-bold leading-tight text-balance">
+          <h1 className="font-heading text-headline-lg text-navy leading-tight text-balance">
             {post.title}
           </h1>
           {post.excerpt && (
-            <p className="mt-5 text-lg md:text-xl text-navy/75 leading-relaxed text-pretty">
+            <p className="mt-5 text-body-lg text-navy/75 leading-relaxed text-pretty">
               {post.excerpt}
             </p>
           )}
 
-          {/* Meta */}
-          <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-navy/60 border-y border-cream-300 py-4">
+          {/* Meta — hairline border-y */}
+          <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-body-sm text-navy/60 border-y border-data-row py-4">
             {post.author && (
               <span className="flex items-center gap-2">
                 {post.author.avatar_url ? (
@@ -180,10 +180,10 @@ export default async function PostPage({ params }: Props) {
                     alt={post.author.name}
                     width={36}
                     height={36}
-                    className="rounded-full object-cover"
+                    className="object-cover border border-cream-300"
                   />
                 ) : (
-                  <span className="size-9 rounded-full bg-navy/10 flex items-center justify-center">
+                  <span className="size-9 bg-navy/10 flex items-center justify-center">
                     <User className="size-4" aria-hidden />
                   </span>
                 )}
@@ -208,10 +208,10 @@ export default async function PostPage({ params }: Props) {
           </div>
         </Container>
 
-        {/* Cover image */}
+        {/* Cover image — no rounded */}
         {post.cover_url && (
           <Container size="lg" className="pb-8">
-            <div className="relative aspect-[16/9] md:aspect-[16/8] overflow-hidden rounded-xl">
+            <div className="relative aspect-[16/9] md:aspect-[16/8] overflow-hidden">
               <Image
                 src={post.cover_url}
                 alt={post.title}
@@ -224,9 +224,9 @@ export default async function PostPage({ params }: Props) {
           </Container>
         )}
 
-        {/* Body */}
-        <Container size="md" className="pb-16">
-          <div className="prose prose-navy max-w-none">
+        {/* Body — container-narrow (65ch), token prose via mdx-components */}
+        <Container size="narrow" className="pb-16">
+          <div className="max-w-none">
             <MDXRemote
               source={post.body_mdx}
               components={mdxComponents}
@@ -242,22 +242,23 @@ export default async function PostPage({ params }: Props) {
             />
           </div>
 
-          {/* Inline subscribe */}
+          {/* Inline subscribe — navy callout block */}
           <div className="mt-12 mb-12">
             <InlineSubscribe />
           </div>
 
-          {/* Author bio */}
+          {/* Author bio — flat, hairline top */}
           {post.author && (
             <div className="mt-12">
               <AuthorBio author={post.author} />
             </div>
           )}
 
-          {/* CTA */}
-          <div className="mt-12 rounded-2xl bg-navy text-cream p-8 md:p-10 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold">Cần tư vấn cho doanh nghiệp của bạn?</h2>
-            <p className="mt-3 text-cream/80 max-w-xl mx-auto">
+          {/* CTA block — navy, sharp, no rounded */}
+          <div className="mt-12 bg-navy text-cream p-8 md:p-10 text-center">
+            <Eyebrow color="cream" className="mb-4">Tư vấn cá nhân</Eyebrow>
+            <h2 className="font-heading text-headline-md text-cream">Cần tư vấn cho doanh nghiệp của bạn?</h2>
+            <p className="mt-3 text-body-md text-cream/80 max-w-xl mx-auto">
               Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí. Đặt lịch ngay hôm nay.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
@@ -272,12 +273,12 @@ export default async function PostPage({ params }: Props) {
         </Container>
       </article>
 
-      {/* Related */}
+      {/* Related articles */}
       {related && related.length > 0 && (
-        <Section bg="cream-100" spacing="md">
+        <Section bg="cream-100" spacing="md" hairlineTop>
           <Container size="lg">
-            <Eyebrow>BÀI VIẾT LIÊN QUAN</Eyebrow>
-            <h2 className="mt-3 text-2xl md:text-3xl font-bold mb-8">Cùng chủ đề</h2>
+            <Eyebrow color="gold" className="mb-3">BÀI VIẾT LIÊN QUAN</Eyebrow>
+            <h2 className="font-heading text-headline-md text-navy mb-8">Cùng chủ đề</h2>
             <RelatedArticles posts={related} />
           </Container>
         </Section>

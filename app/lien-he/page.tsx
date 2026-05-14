@@ -21,13 +21,13 @@ export default function ContactPage() {
     <>
       {/* Hero */}
       <Section bg="cream" spacing="md">
-        <Container size="lg">
+        <Container size="default">
           <div className="max-w-2xl">
-            <Eyebrow>LIÊN HỆ</Eyebrow>
-            <h1 className="mt-3 text-4xl md:text-5xl font-bold leading-tight text-balance">
+            <Eyebrow color="gold" className="mb-4">LIÊN HỆ</Eyebrow>
+            <h1 className="font-heading text-headline-lg text-navy leading-tight mt-3">
               Bắt đầu cuộc trò chuyện với NHN&D
             </h1>
-            <p className="mt-5 text-lg text-navy/75 leading-relaxed text-pretty">
+            <p className="mt-5 text-body-lg text-navy/75 leading-relaxed text-pretty">
               Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí. Hãy chia sẻ với chúng tôi
               về tình huống và mục tiêu của doanh nghiệp — chúng tôi sẽ phản hồi trong vòng
               4 giờ làm việc.
@@ -38,24 +38,25 @@ export default function ContactPage() {
 
       {/* Form + Info */}
       <Section bg="cream" spacing="md" className="!pt-0">
-        <Container size="lg">
+        <Container size="default">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            <div className="lg:col-span-7 rounded-xl bg-white border border-cream-300 p-6 md:p-8 lg:p-10 shadow-sm">
-              <h2 className="text-2xl font-bold text-navy mb-2">Gửi yêu cầu tư vấn</h2>
-              <p className="text-navy/70 mb-6">
+            {/* Form panel — flat, hairline top only */}
+            <div className="lg:col-span-7 border-t-hairline border-gold pt-8">
+              <h2 className="font-heading text-headline-sm text-navy mb-2">Gửi yêu cầu tư vấn</h2>
+              <p className="text-body-md text-navy/70 mb-8">
                 Vui lòng cung cấp thông tin để chúng tôi phục vụ tốt nhất.
               </p>
               <ContactForm source="lien-he" />
             </div>
 
-            <aside className="lg:col-span-5 space-y-6">
+            <aside className="lg:col-span-5 space-y-8">
               <OfficeInfo />
 
-              {/* Booking CTA */}
-              <div className="rounded-lg bg-navy text-cream p-6 lg:p-8">
-                <Calendar className="size-8 text-gold mb-4" aria-hidden />
-                <h3 className="text-xl font-bold mb-2">Hoặc đặt lịch online</h3>
-                <p className="text-cream/80 text-sm leading-relaxed mb-5">
+              {/* Booking CTA — flat navy block */}
+              <div className="bg-navy text-cream p-6 lg:p-8">
+                <Calendar className="size-6 text-gold mb-4" aria-hidden />
+                <h3 className="font-heading text-headline-sm text-cream mb-2">Hoặc đặt lịch online</h3>
+                <p className="text-body-sm text-cream/80 leading-relaxed mb-6">
                   Chọn slot phù hợp với bạn. Anh Ngọc sẽ confirm và gửi link Zoom/Meet
                   trong 4 giờ.
                 </p>
@@ -73,8 +74,8 @@ export default function ContactPage() {
 
       {/* Map */}
       <Section bg="cream" spacing="sm" className="!pt-0">
-        <Container size="lg">
-          <div className="rounded-xl overflow-hidden border border-cream-300 bg-cream-200">
+        <Container size="default">
+          <div className="overflow-hidden border-t-hairline border-gold bg-cream-200">
             <iframe
               title="Bản đồ văn phòng NHN&D Tax Advisory"
               src="https://www.openstreetmap.org/export/embed.html?bbox=105.8342%2C21.0285%2C105.8542%2C21.0385&layer=mapnik&marker=21.0335%2C105.8442"
@@ -87,33 +88,35 @@ export default function ContactPage() {
       </Section>
 
       {/* FAQ */}
-      <Section bg="cream-100" spacing="md">
-        <Container size="md">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <Eyebrow>CÂU HỎI THƯỜNG GẶP</Eyebrow>
-            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-balance">
+      <Section bg="cream-100" spacing="md" hairlineTop>
+        <Container size="narrow">
+          <div className="mb-10">
+            <Eyebrow color="gold" className="mb-3">CÂU HỎI THƯỜNG GẶP</Eyebrow>
+            <h2 className="font-heading text-headline-md text-navy mt-3">
               Trước khi bạn liên hệ
             </h2>
           </div>
 
-          <Accordion.Root type="single" collapsible className="bg-white rounded-xl border border-cream-300 px-6 md:px-8">
+          <Accordion.Root type="single" collapsible>
             {FAQ_CONTACT.map((item, idx) => (
               <Accordion.Item
                 key={idx}
                 value={`faq-${idx}`}
-                className="border-b border-cream-200 last:border-b-0"
+                className="border-b border-cream-300 last:border-b-0"
               >
                 <Accordion.Header>
-                  <Accordion.Trigger className="flex w-full items-start justify-between py-5 text-left font-semibold text-navy hover:text-gold-700 transition group min-h-[44px]">
-                    <span className="text-base md:text-lg pr-6">{item.q}</span>
+                  <Accordion.Trigger className="flex w-full items-start justify-between py-5 text-left group min-h-[44px]">
+                    <span className="text-body-md text-navy font-semibold pr-6 group-data-[state=open]:text-gold-700 transition-colors">
+                      {item.q}
+                    </span>
                     <ChevronDown
-                      className="size-5 shrink-0 mt-1 transition-transform group-data-[state=open]:rotate-180"
+                      className="size-5 shrink-0 mt-1 text-gold transition-transform group-data-[state=open]:rotate-180"
                       aria-hidden
                     />
                   </Accordion.Trigger>
                 </Accordion.Header>
                 <Accordion.Content className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-                  <div className="pb-5 text-navy/80 leading-relaxed">{item.a}</div>
+                  <div className="pb-5 text-body-md text-navy/80 leading-relaxed">{item.a}</div>
                 </Accordion.Content>
               </Accordion.Item>
             ))}

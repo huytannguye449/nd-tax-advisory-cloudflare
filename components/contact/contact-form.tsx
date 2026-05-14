@@ -59,10 +59,10 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
 
   if (submitState === "success") {
     return (
-      <div className="rounded-lg border border-gold-300 bg-gold-50 p-8 text-center">
+      <div className="border-t-hairline border-gold pt-8 text-center">
         <CheckCircle2 className="mx-auto size-12 text-gold-700" aria-hidden />
-        <h3 className="mt-4 text-2xl font-bold text-navy">Cảm ơn bạn đã liên hệ</h3>
-        <p className="mt-3 text-navy/80 max-w-md mx-auto">
+        <h3 className="mt-4 font-heading text-headline-sm text-navy">Cảm ơn bạn đã liên hệ</h3>
+        <p className="mt-3 text-body-md text-navy/80 max-w-md mx-auto leading-relaxed">
           Chúng tôi đã nhận được yêu cầu của bạn và sẽ phản hồi qua email trong vòng 4 giờ
           làm việc. Vui lòng kiểm tra hộp thư.
         </p>
@@ -78,7 +78,7 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
       <Field label="Họ và tên" required error={errors.full_name?.message}>
         <input
           {...register("full_name")}
@@ -89,7 +89,7 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
         />
       </Field>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <Field label="Email" required error={errors.email?.message}>
           <input
             {...register("email")}
@@ -110,7 +110,7 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
         </Field>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <Field label="Tên công ty">
           <input
             {...register("company")}
@@ -133,11 +133,11 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
       </div>
 
       <Field label="Dịch vụ quan tâm">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
           {SERVICES.map((s) => (
             <label
               key={s.slug}
-              className="flex items-start gap-3 rounded-md border border-cream-300 bg-white p-3 cursor-pointer hover:border-gold transition"
+              className="flex items-start gap-3 border-t border-cream-300 pt-3 cursor-pointer hover:border-gold transition"
             >
               <input
                 type="checkbox"
@@ -145,7 +145,7 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
                 {...register("services")}
                 className="mt-0.5 size-4 accent-navy"
               />
-              <span className="text-sm text-navy">{s.title}</span>
+              <span className="text-body-sm text-navy">{s.title}</span>
             </label>
           ))}
         </div>
@@ -160,7 +160,7 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
         />
       </Field>
 
-      <label className="flex items-start gap-3 text-sm text-navy/80 cursor-pointer">
+      <label className="flex items-start gap-3 text-body-sm text-navy/80 cursor-pointer">
         <input
           type="checkbox"
           {...register("consent")}
@@ -179,13 +179,13 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
         </span>
       </label>
       {errors.consent && (
-        <p className="text-sm text-red-600">{errors.consent.message}</p>
+        <p className="text-body-sm text-red-600">{errors.consent.message}</p>
       )}
 
       <Turnstile onToken={setTurnstileToken} />
 
       {submitState === "error" && (
-        <div className="flex items-start gap-2 rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-800">
+        <div className="flex items-start gap-2 border border-red-200 bg-red-50 p-3 text-body-sm text-red-800">
           <AlertCircle className="size-4 mt-0.5 shrink-0" />
           <span>{errorMsg}</span>
         </div>
@@ -203,8 +203,9 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
   );
 }
 
+// Bottom-border only input — DESIGN.md pattern
 const inputCls =
-  "w-full rounded-md border border-cream-300 bg-white px-4 py-3 text-base text-navy placeholder:text-navy/40 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 transition min-h-[48px]";
+  "w-full bg-transparent border-0 border-b border-navy text-body-md text-navy placeholder:text-navy/40 py-3 px-0 focus:outline-none focus:border-gold transition-colors duration-150 min-h-[48px]";
 
 function Field({
   label,
@@ -219,13 +220,13 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-navy mb-1.5">
+      <label className="block text-label-caps text-navy/70 uppercase tracking-[0.1em] mb-2">
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="text-gold ml-1">*</span>}
       </label>
       {children}
       {error && (
-        <p className={cn("mt-1 text-sm text-red-600 flex items-center gap-1")}>
+        <p className={cn("mt-1 text-body-sm text-red-600 flex items-center gap-1")}>
           <AlertCircle className="size-3.5" aria-hidden />
           {error}
         </p>

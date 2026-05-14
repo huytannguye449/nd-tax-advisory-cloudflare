@@ -4,11 +4,11 @@ import type { MDXComponents } from "mdx/types";
 import { cn } from "@/lib/utils";
 
 export const mdxComponents: MDXComponents = {
-  // Headings with anchor links
+  // Headings — Playfair via font-heading, token classes
   h1: ({ className, ...props }) => (
     <h1
       className={cn(
-        "mt-10 mb-4 scroll-mt-24 text-3xl font-bold text-navy leading-tight",
+        "mt-10 mb-4 scroll-mt-24 font-heading text-headline-lg text-navy leading-tight",
         className,
       )}
       {...props}
@@ -18,8 +18,8 @@ export const mdxComponents: MDXComponents = {
     <h2
       id={id}
       className={cn(
-        "group mt-10 mb-4 scroll-mt-24 text-2xl font-bold text-navy leading-snug",
-        "border-b border-cream-200 pb-2",
+        "group mt-10 mb-4 scroll-mt-24 font-heading text-headline-md text-navy leading-snug",
+        "border-b border-data-row pb-2",
         className,
       )}
       {...props}
@@ -30,7 +30,7 @@ export const mdxComponents: MDXComponents = {
   h3: ({ className, ...props }) => (
     <h3
       className={cn(
-        "mt-8 mb-3 scroll-mt-24 text-xl font-bold text-navy leading-snug",
+        "mt-8 mb-3 scroll-mt-24 font-heading text-headline-sm text-navy leading-snug",
         className,
       )}
       {...props}
@@ -38,53 +38,53 @@ export const mdxComponents: MDXComponents = {
   ),
   h4: ({ className, ...props }) => (
     <h4
-      className={cn("mt-6 mb-2 scroll-mt-24 text-lg font-semibold text-navy", className)}
+      className={cn("mt-6 mb-2 scroll-mt-24 font-heading text-headline-sm text-navy", className)}
       {...props}
     />
   ),
 
-  // Paragraph
+  // Paragraph — body-lg Inter
   p: ({ className, ...props }) => (
     <p
-      className={cn("my-4 leading-relaxed text-navy/80 text-base md:text-[17px]", className)}
+      className={cn("my-4 leading-relaxed text-body-lg text-navy/80", className)}
       {...props}
     />
   ),
 
-  // Blockquote — styled as callout box
+  // Blockquote — Playfair italic, gold-700, left gold border (no rounded, no bg)
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        "my-6 rounded-r-lg border-l-4 border-gold-500 bg-gold-50 px-5 py-4",
-        "text-navy/80 [&>p]:my-0 [&>p]:leading-relaxed",
+        "my-6 border-l-2 border-gold pl-6",
+        "text-quote text-gold-700 [&>p]:my-0 [&>p]:leading-relaxed",
         className,
       )}
       {...props}
     />
   ),
 
-  // Lists
+  // Lists — body-lg
   ul: ({ className, ...props }) => (
     <ul
-      className={cn("my-4 ml-6 list-disc space-y-1.5 text-navy/80", className)}
+      className={cn("my-4 ml-6 list-disc space-y-1.5 text-body-lg text-navy/80", className)}
       {...props}
     />
   ),
   ol: ({ className, ...props }) => (
     <ol
-      className={cn("my-4 ml-6 list-decimal space-y-1.5 text-navy/80", className)}
+      className={cn("my-4 ml-6 list-decimal space-y-1.5 text-body-lg text-navy/80", className)}
       {...props}
     />
   ),
   li: ({ className, ...props }) => (
-    <li className={cn("leading-relaxed text-base", className)} {...props} />
+    <li className={cn("leading-relaxed text-body-lg", className)} {...props} />
   ),
 
-  // Table
+  // Table — sharp, hairline borders
   table: ({ className, ...props }) => (
-    <div className="my-6 w-full overflow-x-auto rounded-lg border border-cream-200">
+    <div className="my-6 w-full overflow-x-auto border border-cream-200">
       <table
-        className={cn("w-full border-collapse text-sm", className)}
+        className={cn("w-full border-collapse text-body-sm", className)}
         {...props}
       />
     </div>
@@ -94,14 +94,14 @@ export const mdxComponents: MDXComponents = {
   ),
   th: ({ className, ...props }) => (
     <th
-      className={cn("px-4 py-3 text-left font-semibold tracking-wide text-sm", className)}
+      className={cn("px-4 py-3 text-left text-label-caps tracking-wide", className)}
       {...props}
     />
   ),
   td: ({ className, ...props }) => (
     <td
       className={cn(
-        "px-4 py-3 border-b border-cream-200 text-navy/80 align-top",
+        "px-4 py-3 border-b border-data-row text-navy/80 align-top",
         className,
       )}
       {...props}
@@ -109,31 +109,31 @@ export const mdxComponents: MDXComponents = {
   ),
   tr: ({ className, ...props }) => (
     <tr
-      className={cn("even:bg-cream-50 transition-colors hover:bg-gold-50/50", className)}
+      className={cn("even:bg-cream-50 transition-colors hover:bg-gold/5", className)}
       {...props}
     />
   ),
 
-  // Horizontal rule
+  // Horizontal rule — gold hairline
   hr: ({ className, ...props }) => (
-    <hr className={cn("my-8 border-cream-200", className)} {...props} />
+    <hr className={cn("hr-gold my-8", className)} {...props} />
   ),
 
-  // Code
+  // Inline code — no rounded
   code: ({ className, ...props }) => (
     <code
       className={cn(
-        "rounded bg-navy/5 px-1.5 py-0.5 font-mono text-sm text-navy-700",
-        "border border-navy/10",
+        "bg-cream-200 px-1.5 py-0.5 text-[0.9em] font-mono text-navy border border-navy/10",
         className,
       )}
       {...props}
     />
   ),
+  // Code block — navy bg, no rounded
   pre: ({ className, ...props }) => (
     <pre
       className={cn(
-        "my-6 overflow-x-auto rounded-lg bg-navy-900 p-5 text-sm text-cream",
+        "my-6 overflow-x-auto bg-navy p-4 text-body-sm text-cream font-mono",
         "[&>code]:bg-transparent [&>code]:border-0 [&>code]:text-cream",
         className,
       )}
@@ -141,7 +141,7 @@ export const mdxComponents: MDXComponents = {
     />
   ),
 
-  // Links
+  // Links — navy underline, gold decoration
   a: ({ className, href, ...props }) => {
     const isExternal = href?.startsWith("http");
     if (isExternal) {
@@ -150,7 +150,7 @@ export const mdxComponents: MDXComponents = {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className={cn("text-gold-700 underline decoration-gold/40 hover:decoration-gold transition-colors", className)}
+          className={cn("text-navy underline decoration-gold underline-offset-4 hover:text-gold-700 transition-colors", className)}
           {...props}
         />
       );
@@ -158,7 +158,7 @@ export const mdxComponents: MDXComponents = {
     return (
       <Link
         href={href ?? "#"}
-        className={cn("text-gold-700 underline decoration-gold/40 hover:decoration-gold transition-colors", className)}
+        className={cn("text-navy underline decoration-gold underline-offset-4 hover:text-gold-700 transition-colors", className)}
         {...props}
       />
     );
@@ -172,7 +172,7 @@ export const mdxComponents: MDXComponents = {
     <em className={cn("italic text-navy/90", className)} {...props} />
   ),
 
-  // Image
+  // Image — no rounded, no shadow
   img: ({ src, alt, className, ...props }) => {
     if (!src) return null;
     return (
@@ -182,11 +182,11 @@ export const mdxComponents: MDXComponents = {
           alt={alt ?? ""}
           width={1200}
           height={675}
-          className={cn("w-full rounded-lg object-cover", className)}
+          className={cn("w-full object-cover", className)}
           {...(props as object)}
         />
         {alt && (
-          <span className="mt-2 block text-center text-xs text-navy/50 italic">{alt}</span>
+          <span className="mt-2 block text-center text-body-sm text-navy/50 italic">{alt}</span>
         )}
       </span>
     );

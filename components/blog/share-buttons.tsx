@@ -35,21 +35,22 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
     }
   }
 
+  // Outline navy sharp buttons — hover gold
   const btnBase = cn(
-    "inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium",
-    "border border-cream-200 bg-white transition-all hover:border-navy/30 hover:shadow-sm",
+    "inline-flex items-center gap-2 px-3 py-2 text-body-sm font-medium",
+    "border border-navy/20 bg-transparent text-navy transition-all hover:border-gold hover:text-gold-700",
     "min-h-[40px]",
   );
 
   return (
     <div className="flex items-center gap-2 flex-wrap" role="group" aria-label="Chia sẻ bài viết">
-      <span className="text-sm text-navy/50 mr-1">Chia sẻ:</span>
+      <span className="text-body-sm text-navy/50 mr-1">Chia sẻ:</span>
 
       <a
         href={`https://www.facebook.com/sharer/sharer.php?u=${encoded.url}`}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(btnBase, "text-[#1877F2]")}
+        className={btnBase}
         aria-label="Chia sẻ lên Facebook"
       >
         <Facebook className="size-4" aria-hidden="true" />
@@ -60,7 +61,7 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encoded.url}`}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(btnBase, "text-[#0A66C2]")}
+        className={btnBase}
         aria-label="Chia sẻ lên LinkedIn"
       >
         <Linkedin className="size-4" aria-hidden="true" />
@@ -71,7 +72,7 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
         onClick={handleCopy}
         className={cn(
           btnBase,
-          copied ? "text-green-600 border-green-200 bg-green-50" : "text-navy/70",
+          copied ? "border-gold text-gold-700 bg-gold/5" : "",
         )}
         aria-label={copied ? "Đã sao chép liên kết" : "Sao chép liên kết"}
       >

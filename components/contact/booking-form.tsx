@@ -98,80 +98,80 @@ export function BookingForm() {
 
   if (submitState === "success") {
     return (
-      <div className="rounded-xl border border-gold-300 bg-gold-50 p-8 md:p-10 text-center">
+      <div className="border-t-hairline border-gold pt-10 text-center">
         <CheckCircle2 className="mx-auto size-14 text-gold-700" aria-hidden />
-        <h2 className="mt-5 text-2xl md:text-3xl font-bold text-navy">Đã ghi nhận lịch hẹn</h2>
-        <p className="mt-3 text-navy/80 max-w-lg mx-auto leading-relaxed">
+        <h2 className="mt-5 font-heading text-headline-sm text-navy">Đã ghi nhận lịch hẹn</h2>
+        <p className="mt-3 text-body-md text-navy/80 max-w-lg mx-auto leading-relaxed">
           Cảm ơn bạn. Chúng tôi đã gửi email xác nhận kèm file lịch (.ics).
           Anh Ngọc sẽ confirm slot và gửi link Zoom/Meet (nếu chọn online) trong vòng 4 giờ làm việc.
         </p>
         {bookingId && (
-          <p className="mt-4 text-sm text-navy/50">Mã đặt lịch: <code className="font-mono">{bookingId.slice(0, 8)}</code></p>
+          <p className="mt-4 text-body-sm text-navy/50">Mã đặt lịch: <code className="font-mono">{bookingId.slice(0, 8)}</code></p>
         )}
       </div>
     );
   }
 
   return (
-    <div className="rounded-xl bg-white border border-cream-300 shadow-sm">
-      {/* Progress */}
-      <div className="px-6 md:px-8 pt-6 pb-4 border-b border-cream-200">
-        <div className="flex items-center justify-between text-sm">
+    <div className="border-t-hairline border-gold">
+      {/* Progress indicator — hairline tabs */}
+      <div className="py-5 border-b border-cream-300">
+        <div className="flex items-center gap-0">
           {[1, 2, 3].map((s) => (
             <div key={s} className="flex items-center gap-2 flex-1">
               <span
                 className={cn(
-                  "size-8 rounded-full flex items-center justify-center font-bold text-sm transition",
+                  "size-8 flex items-center justify-center font-bold text-label-caps transition",
                   step >= s ? "bg-navy text-cream" : "bg-cream-200 text-navy/40",
                 )}
               >
                 {s}
               </span>
-              <span className={cn("hidden sm:block", step >= s ? "text-navy font-medium" : "text-navy/40")}>
+              <span className={cn("hidden sm:block text-body-sm transition", step >= s ? "text-navy font-semibold" : "text-navy/40")}>
                 {s === 1 ? "Dịch vụ" : s === 2 ? "Thời gian" : "Thông tin"}
               </span>
-              {s < 3 && <span className="flex-1 h-px bg-cream-200" />}
+              {s < 3 && <span className="flex-1 h-px bg-cream-300 mx-2" />}
             </div>
           ))}
         </div>
       </div>
 
-      <div className="p-6 md:p-8 lg:p-10">
+      <div className="pt-8">
         {/* Step 1: Service */}
         {step === 1 && (
           <div>
-            <h2 className="text-xl md:text-2xl font-bold text-navy mb-2">Chọn dịch vụ</h2>
-            <p className="text-navy/65 mb-6">Bạn muốn tư vấn về vấn đề nào?</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <h2 className="font-heading text-headline-sm text-navy mb-2">Chọn dịch vụ</h2>
+            <p className="text-body-md text-navy/65 mb-8">Bạn muốn tư vấn về vấn đề nào?</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[var(--spacing-gutter)]">
               {SERVICES.map((s) => (
                 <button
                   key={s.slug}
                   type="button"
                   onClick={() => setService(s.title)}
                   className={cn(
-                    "text-left p-4 rounded-lg border-2 transition min-h-[44px]",
+                    "text-left border-t-hairline pt-4 transition min-h-[44px]",
                     service === s.title
-                      ? "border-gold bg-gold/5"
-                      : "border-cream-300 hover:border-gold/50",
+                      ? "border-gold"
+                      : "border-cream-300 hover:border-gold/60",
                   )}
                 >
-                  <span className="block font-semibold text-navy">{s.title}</span>
-                  <span className="block text-xs text-navy/60 mt-1">{s.short}</span>
+                  <span className="block text-body-md text-navy font-semibold">{s.title}</span>
+                  <span className="block text-body-sm text-navy/60 mt-1">{s.short}</span>
                 </button>
               ))}
               <button
                 type="button"
                 onClick={() => setService("Khác")}
                 className={cn(
-                  "text-left p-4 rounded-lg border-2 transition min-h-[44px]",
-                  service === "Khác" ? "border-gold bg-gold/5" : "border-cream-300 hover:border-gold/50",
+                  "text-left border-t-hairline pt-4 transition min-h-[44px]",
+                  service === "Khác" ? "border-gold" : "border-cream-300 hover:border-gold/60",
                 )}
               >
-                <span className="block font-semibold text-navy">Vấn đề khác</span>
-                <span className="block text-xs text-navy/60 mt-1">Sẽ trao đổi cụ thể trong buổi tư vấn</span>
+                <span className="block text-body-md text-navy font-semibold">Vấn đề khác</span>
+                <span className="block text-body-sm text-navy/60 mt-1">Sẽ trao đổi cụ thể trong buổi tư vấn</span>
               </button>
             </div>
-            <div className="mt-8 flex justify-end">
+            <div className="mt-10 flex justify-end">
               <Button onClick={() => service && setStep(2)} disabled={!service}>
                 Tiếp tục <ChevronRight className="size-4" />
               </Button>
@@ -182,10 +182,10 @@ export function BookingForm() {
         {/* Step 2: Date + Time */}
         {step === 2 && (
           <div>
-            <h2 className="text-xl md:text-2xl font-bold text-navy mb-2">Chọn thời gian</h2>
-            <p className="text-navy/65 mb-6">Buổi tư vấn 30 phút. Tất cả slots theo giờ Hà Nội (GMT+7).</p>
+            <h2 className="font-heading text-headline-sm text-navy mb-2">Chọn thời gian</h2>
+            <p className="text-body-md text-navy/65 mb-8">Buổi tư vấn 30 phút. Tất cả slots theo giờ Hà Nội (GMT+7).</p>
 
-            <label className="block text-sm font-medium text-navy mb-3 flex items-center gap-2">
+            <label className="block text-label-caps text-navy/70 uppercase tracking-[0.1em] mb-3 flex items-center gap-2">
               <Calendar className="size-4" /> Ngày
             </label>
             <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1">
@@ -197,13 +197,13 @@ export function BookingForm() {
                     type="button"
                     onClick={() => setDate(d)}
                     className={cn(
-                      "shrink-0 flex flex-col items-center justify-center w-16 py-3 rounded-lg border-2 transition",
+                      "shrink-0 flex flex-col items-center justify-center w-16 py-3 border-t-[2px] transition",
                       selected ? "border-gold bg-gold/10 text-navy" : "border-cream-300 text-navy/70 hover:border-gold/50",
                     )}
                   >
-                    <span className="text-xs font-medium">{VI_DAYS[d.getDay()]}</span>
-                    <span className="text-lg font-bold">{d.getDate()}</span>
-                    <span className="text-xs">{VI_MONTHS[d.getMonth()].slice(0, 3)}</span>
+                    <span className="text-label-caps">{VI_DAYS[d.getDay()]}</span>
+                    <span className="text-body-lg font-bold">{d.getDate()}</span>
+                    <span className="text-label-caps">{VI_MONTHS[d.getMonth()].slice(0, 3)}</span>
                   </button>
                 );
               })}
@@ -211,7 +211,7 @@ export function BookingForm() {
 
             {date && (
               <>
-                <label className="block text-sm font-medium text-navy mt-6 mb-3 flex items-center gap-2">
+                <label className="block text-label-caps text-navy/70 uppercase tracking-[0.1em] mt-8 mb-3 flex items-center gap-2">
                   <Clock className="size-4" /> Khung giờ
                 </label>
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
@@ -221,7 +221,7 @@ export function BookingForm() {
                       type="button"
                       onClick={() => setSlot(s)}
                       className={cn(
-                        "py-2.5 rounded-md border text-sm font-medium transition min-h-[44px]",
+                        "py-2.5 border text-body-sm font-medium transition min-h-[44px]",
                         slot === s
                           ? "border-gold bg-gold/10 text-navy"
                           : "border-cream-300 text-navy/70 hover:border-gold/50",
@@ -232,37 +232,37 @@ export function BookingForm() {
                   ))}
                 </div>
 
-                <label className="block text-sm font-medium text-navy mt-6 mb-3">Hình thức</label>
-                <div className="grid grid-cols-2 gap-2">
+                <label className="block text-label-caps text-navy/70 uppercase tracking-[0.1em] mt-8 mb-3">Hình thức</label>
+                <div className="grid grid-cols-2 gap-[var(--spacing-gutter)]">
                   <button
                     type="button"
                     onClick={() => setMeetingType("online")}
                     className={cn(
-                      "p-4 rounded-lg border-2 text-left transition",
-                      meetingType === "online" ? "border-gold bg-gold/5" : "border-cream-300",
+                      "border-t-[2px] pt-4 text-left transition",
+                      meetingType === "online" ? "border-gold" : "border-cream-300 hover:border-gold/50",
                     )}
                   >
-                    <Video className="size-5 mb-1 text-gold-700" />
-                    <span className="block font-semibold text-navy text-sm">Trực tuyến</span>
-                    <span className="block text-xs text-navy/60">Qua Zoom / Google Meet</span>
+                    <Video className="size-5 mb-2 text-gold-700" />
+                    <span className="block text-body-md text-navy font-semibold">Trực tuyến</span>
+                    <span className="block text-body-sm text-navy/60">Qua Zoom / Google Meet</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setMeetingType("offline")}
                     className={cn(
-                      "p-4 rounded-lg border-2 text-left transition",
-                      meetingType === "offline" ? "border-gold bg-gold/5" : "border-cream-300",
+                      "border-t-[2px] pt-4 text-left transition",
+                      meetingType === "offline" ? "border-gold" : "border-cream-300 hover:border-gold/50",
                     )}
                   >
-                    <Building2 className="size-5 mb-1 text-gold-700" />
-                    <span className="block font-semibold text-navy text-sm">Tại văn phòng</span>
-                    <span className="block text-xs text-navy/60">Hà Nội</span>
+                    <Building2 className="size-5 mb-2 text-gold-700" />
+                    <span className="block text-body-md text-navy font-semibold">Tại văn phòng</span>
+                    <span className="block text-body-sm text-navy/60">Hà Nội</span>
                   </button>
                 </div>
               </>
             )}
 
-            <div className="mt-8 flex justify-between">
+            <div className="mt-10 flex justify-between">
               <Button variant="ghost" onClick={() => setStep(1)}>
                 <ChevronLeft className="size-4" /> Quay lại
               </Button>
@@ -275,22 +275,22 @@ export function BookingForm() {
 
         {/* Step 3: Info form */}
         {step === 3 && (
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-            <h2 className="text-xl md:text-2xl font-bold text-navy mb-2">Thông tin liên hệ</h2>
-            <p className="text-navy/65 mb-2">Để chúng tôi gửi confirmation và link họp.</p>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+            <h2 className="font-heading text-headline-sm text-navy mb-2">Thông tin liên hệ</h2>
+            <p className="text-body-md text-navy/65 mb-2">Để chúng tôi gửi confirmation và link họp.</p>
 
-            {/* Summary */}
-            <div className="rounded-lg bg-cream-100 p-4 text-sm border border-cream-300">
-              <div><strong>Dịch vụ:</strong> {service}</div>
-              <div><strong>Thời gian:</strong> {date && date.toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "long", year: "numeric" })} · {slot}</div>
-              <div><strong>Hình thức:</strong> {meetingType === "online" ? "Trực tuyến" : "Tại văn phòng"}</div>
+            {/* Summary — flat cream inset */}
+            <div className="bg-cream-100 p-5 text-body-sm border-l-2 border-gold">
+              <div className="text-navy"><strong>Dịch vụ:</strong> {service}</div>
+              <div className="text-navy mt-1"><strong>Thời gian:</strong> {date && date.toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "long", year: "numeric" })} · {slot}</div>
+              <div className="text-navy mt-1"><strong>Hình thức:</strong> {meetingType === "online" ? "Trực tuyến" : "Tại văn phòng"}</div>
             </div>
 
             <Field label="Họ và tên" required error={errors.full_name?.message}>
               <input {...register("full_name")} type="text" autoComplete="name" className={inputCls} />
             </Field>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Field label="Email" required error={errors.email?.message}>
                 <input {...register("email")} type="email" autoComplete="email" className={inputCls} />
               </Field>
@@ -307,18 +307,18 @@ export function BookingForm() {
               <textarea {...register("message")} rows={3} className={inputCls} placeholder="Chia sẻ thêm về tình huống bạn muốn thảo luận (không bắt buộc)" />
             </Field>
 
-            <label className="flex items-start gap-3 text-sm text-navy/80 cursor-pointer">
+            <label className="flex items-start gap-3 text-body-sm text-navy/80 cursor-pointer">
               <input type="checkbox" {...register("consent")} className="mt-0.5 size-4 accent-navy" />
               <span>
                 Tôi đồng ý với <a href="/dieu-khoan" className="text-gold-700 underline">Điều khoản</a> và <a href="/chinh-sach-bao-mat" className="text-gold-700 underline">Chính sách bảo mật</a>.
               </span>
             </label>
-            {errors.consent && <p className="text-sm text-red-600">{errors.consent.message}</p>}
+            {errors.consent && <p className="text-body-sm text-red-600">{errors.consent.message}</p>}
 
             <Turnstile onToken={setTurnstileToken} />
 
             {submitState === "error" && (
-              <div className="flex items-start gap-2 rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-800">
+              <div className="flex items-start gap-2 border border-red-200 bg-red-50 p-3 text-body-sm text-red-800">
                 <AlertCircle className="size-4 mt-0.5 shrink-0" />
                 <span>{errorMsg}</span>
               </div>
@@ -339,17 +339,18 @@ export function BookingForm() {
   );
 }
 
+// Bottom-border only — DESIGN.md pattern
 const inputCls =
-  "w-full rounded-md border border-cream-300 bg-white px-4 py-3 text-base text-navy placeholder:text-navy/40 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 transition min-h-[48px]";
+  "w-full bg-transparent border-0 border-b border-navy text-body-md text-navy placeholder:text-navy/40 py-3 px-0 focus:outline-none focus:border-gold transition-colors duration-150 min-h-[48px]";
 
 function Field({ label, required, error, children }: { label: string; required?: boolean; error?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-navy mb-1.5">
-        {label}{required && <span className="text-red-500 ml-1">*</span>}
+      <label className="block text-label-caps text-navy/70 uppercase tracking-[0.1em] mb-2">
+        {label}{required && <span className="text-gold ml-1">*</span>}
       </label>
       {children}
-      {error && <p className="mt-1 text-sm text-red-600 flex items-center gap-1"><AlertCircle className="size-3.5" aria-hidden />{error}</p>}
+      {error && <p className="mt-1 text-body-sm text-red-600 flex items-center gap-1"><AlertCircle className="size-3.5" aria-hidden />{error}</p>}
     </div>
   );
 }

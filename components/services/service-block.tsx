@@ -37,6 +37,8 @@ const SERVICE_IMAGE_ALTS: Record<string, string> = {
   "dao-tao": "Buổi đào tạo kế toán và thuế doanh nghiệp",
 };
 
+const SERVICE_NUMBERS = ["01", "02", "03", "04"];
+
 interface ServiceBlockProps {
   service: Service;
   idx: number;
@@ -53,44 +55,46 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
   return (
     <section
       id={service.slug}
-      className={`${bgClass} py-16 md:py-24 scroll-mt-20`}
+      className={`${bgClass} py-[var(--spacing-section-md)] border-t-hairline border-gold scroll-mt-20`}
       aria-labelledby={`service-heading-${service.slug}`}
     >
-      <Container size="xl">
+      <Container size="default">
         <div
-          className={`flex flex-col gap-12 lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center ${
+          className={`flex flex-col gap-[var(--spacing-gutter)] lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center ${
             imageFirst ? "lg:flex-row-reverse" : ""
           }`}
         >
           {/* Text side */}
           <div className={imageFirst ? "lg:order-1" : ""}>
-            <div className="flex items-center gap-2 mb-4">
-              <Eyebrow color="gold">{icon}</Eyebrow>
-              <Eyebrow color="gold">{service.short.split(",")[0]}</Eyebrow>
+            <div className="flex items-center gap-3 mb-4">
+              <Eyebrow color="gold">
+                {SERVICE_NUMBERS[idx] ?? `0${idx + 1}`}
+              </Eyebrow>
+              <span className="text-gold" aria-hidden="true">{icon}</span>
             </div>
             <h2
               id={`service-heading-${service.slug}`}
-              className="font-heading text-3xl md:text-4xl font-bold text-navy mb-3"
+              className="font-heading text-headline-md text-navy mb-3"
             >
               {service.title}
             </h2>
-            <p className="text-gold-700 italic text-lg mb-6 leading-relaxed">
+            <p className="text-body-lg text-gold-700 italic mb-6 leading-relaxed">
               {service.short}
             </p>
-            <p className="text-navy/80 leading-relaxed mb-10">
+            <p className="text-body-md text-navy/80 leading-relaxed mb-10">
               {service.description}
             </p>
 
-            {/* Sub-cards grid */}
-            <div className="grid gap-6 sm:grid-cols-2 mb-10">
+            {/* Data panels — hairline top, no card bg/shadow */}
+            <div className="grid gap-[var(--spacing-gutter)] sm:grid-cols-2 mb-10">
               {/* Khi nào cần */}
-              <div className="bg-white rounded-lg p-5 border border-cream-300">
-                <h3 className="font-semibold text-navy mb-3 text-sm uppercase tracking-wider">
+              <div className="border-t-hairline border-gold pt-5">
+                <h3 className="text-label-caps text-navy uppercase tracking-[0.1em] mb-4">
                   Khi nào doanh nghiệp cần
                 </h3>
                 <ul className="space-y-2">
                   {service.when.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-navy/80">
+                    <li key={i} className="flex items-start gap-2 text-body-sm text-navy/80">
                       <CheckCircle2
                         className="size-4 text-gold-600 shrink-0 mt-0.5"
                         aria-hidden="true"
@@ -102,15 +106,15 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
               </div>
 
               {/* Quy trình */}
-              <div className="bg-white rounded-lg p-5 border border-cream-300">
-                <h3 className="font-semibold text-navy mb-3 text-sm uppercase tracking-wider">
+              <div className="border-t-hairline border-gold pt-5">
+                <h3 className="text-label-caps text-navy uppercase tracking-[0.1em] mb-4">
                   Quy trình triển khai
                 </h3>
                 <ol className="space-y-2">
                   {service.process.map((step, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-navy/80">
+                    <li key={i} className="flex items-start gap-2.5 text-body-sm text-navy/80">
                       <span
-                        className="size-6 rounded-full bg-navy text-cream flex items-center justify-center text-xs font-semibold shrink-0"
+                        className="size-6 bg-navy text-cream flex items-center justify-center text-xs font-semibold shrink-0"
                         aria-hidden="true"
                       >
                         {i + 1}
@@ -122,13 +126,13 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
               </div>
 
               {/* Sản phẩm bàn giao */}
-              <div className="bg-white rounded-lg p-5 border border-cream-300">
-                <h3 className="font-semibold text-navy mb-3 text-sm uppercase tracking-wider">
+              <div className="border-t-hairline border-gold pt-5">
+                <h3 className="text-label-caps text-navy uppercase tracking-[0.1em] mb-4">
                   Sản phẩm bàn giao
                 </h3>
                 <ul className="space-y-2">
                   {service.deliverables.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-navy/80">
+                    <li key={i} className="flex items-start gap-2 text-body-sm text-navy/80">
                       <CheckCircle2
                         className="size-4 text-gold-600 shrink-0 mt-0.5"
                         aria-hidden="true"
@@ -140,12 +144,12 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
               </div>
 
               {/* Phí tham khảo */}
-              <div className="bg-gold-50 rounded-lg p-5 border border-cream-200">
-                <h3 className="font-semibold text-navy mb-3 text-sm uppercase tracking-wider">
+              <div className="border-t-hairline border-gold pt-5">
+                <h3 className="text-label-caps text-navy uppercase tracking-[0.1em] mb-4">
                   Phí tham khảo
                 </h3>
-                <p className="text-navy font-semibold text-base">{service.pricing}</p>
-                <p className="text-navy/60 text-xs mt-1.5">
+                <p className="text-body-md text-navy font-semibold">{service.pricing}</p>
+                <p className="text-label-caps text-navy/60 mt-1.5">
                   * Báo giá chính xác sau buổi tư vấn miễn phí đầu tiên
                 </p>
               </div>
@@ -158,7 +162,7 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
 
           {/* Image side */}
           <div className={`relative ${imageFirst ? "lg:order-0" : ""}`}>
-            <div className="relative rounded-xl overflow-hidden shadow-lg aspect-[3/2]">
+            <div className="overflow-hidden aspect-[3/2]">
               <Image
                 src={imageUrl}
                 alt={imageAlt}

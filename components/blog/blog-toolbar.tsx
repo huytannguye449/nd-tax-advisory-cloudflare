@@ -64,8 +64,8 @@ export function BlogToolbar({ categories, currentQ = "", currentCategory = "" }:
   const hasFilters = currentQ || currentCategory;
 
   return (
-    <div className="flex flex-col gap-4 py-4">
-      {/* Search input */}
+    <div className="flex flex-col gap-4 py-4 border-t-hairline border-gold">
+      {/* Search input — sharp corners, hairline border */}
       <div className="relative max-w-lg">
         <label htmlFor="blog-search" className="sr-only">
           Tìm kiếm bài viết
@@ -80,14 +80,13 @@ export function BlogToolbar({ categories, currentQ = "", currentCategory = "" }:
           defaultValue={currentQ}
           onChange={(e) => {
             const value = e.target.value;
-            // Debounce using a simple approach with useTransition
             const timer = setTimeout(() => handleSearch(value), 300);
             return () => clearTimeout(timer);
           }}
           placeholder="Tìm kiếm bài viết…"
           className={cn(
-            "w-full rounded-lg border border-cream-200 bg-white py-2.5 pl-10 pr-4 text-sm text-navy",
-            "placeholder:text-navy/40 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent",
+            "w-full border border-cream-300 bg-white py-2.5 pl-10 pr-4 text-body-sm text-navy",
+            "placeholder:text-navy/40 focus:outline-none focus:ring-1 focus:ring-gold focus:border-gold",
             "min-h-[44px] transition-colors",
             isPending && "opacity-70",
           )}
@@ -96,15 +95,15 @@ export function BlogToolbar({ categories, currentQ = "", currentCategory = "" }:
         />
       </div>
 
-      {/* Category filter chips + clear */}
+      {/* Category filter chips — label-caps, sharp, navy/gold active */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar flex-wrap">
         <button
           onClick={() => handleCategory("")}
           className={cn(
-            "shrink-0 rounded-full px-4 py-1.5 text-sm font-medium transition-colors border min-h-[36px]",
+            "shrink-0 px-4 py-1.5 text-label-caps transition-colors border min-h-[36px]",
             !currentCategory
               ? "bg-navy text-cream border-navy"
-              : "bg-white text-navy/70 border-cream-200 hover:border-navy/30 hover:text-navy",
+              : "bg-white text-navy/70 border-cream-300 hover:border-navy/30 hover:text-navy",
           )}
           aria-pressed={!currentCategory}
         >
@@ -116,10 +115,10 @@ export function BlogToolbar({ categories, currentQ = "", currentCategory = "" }:
             key={cat.id}
             onClick={() => handleCategory(cat.slug)}
             className={cn(
-              "shrink-0 rounded-full px-4 py-1.5 text-sm font-medium transition-colors border min-h-[36px]",
+              "shrink-0 px-4 py-1.5 text-label-caps transition-colors border min-h-[36px]",
               currentCategory === cat.slug
                 ? "bg-navy text-cream border-navy"
-                : "bg-white text-navy/70 border-cream-200 hover:border-navy/30 hover:text-navy",
+                : "bg-white text-navy/70 border-cream-300 hover:border-navy/30 hover:text-navy",
             )}
             aria-pressed={currentCategory === cat.slug}
           >
@@ -130,7 +129,7 @@ export function BlogToolbar({ categories, currentQ = "", currentCategory = "" }:
         {hasFilters && (
           <button
             onClick={handleClear}
-            className="shrink-0 flex items-center gap-1 rounded-full px-3 py-1.5 text-sm text-navy/50 hover:text-navy border border-transparent hover:border-cream-200 transition-colors min-h-[36px] ml-2"
+            className="shrink-0 flex items-center gap-1 px-3 py-1.5 text-body-sm text-navy/50 hover:text-navy border border-transparent hover:border-cream-300 transition-colors min-h-[36px] ml-2"
             aria-label="Xóa bộ lọc"
           >
             <X className="size-3.5" aria-hidden="true" />

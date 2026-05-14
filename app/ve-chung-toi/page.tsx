@@ -21,23 +21,23 @@ export default function VeChungToiPage() {
     <>
       {/* Hero */}
       <Section bg="cream" spacing="lg">
-        <Container size="xl">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <Container size="default">
+          <div className="grid lg:grid-cols-2 gap-[var(--spacing-gutter)] items-center">
             <div>
               <Eyebrow color="gold" className="mb-4">
                 VỀ CHÚNG TÔI
               </Eyebrow>
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-navy leading-tight mb-6">
+              <h1 className="font-heading text-headline-lg text-navy leading-tight mb-6">
                 Cố vấn thuế bạn có thể tin cậy
               </h1>
-              <p className="text-navy/70 text-lg md:text-xl leading-relaxed">
+              <p className="text-body-lg text-navy/70 leading-relaxed">
                 NHN&amp;D Tax Advisory là advisory boutique chuyên tư vấn thuế chiến lược
                 cho SME và FDI tại Việt Nam. Chúng tôi không chỉ đảm bảo tuân thủ —
                 chúng tôi đồng hành cùng doanh nghiệp trong mọi quyết định thuế quan trọng,
                 từ giai đoạn khởi nghiệp đến tái cấu trúc và M&amp;A.
               </p>
             </div>
-            <div className="relative rounded-xl overflow-hidden shadow-lg aspect-[4/3]">
+            <div className="overflow-hidden aspect-[4/3]">
               <Image
                 src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80"
                 alt="Đội ngũ NHN&D Tax Advisory"
@@ -52,17 +52,17 @@ export default function VeChungToiPage() {
       </Section>
 
       {/* Brand story */}
-      <section className="bg-cream-100 py-16 md:py-24">
-        <Container size="sm">
-          <div className="text-center mb-6">
+      <Section bg="cream-100" spacing="md" hairlineTop>
+        <Container size="narrow">
+          <div className="mb-8">
             <Eyebrow color="gold" className="mb-3">
               CÂU CHUYỆN
             </Eyebrow>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-navy mt-2">
+            <h2 className="font-heading text-headline-md text-navy mt-2">
               Tại sao chúng tôi thành lập NHN&amp;D
             </h2>
           </div>
-          <div className="space-y-5 text-navy/80 leading-relaxed text-lg">
+          <div className="space-y-5 text-body-lg text-navy/80 leading-relaxed">
             <p>
               NHN&amp;D Tax Advisory được thành lập năm 2026 từ một nhận thức đơn giản — sau hơn
               20 năm trong nghề tư vấn thuế tại Việt Nam, chúng tôi nhận ra: phần lớn doanh
@@ -83,7 +83,7 @@ export default function VeChungToiPage() {
             </p>
           </div>
         </Container>
-      </section>
+      </Section>
 
       {/* Founder */}
       <FounderSection />
@@ -99,15 +99,15 @@ export default function VeChungToiPage() {
 
       {/* Final CTA */}
       <Section bg="navy" spacing="lg">
-        <Container size="md">
+        <Container size="narrow">
           <div className="text-center">
             <Eyebrow color="cream" className="mb-4">
               HỢP TÁC CÙNG CHÚNG TÔI
             </Eyebrow>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-cream mb-4">
+            <h2 className="font-heading text-headline-md text-cream mb-4">
               Sẵn sàng đồng hành?
             </h2>
-            <p className="text-cream/70 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+            <p className="text-body-lg text-cream/70 mb-10 max-w-xl mx-auto leading-relaxed">
               Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí. Hãy để chúng tôi
               lắng nghe và cùng bạn xác định rõ những gì cần làm.
             </p>
@@ -117,8 +117,8 @@ export default function VeChungToiPage() {
               </Button>
               <Button
                 asChild
+                variant="outline"
                 size="lg"
-                className="border border-cream text-cream bg-transparent hover:bg-cream hover:text-navy transition-colors"
               >
                 <Link href="/lien-he">Liên hệ</Link>
               </Button>

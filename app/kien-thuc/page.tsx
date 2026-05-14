@@ -39,14 +39,15 @@ export default async function KienThucPage() {
 
   return (
     <>
+      {/* Hero — editorial broadsheet, asymmetric */}
       <Section bg="cream" spacing="md">
         <Container size="xl">
-          <div className="flex flex-col items-center gap-4 text-center max-w-2xl mx-auto">
-            <Eyebrow>KIẾN THỨC</Eyebrow>
-            <h1 className="text-4xl font-bold text-navy md:text-5xl lg:text-6xl text-balance">
+          <div className="flex flex-col gap-4 max-w-2xl">
+            <Eyebrow color="gold">KIẾN THỨC</Eyebrow>
+            <h1 className="font-heading text-headline-lg text-navy text-balance">
               Insights thuế cho founder Việt
             </h1>
-            <p className="text-base leading-relaxed text-navy/65 md:text-lg max-w-xl">
+            <p className="text-body-lg text-navy/65 leading-relaxed max-w-xl">
               Bài viết chuyên sâu về chiến lược thuế, cập nhật chính sách, và case
               study thực tế từ đội ngũ NHN&amp;D Tax Advisory.
             </p>
@@ -57,22 +58,22 @@ export default async function KienThucPage() {
       {featuredPost && (
         <Section bg="cream" spacing="sm">
           <Container size="xl">
-            <h2 className="mb-6 text-xs font-semibold uppercase tracking-widest text-navy/60">
+            <p className="mb-6 text-label-caps text-navy/60">
               Bài viết nổi bật
-            </h2>
+            </p>
             <ArticleCard post={featuredPost} variant="featured" />
           </Container>
         </Section>
       )}
 
-      <Section bg="cream-100" spacing="md">
+      <Section bg="cream-100" spacing="md" hairlineTop>
         <Container size="xl">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+          <div className="grid grid-cols-1 gap-[var(--spacing-gutter)] lg:grid-cols-12">
             <div className="lg:col-span-8">
               {otherPosts.length === 0 ? (
                 <div className="flex flex-col items-center gap-4 py-20 text-center">
                   <BookOpen className="size-12 text-navy/20" aria-hidden="true" />
-                  <p className="text-lg font-medium text-navy/50">Chưa có bài viết nào.</p>
+                  <p className="text-body-lg text-navy/50">Chưa có bài viết nào.</p>
                 </div>
               ) : (
                 <BlogClient posts={otherPosts} categories={categories} />
@@ -81,9 +82,10 @@ export default async function KienThucPage() {
 
             <aside className="lg:col-span-4" aria-label="Sidebar">
               <div className="space-y-6 lg:sticky lg:top-36">
-                <div className="rounded-2xl border border-navy/10 bg-navy p-5 text-cream">
-                  <h3 className="mb-2 text-base font-bold">Nhận insights hàng tuần</h3>
-                  <p className="mb-4 text-sm text-cream/60">
+                {/* Newsletter sidebar — navy block, sharp */}
+                <div className="bg-navy p-5 text-cream">
+                  <h3 className="font-heading text-headline-sm text-cream mb-2">Nhận insights hàng tuần</h3>
+                  <p className="mb-4 text-body-sm text-cream/60">
                     Mỗi tuần một bài thuế chiến lược. Miễn phí.
                   </p>
                   <form
@@ -97,12 +99,12 @@ export default async function KienThucPage() {
                       required
                       placeholder="email@congty.vn"
                       autoComplete="email"
-                      className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-sm text-cream placeholder:text-cream/40 focus:outline-none focus:ring-2 focus:ring-gold min-h-[44px]"
+                      className="w-full border-b border-cream/30 bg-transparent px-0 py-2.5 text-body-sm text-cream placeholder:text-cream/40 focus:outline-none focus:border-gold min-h-[44px]"
                     />
                     <input type="hidden" name="source" value="blog-sidebar" />
                     <button
                       type="submit"
-                      className="w-full rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-navy hover:bg-gold-600 transition-colors min-h-[44px]"
+                      className="w-full bg-gold px-4 py-2.5 text-body-sm font-semibold text-navy hover:bg-gold-600 transition-colors min-h-[44px]"
                     >
                       Đăng ký
                     </button>
@@ -110,15 +112,15 @@ export default async function KienThucPage() {
                 </div>
 
                 {popular.length > 0 && (
-                  <div className="rounded-2xl border border-cream-200 bg-white p-5">
-                    <h3 className="mb-4 text-sm font-bold uppercase tracking-widest text-navy/60">
+                  <div className="border-t-hairline border-gold pt-5">
+                    <h3 className="mb-4 text-label-caps text-navy/60">
                       Đọc nhiều nhất
                     </h3>
                     <ol className="space-y-4">
                       {popular.map((post, idx) => (
                         <li key={post.id} className="flex gap-3">
                           <span
-                            className="mt-0.5 shrink-0 text-2xl font-bold leading-none text-cream-300 select-none"
+                            className="mt-0.5 shrink-0 text-2xl font-bold leading-none text-cream-300 select-none font-heading"
                             aria-hidden="true"
                           >
                             {String(idx + 1).padStart(2, "0")}
@@ -126,12 +128,12 @@ export default async function KienThucPage() {
                           <div>
                             <Link
                               href={`/kien-thuc/${post.slug}`}
-                              className="text-sm font-semibold text-navy leading-snug hover:text-gold-700 transition-colors line-clamp-2"
+                              className="text-body-sm font-semibold text-navy leading-snug hover:text-gold-700 transition-colors line-clamp-2"
                             >
                               {post.title}
                             </Link>
                             {post.reading_time && (
-                              <p className="mt-1 text-xs text-navy/40">
+                              <p className="mt-1 text-label-caps text-navy/40">
                                 {post.reading_time} phút đọc
                               </p>
                             )}
@@ -143,8 +145,8 @@ export default async function KienThucPage() {
                 )}
 
                 {categories.length > 0 && (
-                  <div className="rounded-2xl border border-cream-200 bg-white p-5">
-                    <h3 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-navy/60">
+                  <div className="border-t-hairline border-gold pt-5">
+                    <h3 className="mb-4 flex items-center gap-2 text-label-caps text-navy/60">
                       <Tag className="size-4" aria-hidden="true" />
                       Chủ đề
                     </h3>
@@ -152,7 +154,7 @@ export default async function KienThucPage() {
                       {categories.map((cat) => (
                         <span
                           key={cat.id}
-                          className="rounded-full px-3 py-1 text-xs font-medium border bg-cream text-navy/70 border-cream-200"
+                          className="px-3 py-1 text-label-caps border border-cream-200 bg-cream text-navy/70"
                         >
                           {cat.name}
                         </span>

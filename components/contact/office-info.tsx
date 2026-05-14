@@ -1,12 +1,13 @@
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { SITE } from "@/lib/utils";
+import { Eyebrow } from "@/components/shared/eyebrow";
 
 export function OfficeInfo() {
   return (
-    <div className="rounded-lg bg-cream-100 border border-cream-300 p-6 lg:p-8 space-y-5">
-      <h3 className="text-xl font-bold text-navy">Thông tin liên hệ</h3>
+    <div className="border-t-hairline border-gold pt-6 space-y-6">
+      <Eyebrow color="gold">THÔNG TIN LIÊN HỆ</Eyebrow>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         <InfoItem icon={MapPin} label="Văn phòng" value={SITE.address} />
         <InfoItem
           icon={Mail}
@@ -45,16 +46,16 @@ function InfoItem({
   href?: string;
 }) {
   const Content = (
-    <div className="flex items-start gap-3">
-      <div className="shrink-0 size-10 rounded-md bg-navy/5 flex items-center justify-center">
-        <Icon className="size-5 text-gold-700" aria-hidden />
+    <div className="flex items-start gap-4">
+      <div className="shrink-0 text-gold-700 mt-0.5">
+        <Icon className="size-5" aria-hidden />
       </div>
       <div>
-        <p className="text-xs font-semibold uppercase tracking-wider text-navy/60">
+        <p className="text-label-caps text-navy/60 uppercase tracking-[0.1em] mb-0.5">
           {label}
         </p>
-        <p className="mt-0.5 text-base text-navy font-medium">{value}</p>
-        {sub && <p className="text-sm text-navy/60">{sub}</p>}
+        <p className="text-body-md text-navy font-medium">{value}</p>
+        {sub && <p className="text-body-sm text-navy/60">{sub}</p>}
       </div>
     </div>
   );

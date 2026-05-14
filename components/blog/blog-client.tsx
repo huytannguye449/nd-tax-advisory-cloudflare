@@ -30,7 +30,8 @@ export function BlogClient({
 
   return (
     <div>
-      <div className="mb-6 flex flex-col gap-3">
+      {/* Filter toolbar — hairline top, sharp */}
+      <div className="mb-6 flex flex-col gap-3 border-t-hairline border-gold pt-4">
         <div className="relative">
           <Search
             className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-navy/40"
@@ -41,20 +42,21 @@ export function BlogClient({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Tìm bài viết…"
-            className="w-full rounded-lg border border-cream-300 bg-white pl-10 pr-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 min-h-[44px]"
+            className="w-full border border-cream-300 bg-white pl-10 pr-4 py-2.5 text-body-sm text-navy placeholder:text-navy/40 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold min-h-[44px]"
             aria-label="Tìm bài viết"
           />
         </div>
 
+        {/* Category filter — label-caps, sharp */}
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => setActiveCategory("")}
             className={cn(
-              "rounded-full px-3 py-1.5 text-xs font-medium border transition min-h-[36px]",
+              "px-3 py-1.5 text-label-caps border transition min-h-[36px]",
               !activeCategory
                 ? "bg-navy text-cream border-navy"
-                : "bg-white text-navy/70 border-cream-200 hover:border-navy/30",
+                : "bg-white text-navy/70 border-cream-300 hover:border-navy/30",
             )}
           >
             Tất cả
@@ -65,10 +67,10 @@ export function BlogClient({
               type="button"
               onClick={() => setActiveCategory(cat.slug)}
               className={cn(
-                "rounded-full px-3 py-1.5 text-xs font-medium border transition min-h-[36px]",
+                "px-3 py-1.5 text-label-caps border transition min-h-[36px]",
                 activeCategory === cat.slug
                   ? "bg-navy text-cream border-navy"
-                  : "bg-white text-navy/70 border-cream-200 hover:border-navy/30",
+                  : "bg-white text-navy/70 border-cream-300 hover:border-navy/30",
               )}
             >
               {cat.name}
@@ -78,13 +80,13 @@ export function BlogClient({
       </div>
 
       {filtered.length === 0 ? (
-        <p className="py-12 text-center text-navy/50">
+        <p className="py-12 text-center text-body-md text-navy/50">
           Không tìm thấy bài viết phù hợp. Thử từ khoá khác.
         </p>
       ) : (
         <>
-          <p className="mb-6 text-sm text-navy/50">{filtered.length} bài viết</p>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <p className="mb-6 text-label-caps text-navy/50">{filtered.length} bài viết</p>
+          <div className="grid grid-cols-1 gap-[var(--spacing-gutter)] sm:grid-cols-2">
             {filtered.map((post) => (
               <ArticleCard key={post.id} post={post} variant="default" />
             ))}
