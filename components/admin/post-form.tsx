@@ -35,6 +35,10 @@ export interface PostFormData {
   seo_description: string;
 }
 
+const inputCls =
+  "w-full border-b border-navy bg-transparent px-0 py-2 text-body-md text-navy focus:border-gold focus:outline-none transition-colors min-h-[44px]";
+const labelCls = "block text-label-caps uppercase text-navy/70 mb-3";
+
 export function PostForm({ initial }: { initial: PostFormData | null }) {
   const router = useRouter();
   const isEdit = !!initial?.id;
@@ -138,11 +142,11 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid lg:grid-cols-12 gap-6">
-      <div className="lg:col-span-8 space-y-5">
+    <form onSubmit={onSubmit} className="grid lg:grid-cols-12 gap-[var(--spacing-gutter)]">
+      <div className="lg:col-span-8 space-y-7">
         <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            Tiêu đề <span className="text-red-500">*</span>
+          <label className={labelCls}>
+            Tiêu đề <span className="text-red-600">*</span>
           </label>
           <input
             type="text"
@@ -151,16 +155,14 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
             onBlur={autoFillSlug}
             placeholder="VD: Tax Health Check — Framework 7 điểm cho CFO"
             required
-            className="w-full rounded-md border border-cream-300 bg-white px-4 py-3 text-lg font-semibold focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 min-h-[52px]"
+            className="w-full border-b border-navy bg-transparent px-0 py-3 text-headline-sm font-heading text-navy focus:border-gold focus:outline-none transition-colors min-h-[52px]"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            Slug URL
-          </label>
-          <div className="flex items-center rounded-md border border-cream-300 bg-cream-50 overflow-hidden">
-            <span className="px-3 py-2.5 text-sm text-navy/50 bg-cream-100 border-r border-cream-300">
+          <label className={labelCls}>Slug URL</label>
+          <div className="flex items-center border-b border-navy">
+            <span className="text-label-caps uppercase text-navy/55 pr-3 border-r border-navy/20">
               /kien-thuc/
             </span>
             <input
@@ -168,31 +170,29 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
               value={data.slug}
               onChange={(e) => update("slug", e.target.value)}
               placeholder="auto từ title"
-              className="flex-1 bg-transparent px-3 py-2.5 text-sm focus:outline-none"
+              className="flex-1 bg-transparent pl-3 py-2 text-body-md focus:outline-none"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            Excerpt (mô tả ngắn)
-          </label>
+          <label className={labelCls}>Excerpt (mô tả ngắn)</label>
           <textarea
             value={data.excerpt}
             onChange={(e) => update("excerpt", e.target.value)}
             rows={3}
             maxLength={300}
             placeholder="2-3 câu giới thiệu bài viết — sẽ hiển thị trong list và meta description SEO."
-            className="w-full rounded-md border border-cream-300 bg-white px-4 py-3 text-sm focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
+            className="w-full border-b border-navy bg-transparent px-0 py-2 text-body-md focus:border-gold focus:outline-none transition-colors"
           />
-          <p className="text-xs text-navy/40 mt-1">
+          <p className="text-[11px] tracking-[0.05em] text-navy/45 mt-2">
             {data.excerpt.length}/300 ký tự
           </p>
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            Nội dung <span className="text-red-500">*</span>
+          <label className={labelCls}>
+            Nội dung <span className="text-red-600">*</span>
           </label>
           <PostEditor
             content={data.body_mdx}
@@ -201,164 +201,150 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
         </div>
 
         {error && (
-          <div className="flex items-start gap-2 rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-800">
+          <div className="flex items-start gap-2 border-l-2 border-red-500 bg-red-50 p-3 text-body-sm text-red-800">
             <AlertCircle className="size-4 mt-0.5 shrink-0" />
             <span>{error}</span>
           </div>
         )}
         {success && (
-          <div className="flex items-start gap-2 rounded-md bg-green-50 border border-green-200 p-3 text-sm text-green-800">
+          <div className="flex items-start gap-2 border-l-2 border-green-600 bg-green-50 p-3 text-body-sm text-green-800">
             <CheckCircle2 className="size-4 mt-0.5 shrink-0" />
             <span>{success}</span>
           </div>
         )}
       </div>
 
-      {/* Sidebar */}
-      <aside className="lg:col-span-4 space-y-5">
-        <div className="bg-white rounded-xl border border-cream-300 p-5 space-y-4 lg:sticky lg:top-6">
-          <div>
-            <label className="block text-sm font-semibold text-navy mb-1.5">
-              Trạng thái
-            </label>
-            <select
-              value={data.status}
-              onChange={(e) => update("status", e.target.value as PostFormData["status"])}
-              className="w-full rounded-md border border-cream-300 bg-white px-3 py-2 text-sm"
-            >
-              <option value="draft">Draft (chưa xuất bản)</option>
-              <option value="scheduled">Scheduled (lên lịch)</option>
-              <option value="published">Published (xuất bản ngay)</option>
-            </select>
-          </div>
+      {/* Sidebar — flat, hairline-top */}
+      <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-6 lg:self-start border-t-hairline border-gold pt-6">
+        <div>
+          <label className={labelCls}>Trạng thái</label>
+          <select
+            value={data.status}
+            onChange={(e) => update("status", e.target.value as PostFormData["status"])}
+            className={inputCls}
+          >
+            <option value="draft">Draft (chưa xuất bản)</option>
+            <option value="scheduled">Scheduled (lên lịch)</option>
+            <option value="published">Published (xuất bản ngay)</option>
+          </select>
+        </div>
 
-          {data.status === "scheduled" && (
-            <div>
-              <label className="block text-sm font-semibold text-navy mb-1.5">
-                Lên lịch xuất bản
-              </label>
-              <input
-                type="datetime-local"
-                value={data.scheduled_at}
-                onChange={(e) => update("scheduled_at", e.target.value)}
-                className="w-full rounded-md border border-cream-300 px-3 py-2 text-sm"
-              />
-            </div>
-          )}
-
+        {data.status === "scheduled" && (
           <div>
-            <label className="block text-sm font-semibold text-navy mb-1.5">
-              Tác giả
-            </label>
-            <select
-              value={data.author_id}
-              onChange={(e) => update("author_id", e.target.value)}
-              className="w-full rounded-md border border-cream-300 bg-white px-3 py-2 text-sm"
-            >
-              <option value="">— Chưa chọn —</option>
-              {authors.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.name} {a.title ? `· ${a.title}` : ""}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-navy mb-1.5">
-              Chuyên mục
-            </label>
-            <select
-              value={data.category_id}
-              onChange={(e) => update("category_id", e.target.value)}
-              className="w-full rounded-md border border-cream-300 bg-white px-3 py-2 text-sm"
-            >
-              <option value="">— Chưa chọn —</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-navy mb-1.5">
-              Cover image URL
-            </label>
+            <label className={labelCls}>Lên lịch xuất bản</label>
             <input
-              type="url"
-              value={data.cover_url}
-              onChange={(e) => update("cover_url", e.target.value)}
-              placeholder="https://..."
-              className="w-full rounded-md border border-cream-300 px-3 py-2 text-sm"
+              type="datetime-local"
+              value={data.scheduled_at}
+              onChange={(e) => update("scheduled_at", e.target.value)}
+              className={inputCls}
             />
-            {data.cover_url && (
-              <img
-                src={data.cover_url}
-                alt="Cover preview"
-                className="mt-2 rounded-md w-full aspect-video object-cover"
-              />
-            )}
           </div>
+        )}
 
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={data.is_featured}
-              onChange={(e) => update("is_featured", e.target.checked)}
-              className="size-4 accent-navy"
+        <div>
+          <label className={labelCls}>Tác giả</label>
+          <select
+            value={data.author_id}
+            onChange={(e) => update("author_id", e.target.value)}
+            className={inputCls}
+          >
+            <option value="">— Chưa chọn —</option>
+            {authors.map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.name} {a.title ? `· ${a.title}` : ""}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className={labelCls}>Chuyên mục</label>
+          <select
+            value={data.category_id}
+            onChange={(e) => update("category_id", e.target.value)}
+            className={inputCls}
+          >
+            <option value="">— Chưa chọn —</option>
+            {categories.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className={labelCls}>Cover image URL</label>
+          <input
+            type="url"
+            value={data.cover_url}
+            onChange={(e) => update("cover_url", e.target.value)}
+            placeholder="https://..."
+            className={inputCls}
+          />
+          {data.cover_url && (
+            <img
+              src={data.cover_url}
+              alt="Cover preview"
+              className="mt-3 w-full aspect-video object-cover border-t-hairline border-gold pt-2"
             />
-            <span className="text-sm text-navy">Bài viết nổi bật (featured)</span>
-          </label>
-
-          <details className="border-t border-cream-200 pt-4">
-            <summary className="text-sm font-semibold text-navy cursor-pointer">
-              SEO
-            </summary>
-            <div className="mt-3 space-y-3">
-              <div>
-                <label className="block text-xs text-navy/60 mb-1">SEO Title</label>
-                <input
-                  type="text"
-                  value={data.seo_title}
-                  onChange={(e) => update("seo_title", e.target.value)}
-                  maxLength={60}
-                  placeholder="Mặc định: Tiêu đề bài viết"
-                  className="w-full rounded-md border border-cream-300 px-3 py-2 text-sm"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-navy/60 mb-1">
-                  SEO Description
-                </label>
-                <textarea
-                  value={data.seo_description}
-                  onChange={(e) => update("seo_description", e.target.value)}
-                  rows={2}
-                  maxLength={160}
-                  placeholder="Mặc định: Excerpt"
-                  className="w-full rounded-md border border-cream-300 px-3 py-2 text-sm"
-                />
-              </div>
-            </div>
-          </details>
-
-          <Button type="submit" size="lg" fullWidth disabled={submitting}>
-            <Save className="size-4" />
-            {submitting ? "Đang lưu…" : isEdit ? "Lưu thay đổi" : "Tạo bài viết"}
-          </Button>
-
-          {isEdit && (
-            <button
-              type="button"
-              onClick={onDelete}
-              className="w-full inline-flex items-center justify-center gap-1.5 text-sm text-red-700 hover:bg-red-50 py-2 rounded-md"
-            >
-              <Trash2 className="size-3.5" /> Xóa bài viết
-            </button>
           )}
         </div>
+
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={data.is_featured}
+            onChange={(e) => update("is_featured", e.target.checked)}
+            className="size-4 accent-gold"
+          />
+          <span className="text-body-md text-navy">Bài viết nổi bật (featured)</span>
+        </label>
+
+        <details className="border-t-hairline border-gold/40 pt-5">
+          <summary className="text-label-caps uppercase text-navy cursor-pointer">SEO</summary>
+          <div className="mt-4 space-y-5">
+            <div>
+              <label className="block text-[11px] tracking-[0.05em] uppercase text-navy/55 mb-2">SEO Title</label>
+              <input
+                type="text"
+                value={data.seo_title}
+                onChange={(e) => update("seo_title", e.target.value)}
+                maxLength={60}
+                placeholder="Mặc định: Tiêu đề bài viết"
+                className={inputCls}
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] tracking-[0.05em] uppercase text-navy/55 mb-2">
+                SEO Description
+              </label>
+              <textarea
+                value={data.seo_description}
+                onChange={(e) => update("seo_description", e.target.value)}
+                rows={2}
+                maxLength={160}
+                placeholder="Mặc định: Excerpt"
+                className={inputCls}
+              />
+            </div>
+          </div>
+        </details>
+
+        <Button type="submit" size="lg" fullWidth disabled={submitting}>
+          <Save className="size-4" />
+          {submitting ? "Đang lưu…" : isEdit ? "Lưu thay đổi" : "Tạo bài viết"}
+        </Button>
+
+        {isEdit && (
+          <button
+            type="button"
+            onClick={onDelete}
+            className="w-full inline-flex items-center justify-center gap-1.5 text-label-caps uppercase text-red-700 hover:bg-red-50 py-3 transition-colors min-h-[44px]"
+          >
+            <Trash2 className="size-3.5" /> Xóa bài viết
+          </button>
+        )}
       </aside>
     </form>
   );

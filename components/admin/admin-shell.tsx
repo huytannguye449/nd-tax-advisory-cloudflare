@@ -70,10 +70,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-cream">
         <div className="text-center">
           <Logo variant="primary" size="md" />
-          <p className="mt-4 text-sm text-navy/60">Đang tải…</p>
+          <p className="mt-4 text-label-caps uppercase text-navy/60">Đang tải…</p>
         </div>
       </div>
     );
@@ -82,14 +82,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-cream-100 flex">
-      {/* Mobile header */}
-      <header className="lg:hidden fixed top-0 inset-x-0 z-30 h-14 bg-white border-b border-cream-300 flex items-center justify-between px-4">
+    <div className="min-h-screen bg-cream flex">
+      {/* Mobile header — flat navy with gold hairline bottom */}
+      <header className="lg:hidden fixed top-0 inset-x-0 z-30 h-14 bg-navy border-b-hairline border-gold flex items-center justify-between px-5">
         <Logo variant="horizontal" size="sm" />
         <button
           onClick={() => setMobileOpen(true)}
           aria-label="Mở menu"
-          className="p-2 -m-2"
+          className="p-2 -m-2 text-cream hover:text-gold transition-colors"
         >
           <Menu className="size-5" />
         </button>
@@ -99,13 +99,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       {mobileOpen && (
         <div className="lg:hidden fixed inset-0 z-40">
           <div
-            className="absolute inset-0 bg-navy/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-navy/60"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="absolute inset-y-0 left-0 w-72 bg-white shadow-xl flex flex-col">
-            <div className="h-14 flex items-center justify-between px-4 border-b border-cream-300">
+          <div className="absolute inset-y-0 left-0 w-72 bg-navy flex flex-col border-r-hairline border-gold">
+            <div className="h-14 flex items-center justify-between px-5 border-b-hairline border-gold">
               <Logo variant="horizontal" size="sm" />
-              <button onClick={() => setMobileOpen(false)} aria-label="Đóng">
+              <button onClick={() => setMobileOpen(false)} aria-label="Đóng" className="text-cream hover:text-gold transition-colors">
                 <X className="size-5" />
               </button>
             </div>
@@ -118,19 +118,19 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      {/* Desktop sidebar */}
-      <aside className="hidden lg:flex lg:flex-col w-72 bg-white border-r border-cream-300 fixed inset-y-0">
-        <div className="h-20 flex items-center px-6 border-b border-cream-300">
+      {/* Desktop sidebar — flat navy with gold hairline right */}
+      <aside className="hidden lg:flex lg:flex-col w-64 bg-navy border-r-hairline border-gold fixed inset-y-0">
+        <div className="h-20 flex items-center px-6 border-b-hairline border-gold">
           <Link href="/admin" aria-label="NHN&D Admin">
-            <Logo variant="primary" size="md" />
+            <Logo variant="reversed" size="md" />
           </Link>
         </div>
         <SidebarContent pathname={pathname} user={user} onLogout={logout} />
       </aside>
 
       {/* Main */}
-      <main className="flex-1 lg:ml-72 pt-14 lg:pt-0">
-        <div className="p-5 md:p-8 lg:p-10 max-w-7xl">{children}</div>
+      <main className="flex-1 lg:ml-64 pt-14 lg:pt-0 bg-cream">
+        <div className="p-5 md:p-10 max-w-[var(--container-default)]">{children}</div>
       </main>
     </div>
   );
@@ -147,7 +147,7 @@ function SidebarContent({
 }) {
   return (
     <>
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 overflow-y-auto">
         {NAV.map((item) => {
           const Icon = item.icon;
           const active = item.exact
@@ -158,10 +158,10 @@ function SidebarContent({
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition min-h-[44px]",
+                "flex items-center gap-3 px-6 py-4 text-label-caps uppercase transition-colors border-b-hairline border-gold/30 min-h-[44px]",
                 active
-                  ? "bg-navy text-cream"
-                  : "text-navy hover:bg-navy/5",
+                  ? "text-gold border-l-2 border-l-gold"
+                  : "text-cream/75 hover:text-gold border-l-2 border-l-transparent",
               )}
             >
               <Icon className="size-4 shrink-0" aria-hidden />
@@ -171,14 +171,14 @@ function SidebarContent({
         })}
       </nav>
 
-      <div className="p-4 border-t border-cream-300 space-y-3">
-        <div className="px-3 py-2">
-          <p className="text-sm font-semibold text-navy">{user.name || user.username}</p>
-          <p className="text-xs text-navy/60">@{user.username} · {user.role}</p>
+      <div className="border-t-hairline border-gold">
+        <div className="px-6 py-4 border-b-hairline border-gold/30">
+          <p className="text-label-caps uppercase text-cream">{user.name || user.username}</p>
+          <p className="text-[11px] tracking-[0.05em] text-cream/55 mt-2">@{user.username} · {user.role}</p>
         </div>
         <button
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-navy hover:bg-red-50 hover:text-red-700 transition min-h-[44px]"
+          className="w-full flex items-center gap-3 px-6 py-4 text-label-caps uppercase text-cream/75 hover:text-gold transition-colors min-h-[44px]"
         >
           <LogOut className="size-4" aria-hidden /> Đăng xuất
         </button>

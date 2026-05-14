@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { Mail, Phone, Building2, X, ChevronDown } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Button } from "@/components/shared/button";
+import { Eyebrow } from "@/components/shared/eyebrow";
 import { formatDate } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface Lead {
   id: string;
@@ -30,11 +32,11 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  new: "bg-gold/15 text-gold-700",
-  contacted: "bg-blue-50 text-blue-700",
-  qualified: "bg-green-50 text-green-700",
-  closed: "bg-cream-200 text-navy/60",
-  spam: "bg-red-50 text-red-700",
+  new: "border-l-gold text-gold-700",
+  contacted: "border-l-blue-600 text-blue-700",
+  qualified: "border-l-green-600 text-green-700",
+  closed: "border-l-navy/30 text-navy/60",
+  spam: "border-l-red-500 text-red-700",
 };
 
 export default function AdminLeadsPage() {
@@ -111,126 +113,118 @@ export default function AdminLeadsPage() {
 
   return (
     <AdminShell>
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+      <div className="space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b-hairline border-gold pb-6">
           <div>
-            <h1 className="font-heading text-3xl font-bold text-navy">Quản lý Lead</h1>
-            <p className="text-navy/60 mt-1">{leads.length} bản ghi</p>
+            <Eyebrow color="gold">Lead Management</Eyebrow>
+            <h1 className="text-headline-lg font-heading text-navy mt-4">Quản lý Lead</h1>
+            <p className="text-body-md text-navy/65 mt-2">{leads.length} bản ghi</p>
           </div>
-          <Button variant="outline" onClick={exportCsv} disabled={!leads.length}>
+          <Button variant="outline" size="sm" onClick={exportCsv} disabled={!leads.length}>
             Xuất CSV
           </Button>
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap gap-2">
+        {/* Filters — sharp rectangular tabs */}
+        <div className="flex flex-wrap gap-0 border-b-hairline border-gold/30">
           {["all", "new", "contacted", "qualified", "closed", "spam"].map((s) => (
             <button
               key={s}
               onClick={() => setFilter(s)}
-              className={`rounded-full px-4 py-2 text-sm font-medium border transition min-h-[36px] ${
+              className={cn(
+                "px-5 py-3 text-label-caps uppercase transition-colors min-h-[44px] -mb-px border-b-2",
                 filter === s
-                  ? "bg-navy text-cream border-navy"
-                  : "bg-white text-navy/70 border-cream-300 hover:border-navy/30"
-              }`}
+                  ? "text-gold border-gold"
+                  : "text-navy/60 hover:text-navy border-transparent",
+              )}
             >
               {s === "all" ? "Tất cả" : STATUS_LABELS[s]}
             </button>
           ))}
         </div>
 
-        {/* Table desktop / Cards mobile */}
-        <div className="bg-white rounded-2xl border border-cream-300 overflow-hidden">
-          {loading ? (
-            <div className="p-12 text-center text-navy/50">Đang tải…</div>
-          ) : leads.length === 0 ? (
-            <div className="p-12 text-center text-navy/50">Không có lead nào.</div>
-          ) : (
-            <>
-              {/* Desktop table */}
-              <table className="hidden md:table w-full text-sm">
-                <thead className="bg-cream-100 text-left">
-                  <tr>
-                    <th className="px-4 py-3 font-semibold text-navy">Họ tên</th>
-                    <th className="px-4 py-3 font-semibold text-navy">Liên hệ</th>
-                    <th className="px-4 py-3 font-semibold text-navy">Công ty</th>
-                    <th className="px-4 py-3 font-semibold text-navy">Trạng thái</th>
-                    <th className="px-4 py-3 font-semibold text-navy">Ngày</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {leads.map((l) => (
-                    <tr
-                      key={l.id}
-                      onClick={() => setSelected(l)}
-                      className="border-t border-cream-200 hover:bg-cream-50 cursor-pointer"
-                    >
-                      <td className="px-4 py-3 font-medium text-navy">{l.full_name}</td>
-                      <td className="px-4 py-3 text-navy/70">
-                        <div className="flex items-center gap-1.5">
-                          <Mail className="size-3.5 text-navy/40" />
-                          {l.email}
-                        </div>
-                        <div className="flex items-center gap-1.5 mt-0.5 text-xs">
-                          <Phone className="size-3 text-navy/40" />
-                          {l.phone}
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-navy/70">{l.company ?? "—"}</td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                            STATUS_COLORS[l.status] ?? ""
-                          }`}
-                        >
-                          {STATUS_LABELS[l.status] ?? l.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-navy/60 text-xs">
-                        {formatDate(l.created_at)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              {/* Mobile cards */}
-              <ul className="md:hidden divide-y divide-cream-200">
+        {/* Data table per DESIGN.md spec */}
+        {loading ? (
+          <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">Đang tải…</div>
+        ) : leads.length === 0 ? (
+          <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">Không có lead nào.</div>
+        ) : (
+          <>
+            {/* Desktop table */}
+            <table className="hidden md:table w-full text-body-sm">
+              <thead>
+                <tr className="border-b-hairline border-gold">
+                  <th className="px-4 py-3 text-left text-label-caps uppercase text-navy">Họ tên</th>
+                  <th className="px-4 py-3 text-left text-label-caps uppercase text-navy">Liên hệ</th>
+                  <th className="px-4 py-3 text-left text-label-caps uppercase text-navy">Công ty</th>
+                  <th className="px-4 py-3 text-left text-label-caps uppercase text-navy">Trạng thái</th>
+                  <th className="px-4 py-3 text-left text-label-caps uppercase text-navy">Ngày</th>
+                </tr>
+              </thead>
+              <tbody>
                 {leads.map((l) => (
-                  <li
+                  <tr
                     key={l.id}
                     onClick={() => setSelected(l)}
-                    className="p-4 hover:bg-cream-50"
+                    className="border-b border-data-row hover:bg-cream-100 cursor-pointer transition-colors"
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-navy truncate">
-                          {l.full_name}
-                        </p>
-                        <p className="text-xs text-navy/60 mt-0.5">
-                          {l.email} · {l.phone}
-                        </p>
-                        {l.company && (
-                          <p className="text-xs text-navy/50 mt-0.5">
-                            <Building2 className="inline size-3 mr-1" />
-                            {l.company}
-                          </p>
-                        )}
+                    <td className="px-4 py-4 font-medium text-navy">{l.full_name}</td>
+                    <td className="px-4 py-4 text-navy/75">
+                      <div className="flex items-center gap-1.5">
+                        <Mail className="size-3.5 text-navy/45" />
+                        {l.email}
                       </div>
-                      <span
-                        className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${
-                          STATUS_COLORS[l.status] ?? ""
-                        }`}
-                      >
+                      <div className="flex items-center gap-1.5 mt-1 text-[11px] tracking-[0.05em]">
+                        <Phone className="size-3 text-navy/45" />
+                        {l.phone}
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 text-navy/75">{l.company ?? "—"}</td>
+                    <td className="px-4 py-4">
+                      <span className={cn("inline-block border-l-2 pl-2 text-label-caps uppercase", STATUS_COLORS[l.status] ?? "")}>
                         {STATUS_LABELS[l.status] ?? l.status}
                       </span>
-                    </div>
-                  </li>
+                    </td>
+                    <td className="px-4 py-4 text-navy/60 text-[11px] tracking-[0.05em]">
+                      {formatDate(l.created_at)}
+                    </td>
+                  </tr>
                 ))}
-              </ul>
-            </>
-          )}
-        </div>
+              </tbody>
+            </table>
+
+            {/* Mobile list */}
+            <ul className="md:hidden">
+              {leads.map((l) => (
+                <li
+                  key={l.id}
+                  onClick={() => setSelected(l)}
+                  className="border-t-hairline border-gold/40 py-4 hover:bg-cream-100 transition-colors cursor-pointer"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-navy truncate">
+                        {l.full_name}
+                      </p>
+                      <p className="text-[11px] tracking-[0.05em] text-navy/65 mt-1">
+                        {l.email} · {l.phone}
+                      </p>
+                      {l.company && (
+                        <p className="text-[11px] tracking-[0.05em] text-navy/55 mt-0.5">
+                          <Building2 className="inline size-3 mr-1" />
+                          {l.company}
+                        </p>
+                      )}
+                    </div>
+                    <span className={cn("shrink-0 border-l-2 pl-2 text-label-caps uppercase", STATUS_COLORS[l.status] ?? "")}>
+                      {STATUS_LABELS[l.status] ?? l.status}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
 
       {/* Drawer */}
@@ -265,25 +259,26 @@ function LeadDrawer({
   return (
     <div className="fixed inset-0 z-50 flex">
       <div className="absolute inset-0 bg-navy/40" onClick={onClose} />
-      <div className="absolute inset-y-0 right-0 w-full max-w-lg bg-white shadow-2xl flex flex-col">
-        <header className="px-6 py-5 border-b border-cream-300 flex items-start justify-between gap-3">
+      <div className="absolute inset-y-0 right-0 w-full max-w-lg bg-cream border-l-hairline border-gold flex flex-col">
+        <header className="px-7 py-6 border-b-hairline border-gold flex items-start justify-between gap-3">
           <div>
-            <h2 className="text-xl font-bold text-navy">{lead.full_name}</h2>
-            <p className="text-sm text-navy/60 mt-1">{formatDate(lead.created_at)}</p>
+            <Eyebrow color="gold">Lead Detail</Eyebrow>
+            <h2 className="text-headline-sm font-heading text-navy mt-3">{lead.full_name}</h2>
+            <p className="text-body-sm text-navy/65 mt-2">{formatDate(lead.created_at)}</p>
           </div>
-          <button onClick={onClose} aria-label="Đóng" className="p-2 -m-2">
+          <button onClick={onClose} aria-label="Đóng" className="p-2 -m-2 text-navy hover:text-gold-700 transition-colors">
             <X className="size-5" />
           </button>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-6 space-y-5">
+        <div className="flex-1 overflow-y-auto p-7 space-y-6">
           <Field label="Email">
-            <a href={`mailto:${lead.email}`} className="text-gold-700">
+            <a href={`mailto:${lead.email}`} className="text-navy underline decoration-gold underline-offset-4 hover:text-gold-700 transition-colors">
               {lead.email}
             </a>
           </Field>
           <Field label="SĐT">
-            <a href={`tel:${lead.phone}`} className="text-gold-700">
+            <a href={`tel:${lead.phone}`} className="text-navy underline decoration-gold underline-offset-4 hover:text-gold-700 transition-colors">
               {lead.phone}
             </a>
           </Field>
@@ -295,19 +290,19 @@ function LeadDrawer({
           {lead.source && <Field label="Nguồn">{lead.source}</Field>}
           {lead.message && (
             <Field label="Lời nhắn">
-              <p className="whitespace-pre-wrap">{lead.message}</p>
+              <p className="whitespace-pre-wrap text-body-md">{lead.message}</p>
             </Field>
           )}
 
           <div>
-            <label className="block text-sm font-semibold text-navy mb-2">
+            <label className="block text-label-caps uppercase text-navy/70 mb-3">
               Trạng thái
             </label>
             <div className="relative">
               <select
                 value={lead.status}
                 onChange={(e) => onStatusChange(e.target.value)}
-                className="w-full appearance-none rounded-md border border-cream-300 bg-white px-4 py-2.5 pr-10 text-sm font-medium"
+                className="w-full appearance-none border-b border-navy bg-transparent px-0 py-2 pr-10 text-body-md font-medium focus:border-gold focus:outline-none transition-colors"
               >
                 <option value="new">Mới</option>
                 <option value="contacted">Đã liên hệ</option>
@@ -315,12 +310,12 @@ function LeadDrawer({
                 <option value="closed">Đã đóng</option>
                 <option value="spam">Spam</option>
               </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 size-4 pointer-events-none" />
+              <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 size-4 pointer-events-none text-gold" />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-navy mb-2">
+            <label className="block text-label-caps uppercase text-navy/70 mb-3">
               Ghi chú nội bộ
             </label>
             <textarea
@@ -328,10 +323,10 @@ function LeadDrawer({
               onChange={(e) => setNotes(e.target.value)}
               onBlur={() => onNotesChange(notes)}
               rows={4}
-              className="w-full rounded-md border border-cream-300 bg-white px-4 py-3 text-sm focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
+              className="w-full border-b border-navy bg-transparent px-0 py-2 text-body-md focus:border-gold focus:outline-none transition-colors"
               placeholder="Note follow-up, đánh giá..."
             />
-            <p className="text-xs text-navy/40 mt-1">Lưu tự động khi click ra ngoài.</p>
+            <p className="text-[11px] tracking-[0.05em] text-navy/45 mt-2">Lưu tự động khi click ra ngoài.</p>
           </div>
         </div>
       </div>
@@ -348,10 +343,10 @@ function Field({
 }) {
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-wider text-navy/50 mb-1">
+      <p className="text-label-caps uppercase text-navy/55 mb-2">
         {label}
       </p>
-      <div className="text-sm text-navy">{children}</div>
+      <div className="text-body-md text-navy">{children}</div>
     </div>
   );
 }

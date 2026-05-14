@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Button } from "@/components/shared/button";
+import { Eyebrow } from "@/components/shared/eyebrow";
 import { formatDate } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface Subscriber {
   id: string;
@@ -54,61 +56,61 @@ export default function AdminSubscribersPage() {
 
   return (
     <AdminShell>
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+      <div className="space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b-hairline border-gold pb-6">
           <div>
-            <h1 className="font-heading text-3xl font-bold text-navy">Newsletter</h1>
-            <p className="text-navy/60 mt-1">
+            <Eyebrow color="gold">Newsletter</Eyebrow>
+            <h1 className="text-headline-lg font-heading text-navy mt-4">Subscribers</h1>
+            <p className="text-body-md text-navy/65 mt-2">
               {active} active · {subs.length} tổng
             </p>
           </div>
-          <Button variant="outline" onClick={exportCsv} disabled={!subs.length}>
+          <Button variant="outline" size="sm" onClick={exportCsv} disabled={!subs.length}>
             Xuất CSV
           </Button>
         </div>
 
-        <div className="bg-white rounded-2xl border border-cream-300 overflow-hidden">
-          {loading ? (
-            <div className="p-12 text-center text-navy/50">Đang tải…</div>
-          ) : subs.length === 0 ? (
-            <div className="p-12 text-center text-navy/50">Chưa có subscriber.</div>
-          ) : (
-            <table className="w-full text-sm">
-              <thead className="bg-cream-100 text-left">
-                <tr>
-                  <th className="px-4 py-3 font-semibold text-navy">Email</th>
-                  <th className="px-4 py-3 font-semibold text-navy">Nguồn</th>
-                  <th className="px-4 py-3 font-semibold text-navy">Trạng thái</th>
-                  <th className="px-4 py-3 font-semibold text-navy">Ngày</th>
+        {loading ? (
+          <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">Đang tải…</div>
+        ) : subs.length === 0 ? (
+          <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">Chưa có subscriber.</div>
+        ) : (
+          <table className="w-full text-body-sm">
+            <thead>
+              <tr className="border-b-hairline border-gold">
+                <th className="px-4 py-3 text-left text-label-caps uppercase text-navy">Email</th>
+                <th className="px-4 py-3 text-left text-label-caps uppercase text-navy">Nguồn</th>
+                <th className="px-4 py-3 text-left text-label-caps uppercase text-navy">Trạng thái</th>
+                <th className="px-4 py-3 text-left text-label-caps uppercase text-navy">Ngày</th>
+              </tr>
+            </thead>
+            <tbody>
+              {subs.map((s) => (
+                <tr key={s.id} className="border-b border-data-row hover:bg-cream-100 transition-colors">
+                  <td className="px-4 py-4 text-navy">{s.email}</td>
+                  <td className="px-4 py-4 text-navy/65">{s.source ?? "—"}</td>
+                  <td className="px-4 py-4">
+                    <span
+                      className={cn(
+                        "inline-block border-l-2 pl-2 text-label-caps uppercase",
+                        s.status === "active"
+                          ? "border-l-green-600 text-green-700"
+                          : s.status === "pending"
+                            ? "border-l-gold text-gold-700"
+                            : "border-l-navy/30 text-navy/60",
+                      )}
+                    >
+                      {s.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4 text-navy/60 text-[11px] tracking-[0.05em]">
+                    {formatDate(s.subscribed_at)}
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {subs.map((s) => (
-                  <tr key={s.id} className="border-t border-cream-200">
-                    <td className="px-4 py-3 text-navy">{s.email}</td>
-                    <td className="px-4 py-3 text-navy/60">{s.source ?? "—"}</td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                          s.status === "active"
-                            ? "bg-green-50 text-green-700"
-                            : s.status === "pending"
-                              ? "bg-gold/15 text-gold-700"
-                              : "bg-cream-200 text-navy/60"
-                        }`}
-                      >
-                        {s.status}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-navy/60 text-xs">
-                      {formatDate(s.subscribed_at)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </AdminShell>
   );

@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { CheckCircle2, AlertCircle, KeyRound } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Button } from "@/components/shared/button";
+import { Eyebrow } from "@/components/shared/eyebrow";
 
 export default function AdminProfilePage() {
   const [current, setCurrent] = useState("");
@@ -48,18 +49,16 @@ export default function AdminProfilePage() {
 
   return (
     <AdminShell>
-      <div className="max-w-xl space-y-6">
-        <div>
-          <h1 className="font-heading text-3xl font-bold text-navy">Đổi mật khẩu</h1>
-          <p className="text-navy/60 mt-1">
+      <div className="max-w-xl space-y-10">
+        <div className="border-b-hairline border-gold pb-6">
+          <Eyebrow color="gold">Tài khoản</Eyebrow>
+          <h1 className="text-headline-lg font-heading text-navy mt-4">Đổi mật khẩu</h1>
+          <p className="text-body-md text-navy/65 mt-2">
             Cập nhật mật khẩu đăng nhập admin
           </p>
         </div>
 
-        <form
-          onSubmit={onSubmit}
-          className="bg-white rounded-2xl border border-cream-300 p-6 md:p-8 space-y-5"
-        >
+        <form onSubmit={onSubmit} className="space-y-7">
           <Field
             label="Mật khẩu hiện tại"
             value={current}
@@ -81,14 +80,14 @@ export default function AdminProfilePage() {
           />
 
           {error && (
-            <div className="flex items-start gap-2 rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-800">
+            <div className="flex items-start gap-2 border-l-2 border-red-500 bg-red-50 p-3 text-body-sm text-red-800">
               <AlertCircle className="size-4 mt-0.5 shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
           {success && (
-            <div className="flex items-start gap-2 rounded-md bg-green-50 border border-green-200 p-3 text-sm text-green-800">
+            <div className="flex items-start gap-2 border-l-2 border-green-600 bg-green-50 p-3 text-body-sm text-green-800">
               <CheckCircle2 className="size-4 mt-0.5 shrink-0" />
               <span>Đã đổi mật khẩu thành công.</span>
             </div>
@@ -119,16 +118,16 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-navy mb-1.5">{label}</label>
+      <label className="block text-label-caps uppercase text-navy/70 mb-3">{label}</label>
       <input
         type="password"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         autoComplete={autoComplete}
         required
-        className="w-full rounded-md border border-cream-300 bg-white px-4 py-3 text-base focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 min-h-[48px]"
+        className="w-full border-b border-navy bg-transparent px-0 py-2 text-body-md text-navy focus:border-gold focus:outline-none transition-colors min-h-[44px]"
       />
-      {hint && <p className="text-xs text-navy/50 mt-1.5">{hint}</p>}
+      {hint && <p className="text-[11px] tracking-[0.05em] text-navy/55 mt-2">{hint}</p>}
     </div>
   );
 }

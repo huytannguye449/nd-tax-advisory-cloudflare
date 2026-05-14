@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { ArrowLeft } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { PostForm, type PostFormData } from "@/components/admin/post-form";
+import { Eyebrow } from "@/components/shared/eyebrow";
 
 export default function EditPostPage() {
   return (
@@ -61,21 +62,24 @@ function EditPostInner() {
 
   return (
     <AdminShell>
-      <div className="space-y-6">
+      <div className="space-y-8">
         <Link
           href="/admin/posts"
-          className="inline-flex items-center gap-1 text-sm text-navy/60 hover:text-navy"
+          className="inline-flex items-center gap-1 text-label-caps uppercase text-navy/65 hover:text-gold-700 transition-colors"
         >
           <ArrowLeft className="size-4" /> Danh sách bài viết
         </Link>
-        <h1 className="font-heading text-3xl font-bold text-navy">Chỉnh sửa bài viết</h1>
+        <div className="border-b-hairline border-gold pb-6">
+          <Eyebrow color="gold">Edit Post</Eyebrow>
+          <h1 className="text-headline-lg font-heading text-navy mt-4">Chỉnh sửa bài viết</h1>
+        </div>
 
         {loading ? (
-          <div className="bg-white rounded-2xl border border-cream-300 p-12 text-center text-navy/50">
+          <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">
             Đang tải…
           </div>
         ) : error ? (
-          <div className="rounded-md bg-red-50 border border-red-200 p-4 text-red-800">
+          <div className="border-l-2 border-red-500 bg-red-50 p-4 text-body-sm text-red-800">
             {error}
           </div>
         ) : initial ? (

@@ -2,9 +2,10 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, User as UserIcon, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { Button } from "@/components/shared/button";
+import { Eyebrow } from "@/components/shared/eyebrow";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -36,74 +37,63 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md">
-        <div className="flex flex-col items-center mb-8">
+    <div className="min-h-screen bg-cream flex items-center justify-center px-5 py-12">
+      <div className="w-full max-w-sm">
+        {/* Header */}
+        <div className="flex flex-col items-center mb-12">
           <Logo variant="primary" size="lg" />
-          <p className="mt-4 text-sm text-navy/60">Khu vực quản trị</p>
+          <p className="mt-5"><Eyebrow color="navy">Khu vực quản trị</Eyebrow></p>
         </div>
 
-        <form
-          onSubmit={onSubmit}
-          className="bg-white rounded-2xl border border-cream-300 shadow-sm p-8 space-y-5"
-        >
-          <h1 className="text-2xl font-bold text-navy text-center">Đăng nhập</h1>
+        {/* Form panel — flat with gold hairline top */}
+        <div className="border-t-hairline border-gold pt-10">
+          <h1 className="text-headline-sm font-heading text-navy mb-10">Đăng nhập</h1>
 
-          <div>
-            <label className="block text-sm font-medium text-navy mb-1.5">
-              Tài khoản
-            </label>
-            <div className="relative">
-              <UserIcon
-                className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-navy/40"
-                aria-hidden
-              />
+          <form onSubmit={onSubmit} className="space-y-7">
+            <div>
+              <label className="block text-label-caps uppercase text-navy/70 mb-3">
+                Tài khoản
+              </label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 autoComplete="username"
                 required
-                className="w-full rounded-md border border-cream-300 bg-white pl-10 pr-4 py-3 text-base focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 min-h-[48px]"
+                className="w-full border-b border-navy bg-transparent px-0 py-2 text-body-md text-navy focus:border-gold focus:outline-none transition-colors min-h-[44px]"
               />
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-navy mb-1.5">
-              Mật khẩu
-            </label>
-            <div className="relative">
-              <Lock
-                className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-navy/40"
-                aria-hidden
-              />
+            <div>
+              <label className="block text-label-caps uppercase text-navy/70 mb-3">
+                Mật khẩu
+              </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
                 required
-                className="w-full rounded-md border border-cream-300 bg-white pl-10 pr-4 py-3 text-base focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 min-h-[48px]"
+                className="w-full border-b border-navy bg-transparent px-0 py-2 text-body-md text-navy focus:border-gold focus:outline-none transition-colors min-h-[44px]"
               />
             </div>
-          </div>
 
-          {error && (
-            <div className="flex items-start gap-2 rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-800">
-              <AlertCircle className="size-4 mt-0.5 shrink-0" />
-              <span>{error}</span>
-            </div>
-          )}
+            {error && (
+              <div className="flex items-start gap-2 border-l-2 border-red-500 bg-red-50 p-3 text-body-sm text-red-800">
+                <AlertCircle className="size-4 mt-0.5 shrink-0" />
+                <span>{error}</span>
+              </div>
+            )}
 
-          <Button type="submit" size="lg" fullWidth disabled={submitting}>
-            {submitting ? "Đang đăng nhập…" : "Đăng nhập"}
-          </Button>
+            <Button type="submit" size="lg" fullWidth disabled={submitting}>
+              {submitting ? "Đang đăng nhập…" : "Đăng nhập"}
+            </Button>
+          </form>
 
-          <p className="text-xs text-navy/40 text-center pt-2">
+          <p className="text-[11px] tracking-[0.05em] text-navy/45 text-center mt-8">
             Khu vực dành cho quản trị viên NHN&D Tax Advisory
           </p>
-        </form>
+        </div>
       </div>
     </div>
   );

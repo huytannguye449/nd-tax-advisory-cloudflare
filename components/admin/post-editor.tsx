@@ -41,10 +41,10 @@ export function PostEditor({ content, onChange }: PostEditorProps) {
       }),
       Link.configure({
         openOnClick: false,
-        HTMLAttributes: { class: "text-gold-700 underline" },
+        HTMLAttributes: { class: "text-navy underline decoration-gold underline-offset-4" },
       }),
       Image.configure({
-        HTMLAttributes: { class: "rounded-lg my-4" },
+        HTMLAttributes: { class: "my-6 w-full" },
       }),
       Placeholder.configure({
         placeholder: "Bắt đầu viết bài tại đây…",
@@ -55,7 +55,7 @@ export function PostEditor({ content, onChange }: PostEditorProps) {
     editorProps: {
       attributes: {
         class:
-          "prose prose-navy max-w-none min-h-[400px] focus:outline-none px-5 py-4",
+          "prose prose-navy max-w-none min-h-[400px] focus:outline-none px-5 py-6",
       },
     },
     onUpdate: ({ editor }) => {
@@ -65,7 +65,7 @@ export function PostEditor({ content, onChange }: PostEditorProps) {
 
   if (!editor) {
     return (
-      <div className="rounded-lg border border-cream-300 bg-white p-12 text-center text-navy/40">
+      <div className="border-t-hairline border-gold p-12 text-center text-body-md text-navy/45">
         Đang tải editor…
       </div>
     );
@@ -82,8 +82,8 @@ export function PostEditor({ content, onChange }: PostEditorProps) {
   }
 
   return (
-    <div className="rounded-lg border border-cream-300 bg-white overflow-hidden">
-      <div className="flex flex-wrap gap-1 p-2 border-b border-cream-300 bg-cream-50">
+    <div className="border-t-hairline border-gold">
+      <div className="flex flex-wrap gap-1 p-3 border-b-hairline border-gold/40">
         <ToolBtn
           onClick={() => editor.chain().focus().toggleBold().run()}
           active={editor.isActive("bold")}
@@ -183,10 +183,10 @@ function ToolBtn({
       title={label}
       aria-label={label}
       className={cn(
-        "size-9 rounded inline-flex items-center justify-center transition",
+        "size-9 inline-flex items-center justify-center transition-colors",
         active
           ? "bg-navy text-cream"
-          : "text-navy hover:bg-navy/5",
+          : "text-navy hover:bg-cream-100 hover:text-gold-700",
       )}
     >
       <Icon className="size-4" aria-hidden />
@@ -195,5 +195,5 @@ function ToolBtn({
 }
 
 function Divider() {
-  return <span className="self-center w-px h-5 bg-cream-300 mx-1" aria-hidden />;
+  return <span className="self-center w-px h-5 bg-gold/40 mx-1" aria-hidden />;
 }

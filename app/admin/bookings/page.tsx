@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Calendar, Video, Building2, Mail, Phone } from "lucide-react";
+import { Video, Building2, Mail, Phone } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Button } from "@/components/shared/button";
+import { Eyebrow } from "@/components/shared/eyebrow";
+import { cn } from "@/lib/utils";
 
 interface Booking {
   id: string;
@@ -30,11 +32,11 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  pending: "bg-gold/15 text-gold-700",
-  confirmed: "bg-green-50 text-green-700",
-  rescheduled: "bg-blue-50 text-blue-700",
-  cancelled: "bg-red-50 text-red-700",
-  completed: "bg-cream-200 text-navy/60",
+  pending: "border-l-gold text-gold-700",
+  confirmed: "border-l-green-600 text-green-700",
+  rescheduled: "border-l-blue-600 text-blue-700",
+  cancelled: "border-l-red-500 text-red-700",
+  completed: "border-l-navy/30 text-navy/60",
 };
 
 export default function AdminBookingsPage() {
@@ -70,22 +72,25 @@ export default function AdminBookingsPage() {
 
   return (
     <AdminShell>
-      <div className="space-y-6">
-        <div>
-          <h1 className="font-heading text-3xl font-bold text-navy">Lịch hẹn</h1>
-          <p className="text-navy/60 mt-1">{bookings.length} bản ghi</p>
+      <div className="space-y-8">
+        <div className="border-b-hairline border-gold pb-6">
+          <Eyebrow color="gold">Bookings</Eyebrow>
+          <h1 className="text-headline-lg font-heading text-navy mt-4">Lịch hẹn</h1>
+          <p className="text-body-md text-navy/65 mt-2">{bookings.length} bản ghi</p>
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        {/* Filter tabs */}
+        <div className="flex flex-wrap gap-0 border-b-hairline border-gold/30">
           {["all", "pending", "confirmed", "completed", "cancelled"].map((s) => (
             <button
               key={s}
               onClick={() => setFilter(s)}
-              className={`rounded-full px-4 py-2 text-sm font-medium border transition min-h-[36px] ${
+              className={cn(
+                "px-5 py-3 text-label-caps uppercase transition-colors min-h-[44px] -mb-px border-b-2",
                 filter === s
-                  ? "bg-navy text-cream border-navy"
-                  : "bg-white text-navy/70 border-cream-300 hover:border-navy/30"
-              }`}
+                  ? "text-gold border-gold"
+                  : "text-navy/60 hover:text-navy border-transparent",
+              )}
             >
               {s === "all" ? "Tất cả" : STATUS_LABELS[s]}
             </button>
@@ -93,38 +98,34 @@ export default function AdminBookingsPage() {
         </div>
 
         {loading ? (
-          <div className="bg-white rounded-2xl border border-cream-300 p-12 text-center text-navy/50">
-            Đang tải…
-          </div>
+          <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">Đang tải…</div>
         ) : bookings.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-cream-300 p-12 text-center text-navy/50">
-            Không có lịch hẹn nào.
-          </div>
+          <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">Không có lịch hẹn nào.</div>
         ) : (
-          <ul className="space-y-3">
+          <ul>
             {bookings.map((b) => {
               const date = new Date(b.scheduled_at);
               return (
                 <li
                   key={b.id}
-                  className="bg-white rounded-xl border border-cream-300 p-5 md:p-6"
+                  className="border-t-hairline border-gold pt-6 pb-6"
                 >
-                  <div className="grid md:grid-cols-12 gap-4 items-start">
+                  <div className="grid md:grid-cols-12 gap-[var(--spacing-gutter)] items-start">
                     <div className="md:col-span-3">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-gold-700">
+                      <Eyebrow color="gold">
                         {date.toLocaleDateString("vi-VN", {
                           weekday: "short",
                           day: "2-digit",
                           month: "2-digit",
                         })}
-                      </p>
-                      <p className="font-heading text-2xl font-bold text-navy mt-1">
+                      </Eyebrow>
+                      <p className="font-heading text-headline-sm text-navy mt-3">
                         {date.toLocaleTimeString("vi-VN", {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </p>
-                      <p className="text-xs text-navy/50 mt-0.5">
+                      <p className="text-[11px] tracking-[0.05em] text-navy/55 mt-2">
                         {b.duration_min} phút · {b.meeting_type === "online" ? (
                           <span className="inline-flex items-center gap-1"><Video className="size-3" /> Online</span>
                         ) : (
@@ -133,31 +134,27 @@ export default function AdminBookingsPage() {
                       </p>
                     </div>
 
-                    <div className="md:col-span-5 space-y-1">
+                    <div className="md:col-span-5 space-y-2">
                       <p className="font-semibold text-navy">{b.full_name}</p>
-                      <p className="text-sm text-navy/70 flex items-center gap-1.5">
+                      <p className="text-body-sm text-navy/75 flex items-center gap-1.5">
                         <Mail className="size-3.5" /> {b.email}
                       </p>
-                      <p className="text-sm text-navy/70 flex items-center gap-1.5">
+                      <p className="text-body-sm text-navy/75 flex items-center gap-1.5">
                         <Phone className="size-3.5" /> {b.phone}
                       </p>
                       {b.company && (
-                        <p className="text-sm text-navy/60">{b.company}</p>
+                        <p className="text-body-sm text-navy/65">{b.company}</p>
                       )}
-                      <p className="text-sm text-navy/65 mt-2">
-                        <span className="font-semibold">Dịch vụ:</span> {b.service ?? "—"}
+                      <p className="text-body-sm text-navy/70 mt-3">
+                        <span className="text-label-caps uppercase text-navy/55 mr-2">Dịch vụ</span>{b.service ?? "—"}
                       </p>
                       {b.message && (
-                        <p className="text-xs text-navy/55 mt-1 italic">"{b.message}"</p>
+                        <p className="text-body-sm text-navy/60 mt-2 italic">"{b.message}"</p>
                       )}
                     </div>
 
-                    <div className="md:col-span-4 flex flex-col gap-2 items-start md:items-end">
-                      <span
-                        className={`rounded-full px-3 py-1 text-xs font-medium ${
-                          STATUS_COLORS[b.status] ?? ""
-                        }`}
-                      >
+                    <div className="md:col-span-4 flex flex-col gap-3 items-start md:items-end">
+                      <span className={cn("border-l-2 pl-2 text-label-caps uppercase", STATUS_COLORS[b.status] ?? "")}>
                         {STATUS_LABELS[b.status] ?? b.status}
                       </span>
 
@@ -166,52 +163,54 @@ export default function AdminBookingsPage() {
                           href={b.meeting_link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-gold-700 underline truncate max-w-[200px]"
+                          className="text-body-sm text-navy underline decoration-gold underline-offset-4 hover:text-gold-700 truncate max-w-[200px] transition-colors"
                         >
                           {b.meeting_link}
                         </a>
                       )}
 
-                      <div className="flex flex-wrap gap-2 mt-1">
+                      <div className="flex flex-wrap gap-2">
                         {b.status === "pending" && (
                           <>
-                            <button
+                            <Button
+                              size="sm"
+                              variant="primary"
                               onClick={() => {
                                 setEditLinkId(b.id);
                                 setLinkValue(b.meeting_link ?? "");
                               }}
-                              className="text-xs px-3 py-1.5 rounded-md bg-gold text-navy font-semibold hover:bg-gold-600"
                             >
                               Confirm + thêm link
-                            </button>
+                            </Button>
                             <button
                               onClick={() => patch(b.id, { status: "cancelled" })}
-                              className="text-xs px-3 py-1.5 rounded-md bg-red-50 text-red-700 hover:bg-red-100"
+                              className="text-label-caps uppercase px-4 py-2.5 border border-red-300 text-red-700 hover:bg-red-50 transition-colors min-h-[44px]"
                             >
                               Hủy
                             </button>
                           </>
                         )}
                         {b.status === "confirmed" && date < new Date() && (
-                          <button
+                          <Button
+                            size="sm"
+                            variant="outline"
                             onClick={() => patch(b.id, { status: "completed" })}
-                            className="text-xs px-3 py-1.5 rounded-md bg-cream-200 text-navy hover:bg-cream-300"
                           >
                             Đánh dấu hoàn thành
-                          </button>
+                          </Button>
                         )}
                       </div>
                     </div>
                   </div>
 
                   {editLinkId === b.id && (
-                    <div className="mt-4 pt-4 border-t border-cream-200 flex flex-col sm:flex-row gap-2">
+                    <div className="mt-5 pt-5 border-t-hairline border-gold/40 flex flex-col sm:flex-row gap-3">
                       <input
                         type="url"
                         value={linkValue}
                         onChange={(e) => setLinkValue(e.target.value)}
                         placeholder="https://meet.google.com/..."
-                        className="flex-1 rounded-md border border-cream-300 px-3 py-2 text-sm"
+                        className="flex-1 border-b border-navy bg-transparent px-0 py-2 text-body-md focus:border-gold focus:outline-none transition-colors"
                       />
                       <Button
                         size="sm"
