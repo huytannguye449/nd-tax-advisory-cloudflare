@@ -64,7 +64,7 @@ export function leadAutoReplyEmail(lead: {
     <p style="font-size:15px;line-height:1.7">Trong thời gian chờ, bạn có thể:</p>
     <ul style="font-size:15px;line-height:1.8">
       <li><a href="${SITE.url}/dat-lich" style="color:#C9A961;font-weight:600">Đặt lịch tư vấn miễn phí 45 phút</a> — chọn slot phù hợp với bạn</li>
-      <li><a href="${SITE.url}/kien-thuc" style="color:#C9A961;font-weight:600">Đọc blog kiến thức thuế</a> — insights cập nhật hàng tuần</li>
+      <li><a href="${SITE.url}/an-pham" style="color:#C9A961;font-weight:600">Đọc ấn phẩm chuyên môn</a> — insights cập nhật hàng tuần</li>
       <li><a href="${SITE.url}/dich-vu" style="color:#C9A961;font-weight:600">Xem dịch vụ chi tiết</a></li>
     </ul>
     <div style="margin-top:32px;padding-top:24px;border-top:1px solid #F0EBDD;font-size:14px;color:#486581">
@@ -148,7 +148,7 @@ export function newsletterWelcomeEmail(unsubToken: string): {
     <p style="font-size:15px">Mỗi tuần, bạn sẽ nhận một bài viết về thuế chiến lược, cập nhật chính sách, và case study thực tế — biên soạn bởi đội ngũ NHN&D.</p>
     <p style="font-size:15px">Số đầu tiên sẽ đến trong tuần này.</p>
     <div style="margin-top:32px;text-align:center">
-      <a href="${SITE.url}/kien-thuc" style="display:inline-block;background:#0F2B46;color:#FAF7F0;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:600">Đọc bài viết mới nhất</a>
+      <a href="${SITE.url}/an-pham" style="display:inline-block;background:#0F2B46;color:#FAF7F0;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:600">Xem ấn phẩm mới nhất</a>
     </div>
     <p style="margin-top:32px;font-size:12px;color:#486581;text-align:center"><a href="${unsubUrl}" style="color:#486581">Hủy đăng ký</a></p>
   `;

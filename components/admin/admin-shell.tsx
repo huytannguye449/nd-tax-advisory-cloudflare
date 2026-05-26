@@ -9,6 +9,10 @@ import {
   Calendar,
   Mail,
   FileText,
+  FolderOpen,
+  Tags,
+  UserPen,
+  Briefcase,
   KeyRound,
   LogOut,
   Menu,
@@ -23,6 +27,11 @@ const NAV = [
   { href: "/admin/bookings", label: "Lịch hẹn", icon: Calendar },
   { href: "/admin/subscribers", label: "Newsletter", icon: Mail },
   { href: "/admin/posts", label: "Bài viết", icon: FileText },
+  { href: "/admin/categories", label: "Chuyên mục", icon: FolderOpen },
+  { href: "/admin/tags", label: "Tags", icon: Tags },
+  { href: "/admin/people", label: "People", icon: UserPen },
+  { href: "/admin/services", label: "Dịch vụ", icon: Briefcase },
+  { href: "/admin/events", label: "Sự kiện", icon: Calendar },
   { href: "/admin/profile", label: "Đổi mật khẩu", icon: KeyRound },
 ];
 
@@ -64,7 +73,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   useEffect(() => setMobileOpen(false), [pathname]);
 
   async function logout() {
-    await fetch("/api/admin/logout", { method: "POST", credentials: "include" });
+    await fetch("/api/admin/logout", {
+      method: "POST",
+      credentials: "include",
+    });
     router.replace("/admin/login");
   }
 
@@ -73,7 +85,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen flex items-center justify-center bg-cream">
         <div className="text-center">
           <Logo variant="primary" size="md" />
-          <p className="mt-4 text-label-caps uppercase text-navy/60">Đang tải…</p>
+          <p className="mt-4 text-label-caps uppercase text-navy/60">
+            Đang tải…
+          </p>
         </div>
       </div>
     );
@@ -105,15 +119,15 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           <div className="absolute inset-y-0 left-0 w-72 bg-navy flex flex-col border-r-hairline border-gold">
             <div className="h-14 flex items-center justify-between px-5 border-b-hairline border-gold">
               <Logo variant="horizontal" size="sm" />
-              <button onClick={() => setMobileOpen(false)} aria-label="Đóng" className="text-cream hover:text-gold transition-colors">
+              <button
+                onClick={() => setMobileOpen(false)}
+                aria-label="Đóng"
+                className="text-cream hover:text-gold transition-colors"
+              >
                 <X className="size-5" />
               </button>
             </div>
-            <SidebarContent
-              pathname={pathname}
-              user={user}
-              onLogout={logout}
-            />
+            <SidebarContent pathname={pathname} user={user} onLogout={logout} />
           </div>
         </div>
       )}
@@ -130,7 +144,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       {/* Main */}
       <main className="flex-1 lg:ml-64 pt-14 lg:pt-0 bg-cream">
-        <div className="p-5 md:p-10 max-w-[var(--container-default)]">{children}</div>
+        <div className="p-5 md:p-10 max-w-[var(--container-default)]">
+          {children}
+        </div>
       </main>
     </div>
   );
@@ -173,8 +189,12 @@ function SidebarContent({
 
       <div className="border-t-hairline border-gold">
         <div className="px-6 py-4 border-b-hairline border-gold/30">
-          <p className="text-label-caps uppercase text-cream">{user.name || user.username}</p>
-          <p className="text-[11px] tracking-[0.05em] text-cream/55 mt-2">@{user.username} · {user.role}</p>
+          <p className="text-label-caps uppercase text-cream">
+            {user.name || user.username}
+          </p>
+          <p className="text-[11px] tracking-[0.05em] text-cream/55 mt-2">
+            @{user.username} · {user.role}
+          </p>
         </div>
         <button
           onClick={onLogout}

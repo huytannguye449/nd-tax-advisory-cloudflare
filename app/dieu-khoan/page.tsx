@@ -33,11 +33,11 @@ export default function TermsPage() {
             không có sự đồng ý bằng văn bản.
           </p>
 
-          <h2 className="font-heading text-headline-sm text-navy mt-8">2. Nội dung tư vấn trên blog</h2>
+          <h2 className="font-heading text-headline-sm text-navy mt-8">2. Nội dung tư vấn trong ấn phẩm</h2>
           <p className="text-body-md text-navy/80 leading-relaxed">
-            Các bài viết kiến thức trên blog {SITE.url}/kien-thuc mang tính chất tham khảo,
+            Các ấn phẩm chuyên môn trên {SITE.url}/an-pham mang tính chất tham khảo,
             phản ánh quan điểm và kinh nghiệm của tác giả tại thời điểm xuất bản. Luật
-            thuế Việt Nam thay đổi liên tục — chúng tôi không cam kết nội dung blog là cập
+            thuế Việt Nam thay đổi liên tục — chúng tôi không cam kết nội dung ấn phẩm là cập
             nhật pháp lý mới nhất hoặc phù hợp với tình huống cụ thể của doanh nghiệp bạn.
           </p>
           <p className="text-body-md text-navy/80 leading-relaxed">
@@ -46,7 +46,7 @@ export default function TermsPage() {
               cố vấn pháp lý độc lập) trước khi ra quyết định thuế quan trọng.
             </strong>{" "}
             {SITE.name} không chịu trách nhiệm về tổn thất phát sinh từ việc áp dụng nội
-            dung blog mà không có sự tư vấn cá nhân hóa.
+            dung ấn phẩm mà không có sự tư vấn cá nhân hóa.
           </p>
 
           <h2 className="font-heading text-headline-sm text-navy mt-8">3. Form liên hệ và đặt lịch</h2>

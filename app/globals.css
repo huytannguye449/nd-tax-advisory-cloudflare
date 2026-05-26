@@ -5,43 +5,43 @@
   /* ============================================================ */
   /* Brand colors — N&D Tax Advisory Brand Guidelines 2026          */
   /* ============================================================ */
-  --color-navy-50:  #F0F4F8;
-  --color-navy-100: #D9E2EC;
-  --color-navy-200: #BCCCDC;
-  --color-navy-300: #9FB3C8;
+  --color-navy-50: #f0f4f8;
+  --color-navy-100: #d9e2ec;
+  --color-navy-200: #bcccdc;
+  --color-navy-300: #9fb3c8;
   --color-navy-400: #486581;
-  --color-navy-500: #0F2B46;
-  --color-navy:     #0F2B46;
-  --color-navy-600: #0C2238;
-  --color-navy-700: #0A1F33;
-  --color-navy-800: #07182A;
-  --color-navy-900: #05111C;
+  --color-navy-500: #0f2b46;
+  --color-navy: #0f2b46;
+  --color-navy-600: #0c2238;
+  --color-navy-700: #0a1f33;
+  --color-navy-800: #07182a;
+  --color-navy-900: #05111c;
 
-  --color-gold-50:  #FBF7EE;
-  --color-gold-100: #F5EBD2;
-  --color-gold-200: #ECDAB0;
-  --color-gold-300: #E2CC9C;
-  --color-gold-400: #D5B97E;
-  --color-gold-500: #C9A961;
-  --color-gold:     #C9A961;
-  --color-gold-600: #B6964F;
-  --color-gold-700: #9C8044;
-  --color-gold-800: #7F6936;
-  --color-gold-900: #5E4E28;
+  --color-gold-50: #fbf7ee;
+  --color-gold-100: #f5ebd2;
+  --color-gold-200: #ecdab0;
+  --color-gold-300: #e2cc9c;
+  --color-gold-400: #d5b97e;
+  --color-gold-500: #c9a961;
+  --color-gold: #c9a961;
+  --color-gold-600: #b6964f;
+  --color-gold-700: #9c8044;
+  --color-gold-800: #7f6936;
+  --color-gold-900: #5e4e28;
 
-  --color-cream-50:  #FEFCF7;
-  --color-cream-100: #FAF7F0;
-  --color-cream:     #FAF7F0;
-  --color-cream-200: #F0EBDD;
-  --color-cream-300: #E5DFCD;
+  --color-cream-50: #fefcf7;
+  --color-cream-100: #faf7f0;
+  --color-cream: #faf7f0;
+  --color-cream-200: #f0ebdd;
+  --color-cream-300: #e5dfcd;
 
-  --color-charcoal: #1A1A1A;
+  --color-charcoal: #1a1a1a;
 
   /* ============================================================ */
   /* Typography ladder — DESIGN.md (Editorial Authority)            */
   /* ============================================================ */
   --font-heading: var(--font-playfair), Georgia, serif;
-  --font-body:    var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
 
   /* Display: hero only — Playfair 700, tight tracking */
   --text-display-lg: 64px;
@@ -102,15 +102,15 @@
   --spacing-margin-desktop: 64px;
 
   /* Vertical section rhythm (multiples of baseline) */
-  --spacing-section-sm: 64px;   /* 8 × 8 */
-  --spacing-section-md: 96px;   /* 12 × 8 */
-  --spacing-section-lg: 128px;  /* 16 × 8 */
+  --spacing-section-sm: 64px; /* 8 × 8 */
+  --spacing-section-md: 96px; /* 12 × 8 */
+  --spacing-section-lg: 128px; /* 16 × 8 */
 
   /* ============================================================ */
   /* Container                                                     */
   /* ============================================================ */
   --container-default: 1280px;
-  --container-prose:   65ch;
+  --container-prose: 65ch;
 
   /* ============================================================ */
   /* Sharp 0px corners — DESIGN.md mandatory                       */
@@ -140,7 +140,12 @@
     font-feature-settings: "ss01", "cv11";
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     color: var(--color-navy);
     letter-spacing: -0.01em;
@@ -160,7 +165,9 @@
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
@@ -169,20 +176,98 @@
   }
 
   /* iOS form font size to prevent zoom */
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     font-size: 16px;
   }
 
   @media (min-width: 768px) {
-    input, textarea, select {
+    input,
+    textarea,
+    select {
       font-size: inherit;
     }
+  }
+
+  .live-article-content h1 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: var(--text-headline-lg);
+    line-height: var(--text-headline-lg--line-height);
+    color: var(--color-navy);
+  }
+
+  .live-article-content h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgb(15 43 70 / 0.1);
+    padding-bottom: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: var(--text-headline-md);
+    line-height: var(--text-headline-md--line-height);
+    color: var(--color-navy);
+  }
+
+  .live-article-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-family: var(--font-heading);
+    font-size: var(--text-headline-sm);
+    line-height: var(--text-headline-sm--line-height);
+    color: var(--color-navy);
+  }
+
+  .live-article-content p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: rgb(15 43 70 / 0.8);
+    font-size: var(--text-body-lg);
+    line-height: 1.75;
+  }
+
+  .live-article-content ul,
+  .live-article-content ol {
+    margin: 1rem 0 1rem 1.5rem;
+    color: rgb(15 43 70 / 0.8);
+    font-size: var(--text-body-lg);
+    line-height: 1.75;
+  }
+
+  .live-article-content ul {
+    list-style: disc;
+  }
+
+  .live-article-content ol {
+    list-style: decimal;
+  }
+
+  .live-article-content blockquote {
+    margin: 1.5rem 0;
+    border-left: 2px solid var(--color-gold);
+    padding-left: 1.5rem;
+    color: var(--color-gold-700);
+    font-family: var(--font-heading);
+    font-size: var(--text-quote);
+    font-style: italic;
+  }
+
+  .live-article-content a {
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-decoration-color: var(--color-gold);
+    text-underline-offset: 4px;
   }
 }
 
 @layer utilities {
-  .text-balance { text-wrap: balance; }
-  .text-pretty  { text-wrap: pretty; }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
 
   .container-narrow {
     max-width: var(--container-prose);
@@ -229,24 +314,38 @@
 
 /* Marquee animation for client logo carousel */
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 .animate-marquee {
   animation: marquee 40s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee { animation: none; }
+  .animate-marquee {
+    animation: none;
+  }
 }
 
 /* Radix Accordion animations */
 @keyframes accordion-down {
-  from { height: 0; }
-  to { height: var(--radix-accordion-content-height); }
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
 }
 @keyframes accordion-up {
-  from { height: var(--radix-accordion-content-height); }
-  to { height: 0; }
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
 }
 .animate-accordion-down {
   animation: accordion-down 0.2s ease-out;

@@ -1,43 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2, ScrollText, Scale, Building2, GraduationCap } from "lucide-react";
-import { Eyebrow } from "@/components/shared/eyebrow";
+import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/shared/button";
 import { Container } from "@/components/shared/container";
+import { cn } from "@/lib/utils";
 
 type Service = {
+  id?: string;
   slug: string;
   title: string;
-  short: string;
-  description: string;
-  when: readonly string[];
-  process: readonly string[];
-  deliverables: readonly string[];
-  pricing: string;
+  short_description?: string | null;
+  description: string | null;
+  when_items?: readonly string[];
+  process_items?: readonly string[];
+  deliverable_items?: readonly string[];
+  pricing: string | null;
+  cover_url?: string | null;
+  service_people?: Array<{
+    role_label: string | null;
+    person: {
+      name: string;
+      title: string | null;
+      avatar_url?: string | null;
+    } | null;
+  }>;
+  cta_label?: string | null;
+  cta_href?: string | null;
 };
-
-const SERVICE_ICONS: Record<string, React.ReactNode> = {
-  "kien-toan-ke-toan": <ScrollText className="size-5" aria-hidden="true" />,
-  "tu-van-phap-ly": <Scale className="size-5" aria-hidden="true" />,
-  "cau-truc-kinh-doanh": <Building2 className="size-5" aria-hidden="true" />,
-  "dao-tao": <GraduationCap className="size-5" aria-hidden="true" />,
-};
-
-const SERVICE_IMAGES: Record<string, string> = {
-  "kien-toan-ke-toan": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80",
-  "tu-van-phap-ly": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=80",
-  "cau-truc-kinh-doanh": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80",
-  "dao-tao": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&q=80",
-};
-
-const SERVICE_IMAGE_ALTS: Record<string, string> = {
-  "kien-toan-ke-toan": "Chuyên gia kế toán làm việc với báo cáo tài chính",
-  "tu-van-phap-ly": "Tư vấn pháp lý và thuế chuyên nghiệp",
-  "cau-truc-kinh-doanh": "Cấu trúc tổ chức doanh nghiệp hiện đại",
-  "dao-tao": "Buổi đào tạo kế toán và thuế doanh nghiệp",
-};
-
-const SERVICE_NUMBERS = ["01", "02", "03", "04"];
 
 interface ServiceBlockProps {
   service: Service;
@@ -45,136 +34,227 @@ interface ServiceBlockProps {
 }
 
 export function ServiceBlock({ service, idx }: ServiceBlockProps) {
-  const imageFirst = idx % 2 !== 0;
-  const bgClass = idx % 2 === 0 ? "bg-cream" : "bg-cream-100";
-  const imageUrl = SERVICE_IMAGES[service.slug];
-  const imageAlt = SERVICE_IMAGE_ALTS[service.slug];
-  const icon = SERVICE_ICONS[service.slug];
-  const isFirst = idx === 0;
+  const when = service.when_items ?? [];
+  const process = service.process_items ?? [];
+  const deliverables = service.deliverable_items ?? [];
+  const experts =
+    service.service_people?.filter((rel) => rel.person !== null) ?? [];
 
   return (
     <section
       id={service.slug}
-      className={`${bgClass} py-[var(--spacing-section-md)] border-t-hairline border-gold scroll-mt-20`}
+      className={cn(
+        "scroll-mt-24 border-t-hairline border-gold py-14 md:py-16",
+        idx % 2 === 0 ? "bg-cream" : "bg-cream-100",
+      )}
       aria-labelledby={`service-heading-${service.slug}`}
     >
-      <Container size="default">
-        <div
-          className={`flex flex-col gap-[var(--spacing-gutter)] lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center ${
-            imageFirst ? "lg:flex-row-reverse" : ""
-          }`}
-        >
-          {/* Text side */}
-          <div className={imageFirst ? "lg:order-1" : ""}>
-            <div className="flex items-center gap-3 mb-4">
-              <Eyebrow color="gold">
-                {SERVICE_NUMBERS[idx] ?? `0${idx + 1}`}
-              </Eyebrow>
-              <span className="text-gold" aria-hidden="true">{icon}</span>
+      <Container size="wide">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-8">
+            <div className="mb-6 flex items-center gap-3 text-gold-700">
+              <span className="text-label-caps">
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+              <span aria-hidden="true" className="h-px w-10 bg-gold" />
             </div>
+
             <h2
               id={`service-heading-${service.slug}`}
-              className="font-heading text-headline-md text-navy mb-3"
+              className="max-w-4xl font-heading text-headline-lg leading-[1.08] text-navy text-balance"
             >
               {service.title}
             </h2>
-            <p className="text-body-lg text-gold-700 italic mb-6 leading-relaxed">
-              {service.short}
-            </p>
-            <p className="text-body-md text-navy/80 leading-relaxed mb-10">
-              {service.description}
-            </p>
 
-            {/* Data panels — hairline top, no card bg/shadow */}
-            <div className="grid gap-[var(--spacing-gutter)] sm:grid-cols-2 mb-10">
-              {/* Khi nào cần */}
-              <div className="border-t-hairline border-gold pt-5">
-                <h3 className="text-label-caps text-navy uppercase tracking-[0.1em] mb-4">
-                  Khi nào doanh nghiệp cần
-                </h3>
-                <ul className="space-y-2">
-                  {service.when.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-body-sm text-navy/80">
-                      <CheckCircle2
-                        className="size-4 text-gold-600 shrink-0 mt-0.5"
-                        aria-hidden="true"
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            {service.short_description ? (
+              <p className="mt-4 max-w-3xl text-body-md italic leading-relaxed text-gold-700">
+                {service.short_description}
+              </p>
+            ) : null}
 
-              {/* Quy trình */}
-              <div className="border-t-hairline border-gold pt-5">
-                <h3 className="text-label-caps text-navy uppercase tracking-[0.1em] mb-4">
-                  Quy trình triển khai
-                </h3>
-                <ol className="space-y-2">
-                  {service.process.map((step, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-body-sm text-navy/80">
-                      <span
-                        className="size-6 bg-navy text-cream flex items-center justify-center text-xs font-semibold shrink-0"
-                        aria-hidden="true"
-                      >
-                        {i + 1}
-                      </span>
-                      <span className="mt-0.5">{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
+            {service.description ? (
+              <p className="mt-5 max-w-4xl text-body-md leading-relaxed text-navy/72">
+                {service.description}
+              </p>
+            ) : null}
 
-              {/* Sản phẩm bàn giao */}
-              <div className="border-t-hairline border-gold pt-5">
-                <h3 className="text-label-caps text-navy uppercase tracking-[0.1em] mb-4">
-                  Sản phẩm bàn giao
-                </h3>
-                <ul className="space-y-2">
-                  {service.deliverables.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-body-sm text-navy/80">
-                      <CheckCircle2
-                        className="size-4 text-gold-600 shrink-0 mt-0.5"
-                        aria-hidden="true"
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <ServiceCover service={service} priority={idx === 0} />
 
-              {/* Phí tham khảo */}
-              <div className="border-t-hairline border-gold pt-5">
-                <h3 className="text-label-caps text-navy uppercase tracking-[0.1em] mb-4">
-                  Phí tham khảo
-                </h3>
-                <p className="text-body-md text-navy font-semibold">{service.pricing}</p>
-                <p className="text-label-caps text-navy/60 mt-1.5">
-                  * Báo giá chính xác sau buổi tư vấn miễn phí đầu tiên
-                </p>
-              </div>
-            </div>
-
-            <Button asChild variant="primary" size="lg">
-              <Link href="/dat-lich">Đặt lịch tư vấn về dịch vụ này</Link>
-            </Button>
-          </div>
-
-          {/* Image side */}
-          <div className={`relative ${imageFirst ? "lg:order-0" : ""}`}>
-            <div className="overflow-hidden aspect-[3/2]">
-              <Image
-                src={imageUrl}
-                alt={imageAlt}
-                width={900}
-                height={600}
-                className="object-cover w-full h-full"
-                priority={isFirst}
+            <div className="mt-10 grid gap-9 md:grid-cols-2">
+              <ChecklistSection title="Khi nào doanh nghiệp cần" items={when} />
+              <ProcessSection title="Quy trình triển khai" items={process} />
+              <ChecklistSection
+                title="Sản phẩm bàn giao"
+                items={deliverables}
               />
+              <PricingBlock pricing={service.pricing} />
+            </div>
+
+            <div className="mt-10 border-t border-data-row pt-6">
+              <Button asChild variant="primary" size="lg">
+                <Link href={service.cta_href || "/dat-lich"}>
+                  {service.cta_label || "Đặt lịch tư vấn"}
+                </Link>
+              </Button>
             </div>
           </div>
+
+          <aside className="lg:col-span-4" aria-label="Chuyên gia phụ trách">
+            <div className="lg:sticky lg:top-32">
+              <ExpertPanel experts={experts} />
+            </div>
+          </aside>
         </div>
       </Container>
+    </section>
+  );
+}
+
+function ServiceCover({
+  service,
+  priority,
+}: {
+  service: Service;
+  priority?: boolean;
+}) {
+  return (
+    <div className="relative mt-10 aspect-[16/9] overflow-hidden bg-cream-200">
+      {service.cover_url ? (
+        <Image
+          src={service.cover_url}
+          alt={service.title}
+          fill
+          priority={priority}
+          className="object-cover"
+          sizes="(max-width: 1024px) 100vw, 70vw"
+        />
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="font-heading text-4xl font-bold text-navy/20">
+            NHN&amp;D
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ExpertPanel({
+  experts,
+}: {
+  experts: NonNullable<Service["service_people"]>;
+}) {
+  if (experts.length === 0) return null;
+
+  return (
+    <section>
+      <h3 className="border-b border-data-row pb-3 text-label-caps text-gold-700">
+        Chuyên gia phụ trách
+      </h3>
+      <div className="mt-4 space-y-4">
+        {experts.map((rel) => {
+          const person = rel.person;
+          if (!person) return null;
+          return (
+            <article
+              key={`${person.name}-${rel.role_label ?? ""}`}
+              className="grid grid-cols-[56px_1fr] items-center gap-4 border border-data-row bg-cream p-4"
+            >
+              <div className="relative size-14 overflow-hidden rounded-full bg-cream-200">
+                {person.avatar_url ? (
+                  <Image
+                    src={person.avatar_url}
+                    alt={person.name}
+                    fill
+                    className="object-cover"
+                    sizes="64px"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center font-heading text-xl text-navy/30">
+                    {person.name.slice(0, 1)}
+                  </div>
+                )}
+              </div>
+              <div>
+                <h4 className="font-heading text-headline-sm leading-tight text-navy">
+                  {person.name}
+                </h4>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-navy/50">
+                  {rel.role_label || person.title || "Responsible expert"}
+                </p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function ChecklistSection({
+  title,
+  items,
+}: {
+  title: string;
+  items: readonly string[];
+}) {
+  if (items.length === 0) return null;
+  return (
+    <section className="border-t border-data-row pt-4">
+      <h3 className="mb-4 text-label-caps text-gold-700">{title}</h3>
+      <ul className="space-y-3">
+        {items.map((item) => (
+          <li key={item} className="flex gap-3 text-body-md text-navy/72">
+            <CheckCircle2
+              className="mt-0.5 size-5 shrink-0 text-gold-700"
+              aria-hidden="true"
+            />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function ProcessSection({
+  title,
+  items,
+}: {
+  title: string;
+  items: readonly string[];
+}) {
+  if (items.length === 0) return null;
+  return (
+    <section className="border-t border-data-row pt-4">
+      <h3 className="mb-4 text-label-caps text-gold-700">{title}</h3>
+      <ol className="space-y-3">
+        {items.map((item, index) => (
+          <li key={item} className="flex gap-4 text-body-md text-navy/72">
+            <span
+              className="flex size-7 shrink-0 items-center justify-center bg-navy text-body-sm font-semibold text-cream"
+              aria-hidden="true"
+            >
+              {index + 1}
+            </span>
+            <span className="pt-1">{item}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+function PricingBlock({ pricing }: { pricing: string | null }) {
+  if (!pricing) return null;
+  return (
+    <section className="border-t border-data-row pt-4">
+      <h3 className="mb-4 text-label-caps text-gold-700">Phí tham khảo</h3>
+      <div className="border-l-4 border-gold bg-cream-200/60 p-5">
+        <p className="font-heading text-headline-sm leading-snug text-navy">
+          {pricing}
+        </p>
+      </div>
     </section>
   );
 }

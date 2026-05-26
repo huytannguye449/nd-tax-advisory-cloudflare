@@ -1,59 +1,80 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/shared/button";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
 import { Eyebrow } from "@/components/shared/eyebrow";
-import { SERVICES } from "@/lib/data";
+import type { ServiceWithPeople } from "@/lib/supabase/types";
 
-// Service number labels — editorial style
 const SERVICE_NUMBERS = ["01", "02", "03", "04"];
 
 export function ServicesPreview() {
+  const [services, setServices] = useState<ServiceWithPeople[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/public/services", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((json) => {
+        if (!cancelled && json.ok) setServices(json.services ?? []);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <Section bg="cream-100" spacing="md" hairlineTop>
       <Container size="default">
-        {/* Section header — centered */}
-        <div className="flex flex-col items-start gap-4 mb-16">
+        <div className="mb-16 flex flex-col items-start gap-4">
           <Eyebrow color="gold">Dịch vụ</Eyebrow>
           <h2 className="font-heading text-headline-lg text-navy text-balance">
-            Bốn lĩnh vực chuyên sâu
+            Các lĩnh vực chuyên sâu
           </h2>
         </div>
 
-        {/* Service cards grid — hairline-top, no bg, no border sides/bottom */}
-        <div className="grid gap-[var(--spacing-gutter)] sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((service, index) => (
-            <article
-              key={service.slug}
-              className="group flex flex-col gap-6 border-t-hairline border-gold pt-6"
-            >
-              {/* Service number eyebrow */}
-              <Eyebrow color="gold">
-                {SERVICE_NUMBERS[index] ?? `0${index + 1}`}
-              </Eyebrow>
-
-              {/* Title */}
-              <h3 className="font-heading text-headline-md text-navy leading-snug flex-1">
-                {service.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-body-md text-navy/65 leading-relaxed">
-                {service.short}
-              </p>
-
-              {/* Ghost CTA */}
-              <Button variant="ghost" size="sm" asChild className="self-start px-0">
-                <Link
-                  href={`/dich-vu#${service.slug}`}
-                  aria-label={`Xem chi tiết về ${service.title}`}
+        {services.length === 0 ? (
+          <div className="border-t-hairline border-gold pt-10 text-body-md text-navy/55">
+            Đang tải dịch vụ từ CMS...
+          </div>
+        ) : (
+          <div className="grid gap-[var(--spacing-gutter)] sm:grid-cols-2 lg:grid-cols-4">
+            {services.slice(0, 4).map((service, index) => (
+              <article
+                key={service.id}
+                className="group flex flex-col gap-6 border-t-hairline border-gold pt-6"
+              >
+                <Eyebrow color="gold">
+                  {SERVICE_NUMBERS[index] ?? `0${index + 1}`}
+                </Eyebrow>
+                <h3 className="flex-1 font-heading text-headline-md leading-snug text-navy">
+                  {service.title}
+                </h3>
+                {service.short_description && (
+                  <p className="text-body-md leading-relaxed text-navy/65">
+                    {service.short_description}
+                  </p>
+                )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="self-start px-0"
                 >
-                  Xem chi tiết →
-                </Link>
-              </Button>
-            </article>
-          ))}
-        </div>
+                  <Link
+                    href={`/dich-vu#${service.slug}`}
+                    aria-label={`Xem chi tiết về ${service.title}`}
+                  >
+                    Xem chi tiết →
+                  </Link>
+                </Button>
+              </article>
+            ))}
+          </div>
+        )}
       </Container>
     </Section>
   );

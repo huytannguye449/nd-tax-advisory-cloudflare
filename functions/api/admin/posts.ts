@@ -1,4 +1,5 @@
 import { requireAuth } from "../../_lib/auth";
+import { nullableUuid, requiredUuid, uuidList } from "../../_lib/payload";
 import { adminSupabase } from "../../_lib/supabase";
 
 interface Env {
@@ -7,23 +8,12 @@ interface Env {
   ADMIN_JWT_SECRET: string;
 }
 
-const VI_DIACRITICS: Record<string, string> = {
-  à: "a", á: "a", ả: "a", ã: "a", ạ: "a", ă: "a", ằ: "a", ắ: "a", ẳ: "a", ẵ: "a", ặ: "a",
-  â: "a", ầ: "a", ấ: "a", ẩ: "a", ẫ: "a", ậ: "a",
-  è: "e", é: "e", ẻ: "e", ẽ: "e", ẹ: "e", ê: "e", ề: "e", ế: "e", ể: "e", ễ: "e", ệ: "e",
-  ì: "i", í: "i", ỉ: "i", ĩ: "i", ị: "i",
-  ò: "o", ó: "o", ỏ: "o", õ: "o", ọ: "o", ô: "o", ồ: "o", ố: "o", ổ: "o", ỗ: "o", ộ: "o",
-  ơ: "o", ờ: "o", ớ: "o", ở: "o", ỡ: "o", ợ: "o",
-  ù: "u", ú: "u", ủ: "u", ũ: "u", ụ: "u", ư: "u", ừ: "u", ứ: "u", ử: "u", ữ: "u", ự: "u",
-  ỳ: "y", ý: "y", ỷ: "y", ỹ: "y", ỵ: "y", đ: "d",
-};
-
 function viSlugify(input: string): string {
   return input
     .toLowerCase()
-    .split("")
-    .map((c) => VI_DIACRITICS[c] ?? c)
-    .join("")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\u0111/g, "d")
     .replace(/[^a-z0-9\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-")
@@ -35,37 +25,58 @@ function readingTime(text: string): number {
   return Math.max(1, Math.ceil(words / 200));
 }
 
+function nullableText(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
+}
+
+function parseTagIds(value: unknown): string[] {
+  return uuidList(value);
+}
+
 export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const auth = await requireAuth(request, env.ADMIN_JWT_SECRET);
   if (auth instanceof Response) return auth;
 
   const url = new URL(request.url);
   const status = url.searchParams.get("status");
-  const id = url.searchParams.get("id");
+  const id = requiredUuid(url.searchParams.get("id"));
 
   const supabase = adminSupabase(env);
 
   if (id) {
-    const { data, error } = await supabase
-      .from("posts")
-      .select("*, category:categories(id, name, slug), author:authors(id, name, slug)")
-      .eq("id", id)
-      .maybeSingle();
-    if (error || !data) return json({ ok: false, error: "Không tìm thấy" }, 404);
-    return json({ ok: true, post: data });
+    const [{ data, error }, { data: tagRows, error: tagError }] =
+      await Promise.all([
+        supabase
+          .from("posts")
+          .select(
+            "*, category:categories(id, name, slug), person:people(id, name, slug), author:authors(id, name, slug)",
+          )
+          .eq("id", id)
+          .maybeSingle(),
+        supabase.from("post_tags").select("tag_id").eq("post_id", id),
+      ]);
+    if (error || !data)
+      return json({ ok: false, error: "Khong tim thay" }, 404);
+    if (tagError) return json({ ok: false, error: "Khong tai duoc tags" }, 500);
+    return json({
+      ok: true,
+      post: { ...data, tag_ids: (tagRows ?? []).map((row) => row.tag_id) },
+    });
   }
 
   let query = supabase
     .from("posts")
     .select(
-      "id, slug, title, excerpt, status, reading_time, published_at, scheduled_at, is_featured, view_count, created_at, updated_at, category:categories(name, slug), author:authors(name, slug)",
+      "id, slug, title, excerpt, status, reading_time, published_at, scheduled_at, is_featured, view_count, created_at, updated_at, category:categories(name, slug), person:people(name, slug), author:authors(name, slug)",
     )
     .order("created_at", { ascending: false });
 
   if (status && status !== "all") query = query.eq("status", status);
 
   const { data, error } = await query;
-  if (error) return json({ ok: false, error: "Không tải được" }, 500);
+  if (error) return json({ ok: false, error: "Khong tai duoc" }, 500);
   return json({ ok: true, posts: data ?? [] });
 };
 
@@ -79,40 +90,45 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     excerpt?: string;
     cover_url?: string;
     body_mdx: string;
-    category_id?: string;
-    author_id?: string;
+    category_id?: string | null;
+    author_id?: string | null;
+    people_id?: string | null;
     status?: "draft" | "scheduled" | "published";
-    published_at?: string;
-    scheduled_at?: string;
+    published_at?: string | null;
+    scheduled_at?: string | null;
     is_featured?: boolean;
     seo_title?: string;
     seo_description?: string;
+    tag_ids?: string[];
   };
 
   if (!body.title || !body.body_mdx) {
-    return json({ ok: false, error: "Tiêu đề và nội dung là bắt buộc" }, 400);
+    return json({ ok: false, error: "Title va noi dung la bat buoc" }, 400);
   }
 
   const supabase = adminSupabase(env);
-  const slug = body.slug?.trim() || viSlugify(body.title);
+  const slug = viSlugify(body.slug?.trim() || body.title);
+  if (!slug) return json({ ok: false, error: "Slug khong hop le" }, 400);
 
   const insertData = {
     title: body.title,
     slug,
-    excerpt: body.excerpt || null,
-    cover_url: body.cover_url || null,
+    excerpt: nullableText(body.excerpt),
+    cover_url: nullableText(body.cover_url),
     body_mdx: body.body_mdx,
-    category_id: body.category_id || null,
-    author_id: body.author_id || null,
+    category_id: nullableUuid(body.category_id) ?? null,
+    author_id: nullableUuid(body.author_id) ?? null,
+    people_id: nullableUuid(body.people_id) ?? null,
     status: body.status ?? "draft",
     published_at:
       body.status === "published"
-        ? body.published_at ?? new Date().toISOString()
+        ? (nullableText(body.published_at) ?? new Date().toISOString())
         : null,
-    scheduled_at: body.status === "scheduled" ? body.scheduled_at ?? null : null,
+    scheduled_at:
+      body.status === "scheduled" ? nullableText(body.scheduled_at) : null,
     is_featured: body.is_featured ?? false,
-    seo_title: body.seo_title || null,
-    seo_description: body.seo_description || null,
+    seo_title: nullableText(body.seo_title),
+    seo_description: nullableText(body.seo_description),
     reading_time: readingTime(body.body_mdx),
   };
 
@@ -126,6 +142,15 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     console.error("[posts-insert]", error);
     return json({ ok: false, error: error.message }, 500);
   }
+
+  const tagIds = parseTagIds(body.tag_ids);
+  if (tagIds.length > 0) {
+    const { error: tagsError } = await supabase
+      .from("post_tags")
+      .insert(tagIds.map((tag_id) => ({ post_id: data.id, tag_id })));
+    if (tagsError) return json({ ok: false, error: tagsError.message }, 500);
+  }
+
   return json({ ok: true, post: data }, 201);
 };
 
@@ -133,8 +158,11 @@ export const onRequestPatch: PagesFunction<Env> = async ({ request, env }) => {
   const auth = await requireAuth(request, env.ADMIN_JWT_SECRET);
   if (auth instanceof Response) return auth;
 
-  const body = (await request.json()) as Record<string, unknown> & { id?: string };
-  if (!body.id) return json({ ok: false, error: "Thiếu id" }, 400);
+  const body = (await request.json()) as Record<string, unknown> & {
+    id?: string;
+  };
+  const postId = requiredUuid(body.id);
+  if (!postId) return json({ ok: false, error: "Thieu id" }, 400);
 
   const update: Record<string, unknown> = {
     updated_at: new Date().toISOString(),
@@ -143,19 +171,38 @@ export const onRequestPatch: PagesFunction<Env> = async ({ request, env }) => {
   for (const key of [
     "title",
     "slug",
+    "body_mdx",
+    "status",
+    "is_featured",
+  ] as const) {
+    if (key in body) update[key] = body[key];
+  }
+
+  for (const key of [
     "excerpt",
     "cover_url",
-    "body_mdx",
-    "category_id",
-    "author_id",
-    "status",
     "published_at",
     "scheduled_at",
-    "is_featured",
     "seo_title",
     "seo_description",
   ] as const) {
-    if (key in body) update[key] = body[key];
+    if (key in body) update[key] = nullableText(body[key]);
+  }
+
+  for (const key of ["category_id", "author_id", "people_id"] as const) {
+    if (key in body) update[key] = nullableUuid(body[key]) ?? null;
+  }
+
+  if (typeof body.slug === "string" || typeof body.title === "string") {
+    const source =
+      typeof body.slug === "string" && body.slug.trim()
+        ? body.slug
+        : typeof body.title === "string"
+          ? body.title
+          : "";
+    const slug = viSlugify(source);
+    if (!slug) return json({ ok: false, error: "Slug khong hop le" }, 400);
+    update.slug = slug;
   }
 
   if (typeof body.body_mdx === "string") {
@@ -167,11 +214,32 @@ export const onRequestPatch: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   const supabase = adminSupabase(env);
-  const { error } = await supabase.from("posts").update(update).eq("id", body.id);
+  const { error } = await supabase
+    .from("posts")
+    .update(update)
+    .eq("id", postId);
   if (error) {
     console.error("[posts-update]", error);
     return json({ ok: false, error: error.message }, 500);
   }
+
+  if ("tag_ids" in body) {
+    const tagIds = parseTagIds(body.tag_ids);
+    const { error: deleteError } = await supabase
+      .from("post_tags")
+      .delete()
+      .eq("post_id", postId);
+    if (deleteError)
+      return json({ ok: false, error: deleteError.message }, 500);
+    if (tagIds.length > 0) {
+      const { error: insertError } = await supabase
+        .from("post_tags")
+        .insert(tagIds.map((tag_id) => ({ post_id: postId, tag_id })));
+      if (insertError)
+        return json({ ok: false, error: insertError.message }, 500);
+    }
+  }
+
   return json({ ok: true });
 };
 
@@ -180,8 +248,8 @@ export const onRequestDelete: PagesFunction<Env> = async ({ request, env }) => {
   if (auth instanceof Response) return auth;
 
   const url = new URL(request.url);
-  const id = url.searchParams.get("id");
-  if (!id) return json({ ok: false, error: "Thiếu id" }, 400);
+  const id = requiredUuid(url.searchParams.get("id"));
+  if (!id) return json({ ok: false, error: "Thieu id" }, 400);
 
   const supabase = adminSupabase(env);
   const { error } = await supabase.from("posts").delete().eq("id", id);

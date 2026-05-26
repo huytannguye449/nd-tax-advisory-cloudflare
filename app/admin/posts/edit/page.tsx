@@ -48,6 +48,8 @@ function EditPostInner() {
           body_mdx: p.body_mdx ?? "",
           category_id: p.category?.id ?? p.category_id ?? "",
           author_id: p.author?.id ?? p.author_id ?? "",
+          people_id: p.person?.id ?? p.people_id ?? "",
+          tag_ids: p.tag_ids ?? [],
           status: p.status ?? "draft",
           scheduled_at: p.scheduled_at
             ? new Date(p.scheduled_at).toISOString().slice(0, 16)
@@ -71,7 +73,9 @@ function EditPostInner() {
         </Link>
         <div className="border-b-hairline border-gold pb-6">
           <Eyebrow color="gold">Edit Post</Eyebrow>
-          <h1 className="text-headline-lg font-heading text-navy mt-4">Chỉnh sửa bài viết</h1>
+          <h1 className="text-headline-lg font-heading text-navy mt-4">
+            Chỉnh sửa bài viết
+          </h1>
         </div>
 
         {loading ? (

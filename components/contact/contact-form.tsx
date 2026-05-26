@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 import { leadSchema, type LeadInput } from "@/lib/validators";
 import { Button } from "@/components/shared/button";
 import { Turnstile } from "@/components/shared/turnstile";
-import { SERVICES } from "@/lib/data";
 import { cn } from "@/lib/utils";
+
+interface ServiceOption {
+  id: string;
+  slug: string;
+  title: string;
+}
 
 const COMPANY_SIZES = [
   { value: "<10", label: "Dưới 10 nhân sự" },
@@ -18,11 +23,25 @@ const COMPANY_SIZES = [
 ];
 
 export function ContactForm({ source = "lien-he" }: { source?: string }) {
-  const [submitState, setSubmitState] = useState<"idle" | "loading" | "success" | "error">(
-    "idle",
-  );
+  const [submitState, setSubmitState] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [services, setServices] = useState<ServiceOption[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/public/services", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((json) => {
+        if (!cancelled && json.ok) setServices(json.services ?? []);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const {
     register,
@@ -61,10 +80,12 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
     return (
       <div className="border-t-hairline border-gold pt-8 text-center">
         <CheckCircle2 className="mx-auto size-12 text-gold-700" aria-hidden />
-        <h3 className="mt-4 font-heading text-headline-sm text-navy">Cảm ơn bạn đã liên hệ</h3>
+        <h3 className="mt-4 font-heading text-headline-sm text-navy">
+          Cảm ơn bạn đã liên hệ
+        </h3>
         <p className="mt-3 text-body-md text-navy/80 max-w-md mx-auto leading-relaxed">
-          Chúng tôi đã nhận được yêu cầu của bạn và sẽ phản hồi qua email trong vòng 4 giờ
-          làm việc. Vui lòng kiểm tra hộp thư.
+          Chúng tôi đã nhận được yêu cầu của bạn và sẽ phản hồi qua email trong
+          vòng 4 giờ làm việc. Vui lòng kiểm tra hộp thư.
         </p>
         <Button
           className="mt-6"
@@ -134,9 +155,9 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
 
       <Field label="Dịch vụ quan tâm">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
-          {SERVICES.map((s) => (
+          {services.map((s) => (
             <label
-              key={s.slug}
+              key={s.id}
               className="flex items-start gap-3 border-t border-cream-300 pt-3 cursor-pointer hover:border-gold transition"
             >
               <input
@@ -226,7 +247,11 @@ function Field({
       </label>
       {children}
       {error && (
-        <p className={cn("mt-1 text-body-sm text-red-600 flex items-center gap-1")}>
+        <p
+          className={cn(
+            "mt-1 text-body-sm text-red-600 flex items-center gap-1",
+          )}
+        >
           <AlertCircle className="size-3.5" aria-hidden />
           {error}
         </p>

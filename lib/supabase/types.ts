@@ -3,9 +3,20 @@
  */
 
 export type PostStatus = "draft" | "scheduled" | "published";
+export type PublishStatus = "draft" | "published";
+export type EventStatus = "draft" | "published" | "upcoming" | "past";
 export type LeadStatus = "new" | "contacted" | "qualified" | "closed" | "spam";
-export type BookingStatus = "pending" | "confirmed" | "rescheduled" | "cancelled" | "completed";
-export type SubscriberStatus = "pending" | "active" | "unsubscribed" | "bounced";
+export type BookingStatus =
+  | "pending"
+  | "confirmed"
+  | "rescheduled"
+  | "cancelled"
+  | "completed";
+export type SubscriberStatus =
+  | "pending"
+  | "active"
+  | "unsubscribed"
+  | "bounced";
 export type MeetingType = "online" | "offline";
 
 export interface CategoryRow {
@@ -59,6 +70,43 @@ export interface AuthorInsert {
   created_at?: string;
 }
 
+export interface PersonRow {
+  id: string;
+  legacy_author_id: string | null;
+  slug: string;
+  name: string;
+  title: string | null;
+  bio: string | null;
+  avatar_url: string | null;
+  expertise: string[];
+  credentials: string[];
+  social_links: Record<string, string>;
+  status: PublishStatus;
+  display_order: number;
+  is_featured: boolean;
+  profile_enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+export interface PersonInsert {
+  id?: string;
+  legacy_author_id?: string | null;
+  slug: string;
+  name: string;
+  title?: string | null;
+  bio?: string | null;
+  avatar_url?: string | null;
+  expertise?: string[];
+  credentials?: string[];
+  social_links?: Record<string, string>;
+  status?: PublishStatus;
+  display_order?: number;
+  is_featured?: boolean;
+  profile_enabled?: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface PostRow {
   id: string;
   slug: string;
@@ -69,6 +117,7 @@ export interface PostRow {
   body_html: string | null;
   reading_time: number | null;
   author_id: string | null;
+  people_id: string | null;
   category_id: string | null;
   status: PostStatus;
   published_at: string | null;
@@ -91,6 +140,7 @@ export interface PostInsert {
   body_html?: string | null;
   reading_time?: number | null;
   author_id?: string | null;
+  people_id?: string | null;
   category_id?: string | null;
   status?: PostStatus;
   published_at?: string | null;
@@ -111,6 +161,102 @@ export interface PostTagRow {
 export interface PostTagInsert {
   post_id: string;
   tag_id: string;
+}
+
+export interface ServiceRow {
+  id: string;
+  slug: string;
+  title: string;
+  short_description: string | null;
+  description: string | null;
+  cover_url: string | null;
+  status: PublishStatus;
+  display_order: number;
+  pricing: string | null;
+  cta_label: string | null;
+  cta_href: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+  when_items: string[];
+  process_items: string[];
+  deliverable_items: string[];
+  created_at: string;
+  updated_at: string;
+}
+export interface ServiceInsert {
+  id?: string;
+  slug: string;
+  title: string;
+  short_description?: string | null;
+  description?: string | null;
+  cover_url?: string | null;
+  status?: PublishStatus;
+  display_order?: number;
+  pricing?: string | null;
+  cta_label?: string | null;
+  cta_href?: string | null;
+  seo_title?: string | null;
+  seo_description?: string | null;
+  when_items?: string[];
+  process_items?: string[];
+  deliverable_items?: string[];
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ServicePersonRow {
+  service_id: string;
+  person_id: string;
+  role_label: string | null;
+  display_order: number;
+}
+export interface ServicePersonInsert {
+  service_id: string;
+  person_id: string;
+  role_label?: string | null;
+  display_order?: number;
+}
+
+export interface EventRow {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  cover_url: string | null;
+  event_date: string | null;
+  location: string | null;
+  format: string | null;
+  status: EventStatus;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+export interface EventInsert {
+  id?: string;
+  slug: string;
+  title: string;
+  excerpt?: string | null;
+  cover_url?: string | null;
+  event_date?: string | null;
+  location?: string | null;
+  format?: string | null;
+  status?: EventStatus;
+  display_order?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface EventPersonRow {
+  event_id: string;
+  person_id: string;
+  role_label: string | null;
+  display_order: number;
+}
+export interface EventPersonInsert {
+  event_id: string;
+  person_id: string;
+  role_label?: string | null;
+  display_order?: number;
 }
 
 export interface LeadRow {
@@ -210,13 +356,78 @@ export type Database = {
   };
   public: {
     Tables: {
-      categories: { Row: CategoryRow; Insert: CategoryInsert; Update: Partial<CategoryInsert>; Relationships: [] };
-      tags: { Row: TagRow; Insert: TagInsert; Update: Partial<TagInsert>; Relationships: [] };
-      authors: { Row: AuthorRow; Insert: AuthorInsert; Update: Partial<AuthorInsert>; Relationships: [] };
-      posts: { Row: PostRow; Insert: PostInsert; Update: Partial<PostInsert>; Relationships: [] };
-      post_tags: { Row: PostTagRow; Insert: PostTagInsert; Update: PostTagInsert; Relationships: [] };
-      leads: { Row: LeadRow; Insert: LeadInsert; Update: Partial<LeadInsert>; Relationships: [] };
-      bookings: { Row: BookingRow; Insert: BookingInsert; Update: Partial<BookingInsert>; Relationships: [] };
+      categories: {
+        Row: CategoryRow;
+        Insert: CategoryInsert;
+        Update: Partial<CategoryInsert>;
+        Relationships: [];
+      };
+      tags: {
+        Row: TagRow;
+        Insert: TagInsert;
+        Update: Partial<TagInsert>;
+        Relationships: [];
+      };
+      authors: {
+        Row: AuthorRow;
+        Insert: AuthorInsert;
+        Update: Partial<AuthorInsert>;
+        Relationships: [];
+      };
+      people: {
+        Row: PersonRow;
+        Insert: PersonInsert;
+        Update: Partial<PersonInsert>;
+        Relationships: [];
+      };
+      posts: {
+        Row: PostRow;
+        Insert: PostInsert;
+        Update: Partial<PostInsert>;
+        Relationships: [];
+      };
+      post_tags: {
+        Row: PostTagRow;
+        Insert: PostTagInsert;
+        Update: PostTagInsert;
+        Relationships: [];
+      };
+      services: {
+        Row: ServiceRow;
+        Insert: ServiceInsert;
+        Update: Partial<ServiceInsert>;
+        Relationships: [];
+      };
+      service_people: {
+        Row: ServicePersonRow;
+        Insert: ServicePersonInsert;
+        Update: Partial<ServicePersonInsert>;
+        Relationships: [];
+      };
+      events: {
+        Row: EventRow;
+        Insert: EventInsert;
+        Update: Partial<EventInsert>;
+        Relationships: [];
+      };
+      event_people: {
+        Row: EventPersonRow;
+        Insert: EventPersonInsert;
+        Update: Partial<EventPersonInsert>;
+        Relationships: [];
+      };
+      leads: {
+        Row: LeadRow;
+        Insert: LeadInsert;
+        Update: Partial<LeadInsert>;
+        Relationships: [];
+      };
+      bookings: {
+        Row: BookingRow;
+        Insert: BookingInsert;
+        Update: Partial<BookingInsert>;
+        Relationships: [];
+      };
       subscribers: {
         Row: SubscriberRow;
         Insert: SubscriberInsert;
@@ -235,11 +446,26 @@ export type Post = PostRow;
 export type Category = CategoryRow;
 export type Tag = TagRow;
 export type Author = AuthorRow;
+export type Person = PersonRow;
+export type Service = ServiceRow;
+export type Event = EventRow;
 export type Lead = LeadRow;
 export type Booking = BookingRow;
 export type Subscriber = SubscriberRow;
 
 export type PostWithMeta = PostRow & {
   author: Pick<AuthorRow, "name" | "slug" | "avatar_url" | "title"> | null;
+  person: Pick<PersonRow, "name" | "slug" | "avatar_url" | "title"> | null;
   category: Pick<CategoryRow, "name" | "slug"> | null;
+};
+
+export type ServiceWithPeople = ServiceRow & {
+  service_people?: Array<{
+    role_label: string | null;
+    display_order: number;
+    person: Pick<
+      PersonRow,
+      "id" | "slug" | "name" | "title" | "avatar_url"
+    > | null;
+  }>;
 };

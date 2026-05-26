@@ -22,6 +22,7 @@ interface Post {
   view_count: number;
   created_at: string;
   category: { name: string; slug: string } | null;
+  person: { name: string; slug: string } | null;
   author: { name: string; slug: string } | null;
 }
 
@@ -71,8 +72,12 @@ export default function AdminPostsPage() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b-hairline border-gold pb-6">
           <div>
             <Eyebrow color="gold">Content</Eyebrow>
-            <h1 className="text-headline-lg font-heading text-navy mt-4">Bài viết</h1>
-            <p className="text-body-md text-navy/65 mt-2">{posts.length} bài viết</p>
+            <h1 className="text-headline-lg font-heading text-navy mt-4">
+              Bài viết
+            </h1>
+            <p className="text-body-md text-navy/65 mt-2">
+              {posts.length} bài viết
+            </p>
           </div>
           <Button asChild variant="primary" size="sm">
             <Link href="/admin/posts/new">
@@ -99,10 +104,14 @@ export default function AdminPostsPage() {
         </div>
 
         {loading ? (
-          <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">Đang tải…</div>
+          <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">
+            Đang tải…
+          </div>
         ) : posts.length === 0 ? (
           <div className="border-t-hairline border-gold pt-12 text-center">
-            <p className="text-body-md text-navy/55 mb-5">Chưa có bài viết nào.</p>
+            <p className="text-body-md text-navy/55 mb-5">
+              Chưa có bài viết nào.
+            </p>
             <Button asChild variant="primary" size="sm">
               <Link href="/admin/posts/new">
                 <Plus className="size-4" /> Viết bài đầu tiên
@@ -119,7 +128,12 @@ export default function AdminPostsPage() {
                 <div className="grid md:grid-cols-12 gap-[var(--spacing-gutter)] items-start">
                   <div className="md:col-span-7 min-w-0">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className={cn("border-l-2 pl-2 text-label-caps uppercase", STATUS_COLORS[p.status])}>
+                      <span
+                        className={cn(
+                          "border-l-2 pl-2 text-label-caps uppercase",
+                          STATUS_COLORS[p.status],
+                        )}
+                      >
                         {STATUS_LABELS[p.status]}
                       </span>
                       {p.is_featured && (
@@ -142,7 +156,8 @@ export default function AdminPostsPage() {
                       </p>
                     )}
                     <p className="text-[11px] tracking-[0.05em] text-navy/45 mt-3">
-                      {p.author?.name && `${p.author.name} · `}
+                      {(p.person?.name ?? p.author?.name) &&
+                        `${p.person?.name ?? p.author?.name} · `}
                       {p.published_at
                         ? `Xuất bản ${formatDate(p.published_at)}`
                         : `Tạo ${formatDate(p.created_at)}`}
@@ -154,7 +169,7 @@ export default function AdminPostsPage() {
                   <div className="md:col-span-5 flex flex-wrap gap-3 md:justify-end">
                     {p.status === "published" && (
                       <a
-                        href={`/kien-thuc/${p.slug}`}
+                        href={`/an-pham/${p.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-label-caps uppercase px-4 py-2.5 border border-navy/30 text-navy hover:border-gold hover:text-gold transition-colors min-h-[44px]"

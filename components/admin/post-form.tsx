@@ -18,6 +18,17 @@ interface Author {
   name: string;
   title: string | null;
 }
+interface Person {
+  id: string;
+  slug: string;
+  name: string;
+  title: string | null;
+}
+interface Tag {
+  id: string;
+  slug: string;
+  name: string;
+}
 
 export interface PostFormData {
   id?: string;
@@ -28,6 +39,8 @@ export interface PostFormData {
   body_mdx: string;
   category_id: string;
   author_id: string;
+  people_id: string;
+  tag_ids: string[];
   status: "draft" | "scheduled" | "published";
   scheduled_at: string;
   is_featured: boolean;
@@ -52,6 +65,8 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
       body_mdx: "",
       category_id: "",
       author_id: "",
+      people_id: "",
+      tag_ids: [],
       status: "draft",
       scheduled_at: "",
       is_featured: false,
@@ -62,6 +77,8 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [authors, setAuthors] = useState<Author[]>([]);
+  const [people, setPeople] = useState<Person[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -73,16 +90,30 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
         if (d.ok) {
           setCategories(d.categories);
           setAuthors(d.authors);
+          setPeople(d.people ?? d.authors ?? []);
+          setTags(d.tags ?? []);
         }
       });
   }, []);
 
-  function update<K extends keyof PostFormData>(key: K, value: PostFormData[K]) {
+  function update<K extends keyof PostFormData>(
+    key: K,
+    value: PostFormData[K],
+  ) {
     setData((prev) => ({ ...prev, [key]: value }));
   }
 
   function autoFillSlug() {
     if (!data.slug && data.title) update("slug", viSlugify(data.title));
+  }
+
+  function toggleTag(tagId: string) {
+    setData((prev) => ({
+      ...prev,
+      tag_ids: prev.tag_ids.includes(tagId)
+        ? prev.tag_ids.filter((id) => id !== tagId)
+        : [...prev.tag_ids, tagId],
+    }));
   }
 
   async function onSubmit(e: FormEvent) {
@@ -100,7 +131,10 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
     try {
       const payload = {
         ...data,
-        slug: data.slug || viSlugify(data.title),
+        slug: viSlugify(data.slug || data.title),
+        category_id: data.category_id || null,
+        author_id: data.author_id || null,
+        people_id: data.people_id || null,
         scheduled_at: data.scheduled_at || null,
       };
 
@@ -119,7 +153,10 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
 
       if (!isEdit && json.post?.id) {
         setSuccess("Đã tạo bài viết.");
-        setTimeout(() => router.push(`/admin/posts/edit?id=${json.post.id}`), 600);
+        setTimeout(
+          () => router.push(`/admin/posts/edit?id=${json.post.id}`),
+          600,
+        );
       } else {
         setSuccess("Đã lưu thay đổi.");
         setTimeout(() => setSuccess(""), 2500);
@@ -142,7 +179,10 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid lg:grid-cols-12 gap-[var(--spacing-gutter)]">
+    <form
+      onSubmit={onSubmit}
+      className="grid lg:grid-cols-12 gap-[var(--spacing-gutter)]"
+    >
       <div className="lg:col-span-8 space-y-7">
         <div>
           <label className={labelCls}>
@@ -163,7 +203,7 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
           <label className={labelCls}>Slug URL</label>
           <div className="flex items-center border-b border-navy">
             <span className="text-label-caps uppercase text-navy/55 pr-3 border-r border-navy/20">
-              /kien-thuc/
+              /an-pham/
             </span>
             <input
               type="text"
@@ -220,7 +260,9 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
           <label className={labelCls}>Trạng thái</label>
           <select
             value={data.status}
-            onChange={(e) => update("status", e.target.value as PostFormData["status"])}
+            onChange={(e) =>
+              update("status", e.target.value as PostFormData["status"])
+            }
             className={inputCls}
           >
             <option value="draft">Draft (chưa xuất bản)</option>
@@ -242,14 +284,17 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
         )}
 
         <div>
-          <label className={labelCls}>Tác giả</label>
+          <label className={labelCls}>People / Tác giả</label>
           <select
-            value={data.author_id}
-            onChange={(e) => update("author_id", e.target.value)}
+            value={data.people_id || data.author_id}
+            onChange={(e) => {
+              update("people_id", e.target.value);
+              update("author_id", "");
+            }}
             className={inputCls}
           >
             <option value="">— Chưa chọn —</option>
-            {authors.map((a) => (
+            {people.map((a) => (
               <option key={a.id} value={a.id}>
                 {a.name} {a.title ? `· ${a.title}` : ""}
               </option>
@@ -271,6 +316,30 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
               </option>
             ))}
           </select>
+        </div>
+
+        <div>
+          <label className={labelCls}>Tags</label>
+          {tags.length === 0 ? (
+            <p className="text-body-sm text-navy/45">Chưa có tag nào.</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <label
+                  key={tag.id}
+                  className="inline-flex min-h-[36px] cursor-pointer items-center gap-2 border border-cream-300 bg-white px-3 py-1.5 text-body-sm text-navy/70 transition-colors hover:border-gold"
+                >
+                  <input
+                    type="checkbox"
+                    checked={data.tag_ids.includes(tag.id)}
+                    onChange={() => toggleTag(tag.id)}
+                    className="size-3.5 accent-gold"
+                  />
+                  {tag.name}
+                </label>
+              ))}
+            </div>
+          )}
         </div>
 
         <div>
@@ -298,14 +367,20 @@ export function PostForm({ initial }: { initial: PostFormData | null }) {
             onChange={(e) => update("is_featured", e.target.checked)}
             className="size-4 accent-gold"
           />
-          <span className="text-body-md text-navy">Bài viết nổi bật (featured)</span>
+          <span className="text-body-md text-navy">
+            Bài viết nổi bật (featured)
+          </span>
         </label>
 
         <details className="border-t-hairline border-gold/40 pt-5">
-          <summary className="text-label-caps uppercase text-navy cursor-pointer">SEO</summary>
+          <summary className="text-label-caps uppercase text-navy cursor-pointer">
+            SEO
+          </summary>
           <div className="mt-4 space-y-5">
             <div>
-              <label className="block text-[11px] tracking-[0.05em] uppercase text-navy/55 mb-2">SEO Title</label>
+              <label className="block text-[11px] tracking-[0.05em] uppercase text-navy/55 mb-2">
+                SEO Title
+              </label>
               <input
                 type="text"
                 value={data.seo_title}

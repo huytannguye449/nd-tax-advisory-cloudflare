@@ -1,95 +1,137 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { FOUNDER_BIO, TIMELINE } from "@/lib/data";
+import { TIMELINE } from "@/lib/data";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
 
+interface Person {
+  id: string;
+  slug: string;
+  name: string;
+  title: string | null;
+  bio: string | null;
+  avatar_url: string | null;
+  is_featured: boolean;
+  credentials: string[];
+}
+
 export function FounderSection() {
-  const bioParagraphs = FOUNDER_BIO.split("\n\n").filter(Boolean);
+  const [people, setPeople] = useState<Person[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/public/people", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((json) => {
+        if (!cancelled && json.ok) setPeople(json.people ?? []);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const founder = useMemo(
+    () =>
+      people.find((person) => person.is_featured) ??
+      people.find((person) => person.slug === "anh-ngoc") ??
+      null,
+    [people],
+  );
+  const bioParagraphs = (founder?.bio ?? "").split("\n\n").filter(Boolean);
 
   return (
-    <Section bg="cream" spacing="md" hairlineTop aria-labelledby="founder-heading">
+    <Section
+      bg="cream"
+      spacing="md"
+      hairlineTop
+      aria-labelledby="founder-heading"
+    >
       <Container size="default">
-        <div className="flex flex-col gap-[var(--spacing-gutter)] lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start">
-          {/* Image */}
+        <div className="flex flex-col gap-[var(--spacing-gutter)] lg:grid lg:grid-cols-2 lg:items-start lg:gap-16">
           <div className="relative lg:sticky lg:top-32">
-            <div className="overflow-hidden aspect-square max-w-md mx-auto lg:mx-0">
-              <Image
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=900&q=80"
-                alt="Nguyễn Hoài Ngọc — Founder & CEO NHN&D Tax Advisory"
-                width={900}
-                height={900}
-                className="object-cover w-full h-full"
-              />
+            <div className="mx-auto aspect-square max-w-md overflow-hidden bg-cream-200 lg:mx-0">
+              {founder?.avatar_url ? (
+                <Image
+                  src={founder.avatar_url}
+                  alt={founder.name}
+                  width={900}
+                  height={900}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center font-heading text-4xl text-navy/20">
+                  NHN&amp;D
+                </div>
+              )}
             </div>
-
-            {/* Experience badge — flat navy block, no shadow, no rounded */}
-            <div className="absolute -bottom-4 -right-4 hidden lg:flex bg-navy text-cream px-5 py-4">
+            <div className="absolute -bottom-4 -right-4 hidden bg-navy px-5 py-4 text-cream lg:flex">
               <div className="text-center">
                 <p className="font-heading text-headline-sm text-gold">20+</p>
-                <p className="text-body-sm text-cream/80 mt-0.5">năm kinh nghiệm</p>
-              </div>
-            </div>
-
-            {/* Credentials badge — flat gold block */}
-            <div className="absolute -top-4 -left-4 hidden lg:flex bg-gold text-navy px-4 py-3">
-              <div className="text-center">
-                <p className="text-label-caps font-bold tracking-wider">CPA · CPTA</p>
+                <p className="mt-0.5 text-body-sm text-cream/80">
+                  năm kinh nghiệm
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Text */}
           <div>
             <Eyebrow color="gold" className="mb-4">
               FOUNDER &amp; CEO
             </Eyebrow>
             <h2
               id="founder-heading"
-              className="font-heading text-headline-md text-navy mb-2"
+              className="mb-2 font-heading text-headline-md text-navy"
             >
-              Nguyễn Hoài Ngọc
+              {founder?.name ?? "Founder"}
             </h2>
-            <p className="text-body-md text-gold-700 font-semibold mb-6">
-              CPA / CPTA — Founder &amp; CEO, Công ty TNHH Tư vấn thuế NHN&amp;D
-            </p>
+            {founder?.title && (
+              <p className="mb-6 text-body-md font-semibold text-gold-700">
+                {founder.title}
+              </p>
+            )}
 
-            <div className="space-y-4 text-body-md text-navy/80 leading-relaxed mb-12">
-              {bioParagraphs.map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
+            <div className="mb-12 space-y-4 text-body-md leading-relaxed text-navy/80">
+              {bioParagraphs.length > 0 ? (
+                bioParagraphs.map((para) => <p key={para}>{para}</p>)
+              ) : (
+                <p>Hồ sơ founder đang được tải từ CMS.</p>
+              )}
             </div>
 
-            {/* Timeline */}
             <div className="border-t-hairline border-gold pt-8">
-              <Eyebrow color="gold" className="mb-4">HÀNH TRÌNH SỰ NGHIỆP</Eyebrow>
-              <h3 className="font-heading text-headline-sm text-navy mb-2">
-                Tám mốc dấu — từ kiểm toán độc lập đến Kế toán Trưởng tập đoàn.
+              <Eyebrow color="gold" className="mb-4">
+                HÀNH TRÌNH SỰ NGHIỆP
+              </Eyebrow>
+              <h3 className="mb-2 font-heading text-headline-sm text-navy">
+                Các mốc nghề nghiệp chính của founder.
               </h3>
               <div className="relative mt-6">
-                {/* Vertical line */}
                 <div
-                  className="absolute left-3.5 top-2 bottom-2 w-px bg-cream-300"
+                  className="absolute bottom-2 left-3.5 top-2 w-px bg-cream-300"
                   aria-hidden="true"
                 />
                 <ol className="space-y-6">
                   {TIMELINE.map((item, i) => (
-                    <li key={i} className="flex items-start gap-4 relative">
+                    <li key={i} className="relative flex items-start gap-4">
                       <span
-                        className="size-7 bg-navy flex items-center justify-center shrink-0 relative z-10 mt-0.5"
+                        className="relative z-10 mt-0.5 flex size-7 shrink-0 items-center justify-center bg-navy"
                         aria-hidden="true"
                       >
                         <span className="size-2.5 bg-gold" />
                       </span>
                       <div className="flex-1">
-                        <span className="text-label-caps text-gold-700 uppercase tracking-[0.1em]">
+                        <span className="text-label-caps uppercase tracking-[0.1em] text-gold-700">
                           {item.period}
                         </span>
-                        <p className="text-body-md text-navy font-semibold mt-1">
+                        <p className="mt-1 text-body-md font-semibold text-navy">
                           {item.title}
                         </p>
                         <p className="text-body-sm text-navy/60">{item.org}</p>
-                        <p className="text-body-sm text-navy/70 mt-1.5 leading-relaxed">
+                        <p className="mt-1.5 text-body-sm leading-relaxed text-navy/70">
                           {item.description}
                         </p>
                       </div>
