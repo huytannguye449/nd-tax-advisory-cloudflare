@@ -1,30 +1,33 @@
 import type { Metadata } from "next";
 import { Section } from "@/components/shared/section";
 import { Container } from "@/components/shared/container";
-import { Eyebrow } from "@/components/shared/eyebrow";
 import { BookingForm } from "@/components/contact/booking-form";
 
 export const metadata: Metadata = {
   title: "Đặt lịch tư vấn",
   description:
-    "Đặt lịch tư vấn miễn phí 45 phút với NHN&D Tax Advisory. Chọn slot phù hợp — chúng tôi sẽ confirm trong 4 giờ.",
+    "Đặt lịch tư vấn chuyên sâu với NHN&D Tax Advisory.",
 };
 
 export default function BookingPage() {
   return (
     <Section bg="cream" spacing="md">
-      <Container size="narrow">
-        <div className="mb-12">
-          <Eyebrow color="gold" className="mb-4">ĐẶT LỊCH TƯ VẤN</Eyebrow>
-          <h1 className="font-heading text-headline-lg text-navy mt-3">
-            Buổi tư vấn đầu tiên hoàn toàn miễn phí
+      <Container size="default">
+        <div className="mx-auto mb-12 max-w-[800px] text-center md:mb-16">
+          <h1 className="font-heading text-display-mobile text-navy md:text-display-lg">
+            Đặt lịch tư vấn chuyên sâu
           </h1>
-          <p className="mt-5 text-body-lg text-navy/75 leading-relaxed text-pretty">
-            Chọn dịch vụ, thời gian phù hợp với bạn. Anh Ngọc sẽ trực tiếp tư vấn 30 phút và gửi
-            link Zoom/Meet (nếu chọn online) qua email.
+          <p className="mx-auto mt-5 max-w-3xl text-body-lg leading-relaxed text-navy/70">
+            Khởi đầu cho lộ trình tài chính và thuế tối ưu. Đội ngũ chuyên gia
+            của chúng tôi sẵn sàng lắng nghe và giải quyết những thách thức
+            phức tạp nhất của doanh nghiệp bạn với sự chuẩn xác và bảo mật
+            tuyệt đối.
           </p>
         </div>
-        <BookingForm />
+
+        <div className="mx-auto max-w-[800px]">
+          <BookingForm />
+        </div>
       </Container>
     </Section>
   );

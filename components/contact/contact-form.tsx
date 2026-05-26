@@ -1,19 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  AlertCircle,
+  Building2,
+  CheckCircle2,
+  Send,
+  Video,
+} from "lucide-react";
 import { leadSchema, type LeadInput } from "@/lib/validators";
 import { Button } from "@/components/shared/button";
-import { Turnstile } from "@/components/shared/turnstile";
 import { cn } from "@/lib/utils";
-
-interface ServiceOption {
-  id: string;
-  slug: string;
-  title: string;
-}
 
 const COMPANY_SIZES = [
   { value: "<10", label: "Dưới 10 nhân sự" },
@@ -22,73 +21,56 @@ const COMPANY_SIZES = [
   { value: ">200", label: "Trên 200 nhân sự" },
 ];
 
+type DemoLeadInput = Omit<LeadInput, "turnstileToken">;
+
 export function ContactForm({ source = "lien-he" }: { source?: string }) {
+  const [meetingMode, setMeetingMode] = useState<"online" | "offline">(
+    "online",
+  );
   const [submitState, setSubmitState] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const [services, setServices] = useState<ServiceOption[]>([]);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetch("/api/public/services", { cache: "no-store" })
-      .then((res) => res.json())
-      .then((json) => {
-        if (!cancelled && json.ok) setServices(json.services ?? []);
-      })
-      .catch(() => undefined);
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<LeadInput>({
-    resolver: zodResolver(leadSchema),
+  } = useForm<DemoLeadInput>({
+    resolver: zodResolver(leadSchema.omit({ turnstileToken: true })),
     defaultValues: {
       services: [],
       consent: false as never,
-      turnstileToken: "",
+      source,
     },
   });
 
-  const onSubmit = async (data: LeadInput) => {
+  const onSubmit = async (_data: DemoLeadInput) => {
     setSubmitState("loading");
-    setErrorMsg("");
-    try {
-      const res = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, turnstileToken, source }),
-      });
-      const json = await res.json();
-      if (!res.ok || !json.ok) throw new Error(json.error || "Có lỗi xảy ra");
-      setSubmitState("success");
-      reset();
-    } catch (err) {
-      setSubmitState("error");
-      setErrorMsg(err instanceof Error ? err.message : "Có lỗi xảy ra");
-    }
+
+    // Demo-only phase: keep form state/validation shape but do not submit to API.
+    await new Promise((resolve) => setTimeout(resolve, 700));
+    setSubmitState("success");
+    reset();
+    setMeetingMode("online");
   };
 
   if (submitState === "success") {
     return (
-      <div className="border-t-hairline border-gold pt-8 text-center">
+      <div className="border border-cream-300 bg-cream-50 px-6 py-10 text-center shadow-sm sm:px-10">
         <CheckCircle2 className="mx-auto size-12 text-gold-700" aria-hidden />
-        <h3 className="mt-4 font-heading text-headline-sm text-navy">
+        <p className="mt-5 text-label-caps uppercase text-gold-700">
+          Yêu cầu đã được ghi nhận
+        </p>
+        <h3 className="mt-3 font-heading text-headline-sm text-navy">
           Cảm ơn bạn đã liên hệ
         </h3>
-        <p className="mt-3 text-body-md text-navy/80 max-w-md mx-auto leading-relaxed">
-          Chúng tôi đã nhận được yêu cầu của bạn và sẽ phản hồi qua email trong
-          vòng 4 giờ làm việc. Vui lòng kiểm tra hộp thư.
+        <p className="mx-auto mt-3 max-w-md text-body-md leading-relaxed text-navy/70">
+          Cảm ơn bạn. Đội ngũ NHN&D sẽ xem xét thông tin và phản hồi trong
+          thời gian sớm nhất.
         </p>
         <Button
-          className="mt-6"
+          className="mt-7"
           variant="outline"
           onClick={() => setSubmitState("idle")}
         >
@@ -99,163 +81,228 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
-      <Field label="Họ và tên" required error={errors.full_name?.message}>
-        <input
-          {...register("full_name")}
-          type="text"
-          autoComplete="name"
-          className={inputCls}
-          placeholder="Nguyễn Văn A"
-        />
-      </Field>
+    <div className="border border-cream-300 bg-cream-50 p-6 shadow-sm md:p-10">
+      <h3 className="mb-8 border-b border-cream-300 pb-4 font-heading text-headline-sm text-navy">
+        Gửi yêu cầu tư vấn
+      </h3>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <Field label="Email" required error={errors.email?.message}>
-          <input
-            {...register("email")}
-            type="email"
-            autoComplete="email"
-            className={inputCls}
-            placeholder="email@congty.vn"
-          />
-        </Field>
-        <Field label="Số điện thoại" required error={errors.phone?.message}>
-          <input
-            {...register("phone")}
-            type="tel"
-            autoComplete="tel"
-            className={inputCls}
-            placeholder="0901 234 567"
-          />
-        </Field>
-      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8" noValidate>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Field label="Họ và tên" error={errors.full_name?.message}>
+            <input
+              {...register("full_name")}
+              type="text"
+              autoComplete="name"
+              className={inputCls}
+              placeholder="Nguyễn Văn A"
+            />
+          </Field>
+          <Field label="Email" error={errors.email?.message}>
+            <input
+              {...register("email")}
+              type="email"
+              autoComplete="email"
+              className={inputCls}
+              placeholder="email@congty.com"
+            />
+          </Field>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <Field label="Tên công ty">
-          <input
-            {...register("company")}
-            type="text"
-            autoComplete="organization"
-            className={inputCls}
-            placeholder="Công ty TNHH ABC"
-          />
-        </Field>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Field label="Số điện thoại" error={errors.phone?.message}>
+            <input
+              {...register("phone")}
+              type="tel"
+              autoComplete="tel"
+              className={inputCls}
+              placeholder="+84 000 000 000"
+            />
+          </Field>
+          <Field label="Tên công ty">
+            <input
+              {...register("company")}
+              type="text"
+              autoComplete="organization"
+              className={inputCls}
+              placeholder="Tên doanh nghiệp của bạn"
+            />
+          </Field>
+        </div>
+
         <Field label="Quy mô doanh nghiệp">
           <select {...register("company_size")} className={inputCls}>
-            <option value="">Chọn quy mô</option>
-            {COMPANY_SIZES.map((s) => (
-              <option key={s.value} value={s.value}>
-                {s.label}
+            <option value="">Chọn quy mô doanh nghiệp</option>
+            {COMPANY_SIZES.map((size) => (
+              <option key={size.value} value={size.value}>
+                {size.label}
               </option>
             ))}
           </select>
         </Field>
-      </div>
 
-      <Field label="Dịch vụ quan tâm">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
-          {services.map((s) => (
-            <label
-              key={s.id}
-              className="flex items-start gap-3 border-t border-cream-300 pt-3 cursor-pointer hover:border-gold transition"
-            >
-              <input
-                type="checkbox"
-                value={s.title}
-                {...register("services")}
-                className="mt-0.5 size-4 accent-navy"
-              />
-              <span className="text-body-sm text-navy">{s.title}</span>
-            </label>
-          ))}
+        <div className="border-t border-cream-300 pt-4">
+          <p className="mb-4 text-label-caps uppercase tracking-[0.12em] text-navy/60">
+            Hình thức làm việc (Meeting Mode)
+          </p>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <MeetingModeCard
+              checked={meetingMode === "online"}
+              icon={<Video className="size-5" aria-hidden />}
+              title="Trực tuyến (Online)"
+              description="Zoom, Meet hoặc Teams"
+              onChange={() => setMeetingMode("online")}
+            />
+            <MeetingModeCard
+              checked={meetingMode === "offline"}
+              icon={<Building2 className="size-5" aria-hidden />}
+              title="Trực tiếp (Offline)"
+              description="Tại NHN hoặc văn phòng đối tác"
+              onChange={() => setMeetingMode("offline")}
+            />
+          </div>
         </div>
-      </Field>
 
-      <Field label="Mô tả nhu cầu" error={errors.message?.message}>
-        <textarea
-          {...register("message")}
-          rows={5}
-          className={inputCls}
-          placeholder="Vui lòng mô tả tình huống / câu hỏi cụ thể của doanh nghiệp..."
-        />
-      </Field>
+        <Field label="Mô tả nhu cầu" error={errors.message?.message}>
+          <textarea
+            {...register("message")}
+            rows={3}
+            className={cn(inputCls, "min-h-24 resize-none leading-relaxed")}
+            placeholder="Vui lòng cho chúng tôi biết thêm về yêu cầu cụ thể của bạn..."
+          />
+        </Field>
 
-      <label className="flex items-start gap-3 text-body-sm text-navy/80 cursor-pointer">
-        <input
-          type="checkbox"
-          {...register("consent")}
-          className="mt-0.5 size-4 accent-navy"
-        />
-        <span>
-          Tôi đồng ý với{" "}
-          <a href="/dieu-khoan" className="text-gold-700 underline">
-            Điều khoản
-          </a>{" "}
-          và{" "}
-          <a href="/chinh-sach-bao-mat" className="text-gold-700 underline">
-            Chính sách bảo mật
-          </a>
-          .
-        </span>
-      </label>
-      {errors.consent && (
-        <p className="text-body-sm text-red-600">{errors.consent.message}</p>
-      )}
+        <div className="pt-2">
+          <label className="mb-6 flex cursor-pointer items-start gap-3 text-body-md text-navy/70">
+            <input
+              type="checkbox"
+              {...register("consent")}
+              className="mt-0.5 size-5 border-cream-300 accent-gold"
+            />
+            <span>
+              Tôi đồng ý với{" "}
+              <a href="/dieu-khoan" className="text-gold-700 hover:underline">
+                Điều khoản
+              </a>{" "}
+              và{" "}
+              <a
+                href="/chinh-sach-bao-mat"
+                className="text-gold-700 hover:underline"
+              >
+                Chính sách bảo mật
+              </a>
+            </span>
+          </label>
+          {errors.consent && (
+            <ErrorText message={errors.consent.message} className="mb-4" />
+          )}
 
-      <Turnstile onToken={setTurnstileToken} />
+          {submitState === "error" && (
+            <div className="mb-4 flex items-start gap-2 border border-red-200 bg-red-50 p-3 text-body-sm text-red-800">
+              <AlertCircle className="mt-0.5 size-4 shrink-0" />
+              <span>Không thể gửi biểu mẫu. Vui lòng thử lại.</span>
+            </div>
+          )}
 
-      {submitState === "error" && (
-        <div className="flex items-start gap-2 border border-red-200 bg-red-50 p-3 text-body-sm text-red-800">
-          <AlertCircle className="size-4 mt-0.5 shrink-0" />
-          <span>{errorMsg}</span>
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full md:w-auto"
+            disabled={submitState === "loading"}
+          >
+            {submitState === "loading" ? (
+              "Đang ghi nhận..."
+            ) : (
+              <>
+                Gửi yêu cầu
+                <Send className="size-4" aria-hidden />
+              </>
+            )}
+          </Button>
         </div>
-      )}
-
-      <Button
-        type="submit"
-        size="lg"
-        fullWidth
-        disabled={submitState === "loading" || !turnstileToken}
-      >
-        {submitState === "loading" ? "Đang gửi…" : "Gửi yêu cầu tư vấn"}
-      </Button>
-    </form>
+      </form>
+    </div>
   );
 }
 
-// Bottom-border only input — DESIGN.md pattern
 const inputCls =
-  "w-full bg-transparent border-0 border-b border-navy text-body-md text-navy placeholder:text-navy/40 py-3 px-0 focus:outline-none focus:border-gold transition-colors duration-150 min-h-[48px]";
+  "w-full border-0 border-b border-cream-300 bg-transparent px-0 py-2 text-body-md text-navy outline-none transition-colors placeholder:text-navy/35 focus:border-gold";
 
 function Field({
   label,
-  required,
   error,
   children,
 }: {
   label: string;
-  required?: boolean;
   error?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
-    <div>
-      <label className="block text-label-caps text-navy/70 uppercase tracking-[0.1em] mb-2">
+    <div className="group flex flex-col gap-2">
+      <label className="text-label-caps uppercase tracking-[0.12em] text-navy/60 transition-colors group-focus-within:text-gold-700">
         {label}
-        {required && <span className="text-gold ml-1">*</span>}
       </label>
       {children}
-      {error && (
-        <p
+      {error && <ErrorText message={error} />}
+    </div>
+  );
+}
+
+function MeetingModeCard({
+  checked,
+  icon,
+  title,
+  description,
+  onChange,
+}: {
+  checked: boolean;
+  icon: ReactNode;
+  title: string;
+  description: string;
+  onChange: () => void;
+}) {
+  return (
+    <label className="group relative cursor-pointer">
+      <input
+        checked={checked}
+        className="peer sr-only"
+        name="contact_meeting_mode"
+        type="radio"
+        onChange={onChange}
+      />
+      <span className="flex h-full items-center gap-4 border border-cream-300 p-4 transition-colors group-hover:border-gold peer-checked:border-gold peer-checked:bg-cream">
+        <span
           className={cn(
-            "mt-1 text-body-sm text-red-600 flex items-center gap-1",
+            "flex size-10 shrink-0 items-center justify-center text-navy transition-colors",
+            checked ? "bg-gold" : "bg-cream-200",
           )}
         >
-          <AlertCircle className="size-3.5" aria-hidden />
-          {error}
-        </p>
-      )}
-    </div>
+          {icon}
+        </span>
+        <span>
+          <span className="block text-xs font-bold uppercase tracking-[0.12em] text-navy">
+            {title}
+          </span>
+          <span className="mt-1 block text-[13px] leading-tight text-navy/55">
+            {description}
+          </span>
+        </span>
+      </span>
+    </label>
+  );
+}
+
+function ErrorText({
+  message,
+  className,
+}: {
+  message?: string;
+  className?: string;
+}) {
+  if (!message) return null;
+  return (
+    <p className={cn("flex items-center gap-1 text-body-sm text-red-600", className)}>
+      <AlertCircle className="size-3.5" aria-hidden />
+      {message}
+    </p>
   );
 }
