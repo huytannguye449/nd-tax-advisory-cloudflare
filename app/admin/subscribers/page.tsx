@@ -95,9 +95,7 @@ export default function AdminSubscribersPage() {
                         "inline-block border-l-2 pl-2 text-label-caps uppercase",
                         s.status === "active"
                           ? "border-l-green-600 text-green-700"
-                          : s.status === "pending"
-                            ? "border-l-gold text-gold-700"
-                            : "border-l-navy/30 text-navy/60",
+                          : "border-l-navy/30 text-navy/60",
                       )}
                     >
                       {s.status}

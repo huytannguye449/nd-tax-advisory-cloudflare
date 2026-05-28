@@ -6,6 +6,7 @@ import { TIMELINE } from "@/lib/data";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
+import { PersonSocialLinks } from "@/components/about/person-social-links";
 
 interface Person {
   id: string;
@@ -14,6 +15,7 @@ interface Person {
   title: string | null;
   bio: string | null;
   avatar_url: string | null;
+  social_links: Record<string, string> | null;
   is_featured: boolean;
   credentials: string[];
 }
@@ -92,6 +94,12 @@ export function FounderSection() {
               <p className="mb-6 text-body-md font-semibold text-gold-700">
                 {founder.title}
               </p>
+            )}
+            {founder && (
+              <PersonSocialLinks
+                links={founder.social_links}
+                className="mb-8"
+              />
             )}
 
             <div className="mb-12 space-y-4 text-body-md leading-relaxed text-navy/80">

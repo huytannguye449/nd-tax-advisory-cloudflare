@@ -55,10 +55,10 @@ export default function ContactPage() {
               {/* Booking CTA — flat navy block */}
               <div className="bg-navy text-cream p-6 lg:p-8">
                 <Calendar className="size-6 text-gold mb-4" aria-hidden />
-                <h3 className="font-heading text-headline-sm text-cream mb-2">Hoặc đặt lịch online</h3>
+                <h3 className="font-heading text-headline-sm text-cream mb-2">Tiếp nhận & xác nhận yêu cầu tư vấn</h3>
                 <p className="text-body-sm text-cream/80 leading-relaxed mb-6">
-                  Chọn slot phù hợp với bạn. Anh Ngọc sẽ confirm và gửi link Zoom/Meet
-                  trong 4 giờ.
+                  Chúng tôi sẽ rà soát thông tin và liên hệ xác nhận hình thức
+                  trao đổi phù hợp trong vòng 4 giờ làm việc.
                 </p>
                 <Button asChild variant="secondary" fullWidth>
                   <Link href="/dat-lich">

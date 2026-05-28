@@ -1,28 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/shared/button";
+import { useState, type FormEvent } from "react";
 import { BookOpen } from "lucide-react";
+import { Button } from "@/components/shared/button";
 import { Eyebrow } from "@/components/shared/eyebrow";
+import { subscribeToNewsletter } from "@/components/marketing/newsletter-client";
 
 export function InlineSubscribe() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [msg, setMsg] = useState("");
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("loading");
     try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "blog-inline" }),
-      });
-      const data = (await res.json()) as { error?: string };
-      if (!res.ok) throw new Error(data.error ?? "Có lỗi xảy ra");
+      await subscribeToNewsletter(email, "blog-inline");
       setStatus("success");
-      setMsg("Cảm ơn bạn — vui lòng kiểm tra email để xác nhận!");
+      setMsg("Cảm ơn bạn. Các ấn phẩm mới sẽ được gửi trực tiếp tới email của bạn.");
       setEmail("");
     } catch (err) {
       setStatus("error");
@@ -40,17 +35,19 @@ export function InlineSubscribe() {
   }
 
   return (
-    /* Navy callout block — sharp, no rounded */
-    <div className="bg-navy text-cream p-6 md:p-8">
+    <div className="bg-navy p-6 text-cream md:p-8">
       <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-        <BookOpen className="shrink-0 size-8 text-gold" aria-hidden="true" />
+        <BookOpen className="size-8 shrink-0 text-gold" aria-hidden="true" />
         <div className="flex-1">
-          <Eyebrow color="cream" className="mb-1">Newsletter</Eyebrow>
+          <Eyebrow color="cream" className="mb-1">
+            Newsletter
+          </Eyebrow>
           <h3 className="font-heading text-headline-sm text-cream">
-            Nhận insights thuế hàng tuần
+            Nhận insights thuế hằng tuần
           </h3>
           <p className="mt-1 text-body-sm text-cream/60">
-            Cập nhật chính sách, case study, và mẹo tối ưu thuế — miễn phí, hủy bất cứ lúc nào.
+            Cập nhật chính sách, case study và góc nhìn chuyên môn, miễn phí và
+            có thể hủy bất cứ lúc nào.
           </p>
         </div>
       </div>
@@ -64,7 +61,6 @@ export function InlineSubscribe() {
         <label htmlFor="inline-subscribe-email" className="sr-only">
           Địa chỉ email
         </label>
-        {/* Cream input — bottom-border only style */}
         <input
           id="inline-subscribe-email"
           type="email"
@@ -73,7 +69,7 @@ export function InlineSubscribe() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="email@congty.vn"
           disabled={status === "loading"}
-          className="flex-1 bg-transparent border-b border-cream/30 px-0 py-2.5 text-body-sm text-cream placeholder:text-cream/40 focus:outline-none focus:border-gold disabled:opacity-60 min-h-[44px]"
+          className="min-h-[44px] flex-1 border-b border-cream/30 bg-transparent px-0 py-2.5 text-body-sm text-cream placeholder:text-cream/40 focus:border-gold focus:outline-none disabled:opacity-60"
           autoComplete="email"
         />
         <Button
@@ -83,7 +79,7 @@ export function InlineSubscribe() {
           disabled={status === "loading"}
           className="shrink-0"
         >
-          {status === "loading" ? "Đang gửi…" : "Đăng ký"}
+          {status === "loading" ? "Đang gửi..." : "Đăng ký"}
         </Button>
       </form>
 

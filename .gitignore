@@ -34,6 +34,7 @@ yarn-error.log*
 .pnpm-debug.log*
 local-next-dev*.log
 local-wrangler-dev*.log
+tmp-wrangler-boundary*.log
 
 # local env files
 .env*
@@ -46,6 +47,7 @@ local-wrangler-dev*.log
 # cloudflare
 .open-next/
 .wrangler/
+.tmp-functions-build*/
 
 # typescript
 *.tsbuildinfo

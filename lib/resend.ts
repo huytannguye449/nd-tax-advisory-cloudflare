@@ -1,16 +1,17 @@
 /**
  * Resend email helper.
  *
- * If RESEND_API_KEY is not configured (Phase 1 dev mode), email sends are
- * logged to console and skipped. Hot-swap by adding the env var.
+ * Server-side Resend helper for Next/server code. Pages Functions use
+ * functions/_lib/email.ts.
  */
 
 import { Resend } from "resend";
 
+const provider = (process.env.EMAIL_PROVIDER || "mock").trim().toLowerCase();
 const apiKey = process.env.RESEND_API_KEY;
 export const resend = apiKey ? new Resend(apiKey) : null;
 
-export const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "noreply@ndtax.vn";
+export const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "";
 export const NOTIFY_EMAIL = process.env.RESEND_NOTIFY_EMAIL || "hello@ndtax.vn";
 
 interface SendArgs {
@@ -23,9 +24,15 @@ interface SendArgs {
 }
 
 export async function sendEmail(args: SendArgs): Promise<{ ok: boolean; id?: string; error?: string }> {
-  if (!resend) {
-    console.log("[email-mock] would send:", { to: args.to, subject: args.subject });
+  if (provider !== "resend") {
+    console.log("[email-mock-send]", { to: args.to, subject: args.subject });
     return { ok: true, id: "mock" };
+  }
+  if (!resend) {
+    return { ok: false, error: "EMAIL_PROVIDER=resend requires RESEND_API_KEY" };
+  }
+  if (!FROM_EMAIL) {
+    return { ok: false, error: "EMAIL_PROVIDER=resend requires RESEND_FROM_EMAIL" };
   }
   try {
     const result = await resend.emails.send({

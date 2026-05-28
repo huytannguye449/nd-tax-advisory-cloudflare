@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
 import { PublicationsLive } from "@/components/content/publications-live";
+import { SubscribePopup } from "@/components/marketing/subscribe-popup";
 
 export const metadata: Metadata = {
   title: "Ấn phẩm",
@@ -28,6 +29,7 @@ export default function AnPhamPage() {
       </Section>
 
       <PublicationsLive />
+      <SubscribePopup />
     </>
   );
 }

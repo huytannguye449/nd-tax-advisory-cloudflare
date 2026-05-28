@@ -39,6 +39,7 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
   const deliverables = service.deliverable_items ?? [];
   const experts =
     service.service_people?.filter((rel) => rel.person !== null) ?? [];
+  const bookingHref = getServiceBookingHref(service.cta_href, service.slug);
 
   return (
     <section
@@ -92,7 +93,7 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
 
             <div className="mt-10 border-t border-data-row pt-6">
               <Button asChild variant="primary" size="lg">
-                <Link href={service.cta_href || "/dat-lich"}>
+                <Link href={bookingHref}>
                   {service.cta_label || "Đặt lịch tư vấn"}
                 </Link>
               </Button>
@@ -108,6 +109,24 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
       </Container>
     </section>
   );
+}
+
+function getServiceBookingHref(ctaHref: string | null | undefined, slug: string) {
+  const serviceParam = encodeURIComponent(slug);
+  const href = ctaHref?.trim();
+
+  if (!href || href === "/dat-lich" || href === "/dat-lich/") {
+    return `/dat-lich?service=${serviceParam}`;
+  }
+
+  if (href.startsWith("/dat-lich?")) {
+    const [pathname, query = ""] = href.split("?");
+    const params = new URLSearchParams(query);
+    if (!params.has("service")) params.set("service", slug);
+    return `${pathname}?${params.toString()}`;
+  }
+
+  return href;
 }
 
 function ServiceCover({

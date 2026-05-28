@@ -16,12 +16,18 @@ interface Lead {
   company: string | null;
   company_size: string | null;
   services: string[] | null;
+  meeting_type: "online" | "offline" | null;
+  meeting_link: string | null;
   message: string | null;
   source: string | null;
   status: string;
   internal_notes: string | null;
   created_at: string;
 }
+
+type LeadPatch = Partial<
+  Pick<Lead, "status" | "meeting_type" | "meeting_link" | "internal_notes">
+>;
 
 const STATUS_LABELS: Record<string, string> = {
   new: "Mới",
@@ -37,6 +43,11 @@ const STATUS_COLORS: Record<string, string> = {
   qualified: "border-l-green-600 text-green-700",
   closed: "border-l-navy/30 text-navy/60",
   spam: "border-l-red-500 text-red-700",
+};
+
+const MEETING_LABELS: Record<string, string> = {
+  online: "Online",
+  offline: "Truc tiep",
 };
 
 export default function AdminLeadsPage() {
@@ -60,26 +71,32 @@ export default function AdminLeadsPage() {
     void load();
   }, [filter]);
 
-  async function updateStatus(id: string, status: string) {
-    await fetch("/api/admin/leads", {
+  async function patchLead(id: string, body: LeadPatch) {
+    const res = await fetch("/api/admin/leads", {
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, status }),
+      body: JSON.stringify({ id, ...body }),
     });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) return false;
+
+    const normalized: LeadPatch =
+      body.meeting_type === "offline" ? { ...body, meeting_link: null } : body;
+
     setLeads((prev) =>
-      prev.map((l) => (l.id === id ? { ...l, status } : l)),
+      prev.map((l) => (l.id === id ? { ...l, ...normalized } : l)),
     );
-    if (selected?.id === id) setSelected({ ...selected, status });
+    if (selected?.id === id) setSelected({ ...selected, ...normalized });
+    return true;
+  }
+
+  async function updateStatus(id: string, status: string) {
+    await patchLead(id, { status });
   }
 
   async function updateNotes(id: string, notes: string) {
-    await fetch("/api/admin/leads", {
-      method: "PATCH",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, internal_notes: notes }),
-    });
+    await patchLead(id, { internal_notes: notes });
   }
 
   function exportCsv() {
@@ -178,6 +195,9 @@ export default function AdminLeadsPage() {
                         <Phone className="size-3 text-navy/45" />
                         {l.phone}
                       </div>
+                      <div className="mt-1 text-[11px] tracking-[0.05em] text-navy/50 uppercase">
+                        {MEETING_LABELS[l.meeting_type ?? "online"]}
+                      </div>
                     </td>
                     <td className="px-4 py-4 text-navy/75">{l.company ?? "—"}</td>
                     <td className="px-4 py-4">
@@ -209,6 +229,9 @@ export default function AdminLeadsPage() {
                       <p className="text-[11px] tracking-[0.05em] text-navy/65 mt-1">
                         {l.email} · {l.phone}
                       </p>
+                      <p className="text-[11px] tracking-[0.05em] text-navy/50 mt-0.5 uppercase">
+                        {MEETING_LABELS[l.meeting_type ?? "online"]}
+                      </p>
                       {l.company && (
                         <p className="text-[11px] tracking-[0.05em] text-navy/55 mt-0.5">
                           <Building2 className="inline size-3 mr-1" />
@@ -237,6 +260,9 @@ export default function AdminLeadsPage() {
             setSelected({ ...selected, internal_notes: n });
             void updateNotes(selected.id, n);
           }}
+          onMeetingChange={(body) => {
+            void patchLead(selected.id, body);
+          }}
         />
       )}
     </AdminShell>
@@ -248,13 +274,25 @@ function LeadDrawer({
   onClose,
   onStatusChange,
   onNotesChange,
+  onMeetingChange,
 }: {
   lead: Lead;
   onClose: () => void;
   onStatusChange: (status: string) => void;
   onNotesChange: (notes: string) => void;
+  onMeetingChange: (body: LeadPatch) => void;
 }) {
   const [notes, setNotes] = useState(lead.internal_notes ?? "");
+  const [meetingType, setMeetingType] = useState<"online" | "offline">(
+    lead.meeting_type ?? "online",
+  );
+  const [meetingLink, setMeetingLink] = useState(lead.meeting_link ?? "");
+
+  useEffect(() => {
+    setNotes(lead.internal_notes ?? "");
+    setMeetingType(lead.meeting_type ?? "online");
+    setMeetingLink(lead.meeting_link ?? "");
+  }, [lead]);
 
   return (
     <div className="fixed inset-0 z-50 flex">
@@ -312,6 +350,46 @@ function LeadDrawer({
               </select>
               <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 size-4 pointer-events-none text-gold" />
             </div>
+          </div>
+
+          <div className="border-t-hairline border-gold/40 pt-6">
+            <label className="block text-label-caps uppercase text-navy/70 mb-3">
+              Thong tin follow-up
+            </label>
+            <div className="relative">
+              <select
+                value={meetingType}
+                onChange={(e) => {
+                  const value = e.target.value as "online" | "offline";
+                  setMeetingType(value);
+                  if (value === "offline") setMeetingLink("");
+                  onMeetingChange({
+                    meeting_type: value,
+                    meeting_link: value === "offline" ? null : meetingLink,
+                  });
+                }}
+                className="w-full appearance-none border-b border-navy bg-transparent px-0 py-2 pr-10 text-body-md font-medium focus:border-gold focus:outline-none transition-colors"
+              >
+                <option value="online">Online</option>
+                <option value="offline">Trao doi truc tiep</option>
+              </select>
+              <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 size-4 pointer-events-none text-gold" />
+            </div>
+
+            {meetingType === "online" ? (
+              <input
+                type="url"
+                value={meetingLink}
+                onChange={(e) => setMeetingLink(e.target.value)}
+                onBlur={() => onMeetingChange({ meeting_link: meetingLink })}
+                className="mt-4 w-full border-b border-navy bg-transparent px-0 py-2 text-body-md focus:border-gold focus:outline-none transition-colors"
+                placeholder="Link hop online"
+              />
+            ) : (
+              <p className="mt-4 text-body-sm text-navy/65">
+                Lead nay se duoc follow-up theo hinh thuc trao doi truc tiep.
+              </p>
+            )}
           </div>
 
           <div>

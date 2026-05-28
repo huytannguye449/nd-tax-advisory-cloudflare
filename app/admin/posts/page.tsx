@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Plus, Pencil, Trash2, Star, ExternalLink } from "lucide-react";
+import { Plus, Pencil, Trash2, Star, ExternalLink, Mail } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Button } from "@/components/shared/button";
 import { Eyebrow } from "@/components/shared/eyebrow";
@@ -21,6 +21,12 @@ interface Post {
   is_featured: boolean;
   view_count: number;
   created_at: string;
+  newsletter_sends?: Array<{
+    id: string;
+    status: "sent" | "failed" | "mocked";
+    sent_at: string;
+    recipient_count: number;
+  }>;
   category: { name: string; slug: string } | null;
   person: { name: string; slug: string } | null;
   author: { name: string; slug: string } | null;
@@ -42,6 +48,8 @@ export default function AdminPostsPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [sendingId, setSendingId] = useState<string | null>(null);
+  const [sendMessage, setSendMessage] = useState("");
 
   async function load() {
     setLoading(true);
@@ -64,6 +72,50 @@ export default function AdminPostsPage() {
       credentials: "include",
     });
     if (res.ok) void load();
+  }
+
+  async function sendNewsletter(post: Post) {
+    if (!confirm(`Gửi newsletter cho bài "${post.title}"?`)) return;
+    setSendingId(post.id);
+    setSendMessage("");
+    try {
+      const res = await fetch("/api/admin/newsletter/send", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ post_id: post.id }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+        details?: string[];
+        recipient_count?: number;
+        status?: "sent" | "failed" | "mocked";
+        provider?: "mock" | "resend";
+        runtime?: "worker" | "node";
+        delivery_status?: "sent" | "failed" | "mocked";
+      };
+      if (data.details?.length) {
+        data.error = `${data.error || "Khong gui duoc newsletter"}\n${data.details
+          .slice(0, 2)
+          .join("\n")}`;
+      }
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || "Không gửi được newsletter");
+      }
+      setSendMessage(
+        data.status === "mocked"
+          ? `Mock newsletter cho ${data.recipient_count ?? 0} subscriber (${data.provider ?? "mock"}/${data.runtime ?? "worker"}). Xem terminal log [newsletter-mock-send].`
+          : `Đã gửi newsletter tới ${data.recipient_count ?? 0} subscriber qua ${data.provider ?? "email"}/${data.runtime ?? "runtime"}.`,
+      );
+      void load();
+    } catch (error) {
+      setSendMessage(
+        error instanceof Error ? error.message : "Không gửi được newsletter",
+      );
+    } finally {
+      setSendingId(null);
+    }
   }
 
   return (
@@ -103,6 +155,12 @@ export default function AdminPostsPage() {
           ))}
         </div>
 
+        {sendMessage && (
+          <p className="border-l-2 border-gold pl-3 text-body-sm text-navy/70">
+            {sendMessage}
+          </p>
+        )}
+
         {loading ? (
           <div className="border-t-hairline border-gold pt-12 text-center text-body-md text-navy/55">
             Đang tải…
@@ -120,7 +178,11 @@ export default function AdminPostsPage() {
           </div>
         ) : (
           <ul>
-            {posts.map((p) => (
+            {posts.map((p) => {
+              const sentNewsletter = p.newsletter_sends?.find(
+                (send) => send.status === "sent",
+              );
+              return (
               <li
                 key={p.id}
                 className="border-t-hairline border-gold pt-6 pb-6"
@@ -164,6 +226,12 @@ export default function AdminPostsPage() {
                       {p.reading_time && ` · ${p.reading_time} phút đọc`}
                       {p.view_count > 0 && ` · ${p.view_count} views`}
                     </p>
+                    {sentNewsletter && (
+                      <p className="mt-2 text-[11px] tracking-[0.05em] text-gold-700">
+                        Newsletter đã gửi {formatDate(sentNewsletter.sent_at)} ·{" "}
+                        {sentNewsletter.recipient_count} email
+                      </p>
+                    )}
                   </div>
 
                   <div className="md:col-span-5 flex flex-wrap gap-3 md:justify-end">
@@ -176,6 +244,20 @@ export default function AdminPostsPage() {
                       >
                         <ExternalLink className="size-3" /> Xem
                       </a>
+                    )}
+                    {p.status === "published" && (
+                      <button
+                        onClick={() => sendNewsletter(p)}
+                        disabled={Boolean(sentNewsletter) || sendingId !== null}
+                        className="inline-flex min-h-[44px] items-center gap-1 border border-gold/60 px-4 py-2.5 text-label-caps uppercase text-gold-700 transition-colors hover:border-gold hover:text-navy disabled:cursor-not-allowed disabled:opacity-45"
+                      >
+                        <Mail className="size-3" />
+                        {sentNewsletter
+                          ? "Đã gửi newsletter"
+                          : sendingId === p.id
+                            ? "Đang gửi..."
+                            : "Gửi newsletter"}
+                      </button>
                     )}
                     <Link
                       href={`/admin/posts/edit?id=${p.id}`}
@@ -192,7 +274,8 @@ export default function AdminPostsPage() {
                   </div>
                 </div>
               </li>
-            ))}
+            );
+            })}
           </ul>
         )}
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import Link from "next/link";
 import { Tag } from "lucide-react";
 import { Container } from "@/components/shared/container";
@@ -10,6 +10,7 @@ import {
   publicationFromPost,
 } from "@/components/content/publication-card";
 import { BlogClient } from "@/components/blog/blog-client";
+import { subscribeToNewsletter } from "@/components/marketing/newsletter-client";
 import type { Category, PostWithMeta } from "@/lib/supabase/types";
 
 interface PublicationsResponse {
@@ -114,7 +115,7 @@ function EditorialSidebar({
   return (
     <aside className="lg:col-span-4" aria-label="Sidebar ấn phẩm">
       <div className="space-y-6 lg:sticky lg:top-32">
-        <SubscribeBox />
+        <ClientSubscribeBox />
 
         {posts.length > 0 && (
           <SidebarSection title="Bài viết được quan tâm">
@@ -268,6 +269,80 @@ function SubscribeBox() {
           Đăng ký ngay
         </button>
       </form>
+    </section>
+  );
+}
+
+function ClientSubscribeBox() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus("loading");
+    setMessage("");
+    try {
+      await subscribeToNewsletter(email, "publications-sidebar");
+      setStatus("success");
+      setMessage("Cảm ơn bạn đã đăng ký.");
+      setEmail("");
+    } catch (error) {
+      setStatus("error");
+      setMessage(error instanceof Error ? error.message : "Không đăng ký được.");
+    }
+  }
+
+  return (
+    <section
+      className="bg-navy p-5 text-cream md:p-6"
+      aria-labelledby="subscribe-title"
+    >
+      <h2 id="subscribe-title" className="font-heading text-headline-sm text-cream">
+        Đăng ký nhận bản tin
+      </h2>
+      <p className="mt-2 text-body-sm leading-relaxed text-cream/70">
+        Nhận những phân tích và cập nhật chính sách mới nhất trực tiếp vào hộp
+        thư của bạn.
+      </p>
+      <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-3" noValidate>
+        <label>
+          <span className="sr-only">Email của bạn</span>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="email@congty.vn"
+            autoComplete="email"
+            disabled={status === "loading" || status === "success"}
+            className="min-h-[44px] w-full border-0 border-b border-cream/30 bg-transparent py-2.5 text-body-sm text-cream placeholder:text-cream/45 focus:border-gold focus:outline-none disabled:opacity-60"
+          />
+        </label>
+        <button
+          type="submit"
+          disabled={status === "loading" || status === "success"}
+          className="min-h-[44px] w-full bg-gold px-4 py-2.5 text-label-caps text-navy transition-colors hover:bg-gold-600 disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {status === "loading"
+            ? "Đang gửi..."
+            : status === "success"
+              ? "Đã đăng ký"
+              : "Đăng ký ngay"}
+        </button>
+      </form>
+      {message && (
+        <p
+          role={status === "error" ? "alert" : "status"}
+          className={
+            status === "error"
+              ? "mt-3 text-body-sm text-red-300"
+              : "mt-3 text-body-sm text-gold"
+          }
+        >
+          {message}
+        </p>
+      )}
     </section>
   );
 }

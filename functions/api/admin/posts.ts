@@ -69,7 +69,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   let query = supabase
     .from("posts")
     .select(
-      "id, slug, title, excerpt, status, reading_time, published_at, scheduled_at, is_featured, view_count, created_at, updated_at, category:categories(name, slug), person:people(name, slug), author:authors(name, slug)",
+      "id, slug, title, excerpt, status, reading_time, published_at, scheduled_at, is_featured, view_count, created_at, updated_at, newsletter_sends(id, status, sent_at, recipient_count), category:categories(name, slug), person:people(name, slug), author:authors(name, slug)",
     )
     .order("created_at", { ascending: false });
 

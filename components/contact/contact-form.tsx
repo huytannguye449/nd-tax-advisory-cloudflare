@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { leadSchema, type LeadInput } from "@/lib/validators";
 import { Button } from "@/components/shared/button";
+import { Turnstile } from "@/components/shared/turnstile";
 import { cn } from "@/lib/utils";
 
 const COMPANY_SIZES = [
@@ -21,7 +22,11 @@ const COMPANY_SIZES = [
   { value: ">200", label: "Trên 200 nhân sự" },
 ];
 
-type DemoLeadInput = Omit<LeadInput, "turnstileToken">;
+type LeadFormInput = Omit<LeadInput, "turnstileToken">;
+
+function normalizePhone(phone: string) {
+  return phone.trim().replace(/[\s.-]/g, "");
+}
 
 export function ContactForm({ source = "lien-he" }: { source?: string }) {
   const [meetingMode, setMeetingMode] = useState<"online" | "offline">(
@@ -30,29 +35,70 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
   const [submitState, setSubmitState] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [formError, setFormError] = useState("");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<DemoLeadInput>({
+  } = useForm<LeadFormInput>({
     resolver: zodResolver(leadSchema.omit({ turnstileToken: true })),
     defaultValues: {
       services: [],
+      meeting_type: "online",
+      meeting_link: "",
       consent: false as never,
       source,
     },
   });
 
-  const onSubmit = async (_data: DemoLeadInput) => {
+  const onSubmit = async (data: LeadFormInput) => {
+    setFormError("");
+
+    if (!turnstileToken) {
+      setSubmitState("error");
+      setFormError("Vui lòng xác nhận bảo mật trước khi gửi.");
+      return;
+    }
+
     setSubmitState("loading");
 
-    // Demo-only phase: keep form state/validation shape but do not submit to API.
-    await new Promise((resolve) => setTimeout(resolve, 700));
-    setSubmitState("success");
-    reset();
-    setMeetingMode("online");
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...data,
+          phone: normalizePhone(data.phone),
+          meeting_type: meetingMode,
+          meeting_link: null,
+          source,
+          turnstileToken,
+        }),
+      });
+      const json = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+
+      if (!res.ok || !json.ok) {
+        throw new Error(json.error || "Không thể gửi yêu cầu liên hệ.");
+      }
+
+      setSubmitState("success");
+      reset();
+      setMeetingMode("online");
+      setTurnstileToken("");
+    } catch (error) {
+      setSubmitState("error");
+      setFormError(
+        error instanceof Error
+          ? error.message
+          : "Không thể gửi biểu mẫu. Vui lòng thử lại.",
+      );
+    }
   };
 
   if (submitState === "success") {
@@ -72,7 +118,10 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
         <Button
           className="mt-7"
           variant="outline"
-          onClick={() => setSubmitState("idle")}
+          onClick={() => {
+            setSubmitState("idle");
+            setFormError("");
+          }}
         >
           Gửi yêu cầu khác
         </Button>
@@ -111,7 +160,7 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <Field label="Số điện thoại" error={errors.phone?.message}>
             <input
-              {...register("phone")}
+              {...register("phone", { setValueAs: normalizePhone })}
               type="tel"
               autoComplete="tel"
               className={inputCls}
@@ -196,10 +245,15 @@ export function ContactForm({ source = "lien-he" }: { source?: string }) {
             <ErrorText message={errors.consent.message} className="mb-4" />
           )}
 
-          {submitState === "error" && (
+          <Turnstile
+            onToken={setTurnstileToken}
+            className="mb-4 min-h-[65px]"
+          />
+
+          {submitState === "error" && formError && (
             <div className="mb-4 flex items-start gap-2 border border-red-200 bg-red-50 p-3 text-body-sm text-red-800">
               <AlertCircle className="mt-0.5 size-4 shrink-0" />
-              <span>Không thể gửi biểu mẫu. Vui lòng thử lại.</span>
+              <span>{formError}</span>
             </div>
           )}
 

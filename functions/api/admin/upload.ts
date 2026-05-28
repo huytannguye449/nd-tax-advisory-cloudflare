@@ -39,10 +39,11 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       .replace(/[^a-z0-9]/g, "") || "jpg";
   const filename = `${Date.now()}-${crypto.randomUUID()}.${ext}`;
   const path = `${folder}/${entityId.replace(/[^a-zA-Z0-9_-]/g, "")}/${filename}`;
+  const uploadBody = new Blob([await file.arrayBuffer()], { type: file.type });
   const supabase = adminSupabase(env);
   const { error } = await supabase.storage
     .from("cms-assets")
-    .upload(path, file, {
+    .upload(path, uploadBody, {
       contentType: file.type,
       upsert: true,
     });

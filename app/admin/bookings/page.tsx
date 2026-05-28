@@ -14,7 +14,8 @@ interface Booking {
   phone: string;
   company: string | null;
   service: string | null;
-  scheduled_at: string;
+  services: string[] | null;
+  scheduled_at: string | null;
   duration_min: number;
   meeting_type: string;
   meeting_link: string | null;
@@ -26,7 +27,6 @@ interface Booking {
 const STATUS_LABELS: Record<string, string> = {
   pending: "Chờ confirm",
   confirmed: "Đã confirm",
-  rescheduled: "Đã đổi lịch",
   cancelled: "Đã hủy",
   completed: "Đã xong",
 };
@@ -34,7 +34,6 @@ const STATUS_LABELS: Record<string, string> = {
 const STATUS_COLORS: Record<string, string> = {
   pending: "border-l-gold text-gold-700",
   confirmed: "border-l-green-600 text-green-700",
-  rescheduled: "border-l-blue-600 text-blue-700",
   cancelled: "border-l-red-500 text-red-700",
   completed: "border-l-navy/30 text-navy/60",
 };
@@ -45,6 +44,7 @@ export default function AdminBookingsPage() {
   const [filter, setFilter] = useState("all");
   const [editLinkId, setEditLinkId] = useState<string | null>(null);
   const [linkValue, setLinkValue] = useState("");
+  const [actionError, setActionError] = useState("");
 
   async function load() {
     setLoading(true);
@@ -61,13 +61,36 @@ export default function AdminBookingsPage() {
   }, [filter]);
 
   async function patch(id: string, body: Record<string, unknown>) {
-    await fetch("/api/admin/bookings", {
+    setActionError("");
+    const res = await fetch("/api/admin/bookings", {
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, ...body }),
     });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) {
+      setActionError(data.error || "Không cập nhật được booking.");
+      return false;
+    }
     void load();
+    return true;
+  }
+
+  async function confirmBooking(booking: Booking) {
+    if (booking.meeting_type === "online" && !linkValue.trim()) {
+      setActionError("Booking online cần link họp trước khi xác nhận.");
+      return;
+    }
+
+    const ok = await patch(booking.id, {
+      status: "confirmed",
+      meeting_link: booking.meeting_type === "online" ? linkValue : "",
+    });
+    if (ok) {
+      setEditLinkId(null);
+      setLinkValue("");
+    }
   }
 
   return (
@@ -104,7 +127,10 @@ export default function AdminBookingsPage() {
         ) : (
           <ul>
             {bookings.map((b) => {
-              const date = new Date(b.scheduled_at);
+              const date = b.scheduled_at ? new Date(b.scheduled_at) : null;
+              const hasValidSchedule = date ? !Number.isNaN(date.getTime()) : false;
+              const serviceLabel =
+                b.services?.length ? b.services.join(", ") : b.service ?? "—";
               return (
                 <li
                   key={b.id}
@@ -113,17 +139,21 @@ export default function AdminBookingsPage() {
                   <div className="grid md:grid-cols-12 gap-[var(--spacing-gutter)] items-start">
                     <div className="md:col-span-3">
                       <Eyebrow color="gold">
-                        {date.toLocaleDateString("vi-VN", {
-                          weekday: "short",
-                          day: "2-digit",
-                          month: "2-digit",
-                        })}
+                        {hasValidSchedule
+                          ? date!.toLocaleDateString("vi-VN", {
+                              weekday: "short",
+                              day: "2-digit",
+                              month: "2-digit",
+                            })
+                          : "Yêu cầu tư vấn"}
                       </Eyebrow>
                       <p className="font-heading text-headline-sm text-navy mt-3">
-                        {date.toLocaleTimeString("vi-VN", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
+                        {hasValidSchedule
+                          ? date!.toLocaleTimeString("vi-VN", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })
+                          : "Chưa xác nhận lịch"}
                       </p>
                       <p className="text-[11px] tracking-[0.05em] text-navy/55 mt-2">
                         {b.duration_min} phút · {b.meeting_type === "online" ? (
@@ -146,7 +176,7 @@ export default function AdminBookingsPage() {
                         <p className="text-body-sm text-navy/65">{b.company}</p>
                       )}
                       <p className="text-body-sm text-navy/70 mt-3">
-                        <span className="text-label-caps uppercase text-navy/55 mr-2">Dịch vụ</span>{b.service ?? "—"}
+                        <span className="text-label-caps uppercase text-navy/55 mr-2">Dịch vụ</span>{serviceLabel}
                       </p>
                       {b.message && (
                         <p className="text-body-sm text-navy/60 mt-2 italic">"{b.message}"</p>
@@ -154,6 +184,9 @@ export default function AdminBookingsPage() {
                     </div>
 
                     <div className="md:col-span-4 flex flex-col gap-3 items-start md:items-end">
+                      {actionError && editLinkId === b.id && (
+                        <p className="max-w-xs text-body-sm text-red-700">{actionError}</p>
+                      )}
                       <span className={cn("border-l-2 pl-2 text-label-caps uppercase", STATUS_COLORS[b.status] ?? "")}>
                         {STATUS_LABELS[b.status] ?? b.status}
                       </span>
@@ -178,9 +211,10 @@ export default function AdminBookingsPage() {
                               onClick={() => {
                                 setEditLinkId(b.id);
                                 setLinkValue(b.meeting_link ?? "");
+                                setActionError("");
                               }}
                             >
-                              Confirm + thêm link
+                              Xác nhận yêu cầu
                             </Button>
                             <button
                               onClick={() => patch(b.id, { status: "cancelled" })}
@@ -190,7 +224,7 @@ export default function AdminBookingsPage() {
                             </button>
                           </>
                         )}
-                        {b.status === "confirmed" && date < new Date() && (
+                        {b.status === "confirmed" && (
                           <Button
                             size="sm"
                             variant="outline"
@@ -205,26 +239,32 @@ export default function AdminBookingsPage() {
 
                   {editLinkId === b.id && (
                     <div className="mt-5 pt-5 border-t-hairline border-gold/40 flex flex-col sm:flex-row gap-3">
-                      <input
-                        type="url"
-                        value={linkValue}
-                        onChange={(e) => setLinkValue(e.target.value)}
-                        placeholder="https://meet.google.com/..."
-                        className="flex-1 border-b border-navy bg-transparent px-0 py-2 text-body-md focus:border-gold focus:outline-none transition-colors"
-                      />
+                      {b.meeting_type === "online" ? (
+                        <input
+                          type="url"
+                          value={linkValue}
+                          onChange={(e) => setLinkValue(e.target.value)}
+                          placeholder="Link họp online"
+                          className="flex-1 border-b border-navy bg-transparent px-0 py-2 text-body-md focus:border-gold focus:outline-none transition-colors"
+                        />
+                      ) : (
+                        <p className="flex-1 text-body-sm text-navy/65">
+                          Yêu cầu trao đổi trực tiếp. Không cần link họp.
+                        </p>
+                      )}
                       <Button
                         size="sm"
-                        onClick={() => {
-                          patch(b.id, { status: "confirmed", meeting_link: linkValue });
-                          setEditLinkId(null);
-                        }}
+                        onClick={() => confirmBooking(b)}
                       >
-                        Lưu
+                        Xác nhận
                       </Button>
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => setEditLinkId(null)}
+                        onClick={() => {
+                          setEditLinkId(null);
+                          setActionError("");
+                        }}
                       >
                         Hủy
                       </Button>

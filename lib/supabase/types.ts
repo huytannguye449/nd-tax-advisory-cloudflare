@@ -9,14 +9,9 @@ export type LeadStatus = "new" | "contacted" | "qualified" | "closed" | "spam";
 export type BookingStatus =
   | "pending"
   | "confirmed"
-  | "rescheduled"
   | "cancelled"
   | "completed";
-export type SubscriberStatus =
-  | "pending"
-  | "active"
-  | "unsubscribed"
-  | "bounced";
+export type SubscriberStatus = "active" | "unsubscribed";
 export type MeetingType = "online" | "offline";
 
 export interface CategoryRow {
@@ -267,6 +262,8 @@ export interface LeadRow {
   company: string | null;
   company_size: string | null;
   services: string[] | null;
+  meeting_type: MeetingType;
+  meeting_link: string | null;
   message: string | null;
   source: string | null;
   utm: Record<string, string> | null;
@@ -285,6 +282,8 @@ export interface LeadInsert {
   company?: string | null;
   company_size?: string | null;
   services?: string[] | null;
+  meeting_type?: MeetingType;
+  meeting_link?: string | null;
   message?: string | null;
   source?: string | null;
   utm?: Record<string, string> | null;
@@ -303,7 +302,8 @@ export interface BookingRow {
   phone: string;
   company: string | null;
   service: string | null;
-  scheduled_at: string;
+  services: string[] | null;
+  scheduled_at: string | null;
   duration_min: number;
   meeting_type: MeetingType;
   meeting_link: string | null;
@@ -320,7 +320,8 @@ export interface BookingInsert {
   phone: string;
   company?: string | null;
   service?: string | null;
-  scheduled_at: string;
+  services?: string[] | null;
+  scheduled_at?: string | null;
   duration_min?: number;
   meeting_type?: MeetingType;
   meeting_link?: string | null;
@@ -348,6 +349,25 @@ export interface SubscriberInsert {
   status?: SubscriberStatus;
   unsub_token?: string;
   subscribed_at?: string;
+}
+
+export interface NewsletterSendRow {
+  id: string;
+  post_id: string;
+  status: "sent" | "failed" | "mocked";
+  subject: string;
+  recipient_count: number;
+  sent_at: string;
+  error_message: string | null;
+}
+export interface NewsletterSendInsert {
+  id?: string;
+  post_id: string;
+  status?: "sent" | "failed" | "mocked";
+  subject: string;
+  recipient_count?: number;
+  sent_at?: string;
+  error_message?: string | null;
 }
 
 export type Database = {
@@ -434,6 +454,12 @@ export type Database = {
         Update: Partial<SubscriberInsert>;
         Relationships: [];
       };
+      newsletter_sends: {
+        Row: NewsletterSendRow;
+        Insert: NewsletterSendInsert;
+        Update: Partial<NewsletterSendInsert>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -452,6 +478,7 @@ export type Event = EventRow;
 export type Lead = LeadRow;
 export type Booking = BookingRow;
 export type Subscriber = SubscriberRow;
+export type NewsletterSend = NewsletterSendRow;
 
 export type PostWithMeta = PostRow & {
   author: Pick<AuthorRow, "name" | "slug" | "avatar_url" | "title"> | null;

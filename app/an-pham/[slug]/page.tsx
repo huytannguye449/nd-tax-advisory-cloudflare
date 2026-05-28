@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { createStaticClient as createClient } from "@/lib/supabase/static";
 import { PublicationDetailLive } from "@/components/content/publication-detail-live";
+import { SubscribePopup } from "@/components/marketing/subscribe-popup";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -27,5 +28,10 @@ interface Props {
 
 export default async function PublicationPage({ params }: Props) {
   const { slug } = await params;
-  return <PublicationDetailLive initialSlug={slug} />;
+  return (
+    <>
+      <PublicationDetailLive initialSlug={slug} />
+      <SubscribePopup />
+    </>
+  );
 }

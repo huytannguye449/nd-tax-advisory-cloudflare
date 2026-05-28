@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import {
   AlertCircle,
   ArrowRight,
@@ -16,7 +17,8 @@ import {
   Video,
 } from "lucide-react";
 import { Button } from "@/components/shared/button";
-import { bookingSchema, type BookingInput } from "@/lib/validators";
+import { Turnstile } from "@/components/shared/turnstile";
+import { leadSchema } from "@/lib/validators";
 import { cn } from "@/lib/utils";
 
 interface ServiceOption {
@@ -26,12 +28,23 @@ interface ServiceOption {
   short_description: string | null;
 }
 
-type BookingDemoInput = Omit<
-  BookingInput,
-  "scheduled_at" | "service" | "meeting_type" | "turnstileToken"
->;
+const bookingRequestSchema = leadSchema.pick({
+  full_name: true,
+  email: true,
+  phone: true,
+  company: true,
+  message: true,
+  consent: true,
+});
+
+type BookingRequestInput = z.infer<typeof bookingRequestSchema>;
+
+function normalizePhone(phone: string) {
+  return phone.trim().replace(/[\s.-]/g, "");
+}
 
 export function BookingForm() {
+  const didAutoSelectServiceRef = useRef(false);
   const [meetingType, setMeetingType] = useState<"online" | "offline">(
     "online",
   );
@@ -40,6 +53,8 @@ export function BookingForm() {
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [services, setServices] = useState<ServiceOption[]>([]);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [formError, setFormError] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -54,20 +69,35 @@ export function BookingForm() {
     };
   }, []);
 
+  useEffect(() => {
+    if (didAutoSelectServiceRef.current || services.length === 0) return;
+    didAutoSelectServiceRef.current = true;
+    if (typeof window === "undefined") return;
+
+    const serviceSlug = new URLSearchParams(window.location.search).get(
+      "service",
+    );
+    if (!serviceSlug) return;
+
+    const matchedService = services.find(
+      (service) => service.slug === serviceSlug,
+    );
+    if (!matchedService) return;
+
+    setSelectedServices((current) =>
+      current.includes(matchedService.title)
+        ? current
+        : [...current, matchedService.title],
+    );
+  }, [services]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<BookingDemoInput>({
-    resolver: zodResolver(
-      bookingSchema.omit({
-        scheduled_at: true,
-        service: true,
-        meeting_type: true,
-        turnstileToken: true,
-      }),
-    ),
+  } = useForm<BookingRequestInput>({
+    resolver: zodResolver(bookingRequestSchema),
     defaultValues: { consent: false as never },
   });
 
@@ -79,15 +109,57 @@ export function BookingForm() {
     );
   };
 
-  const onSubmit = async (_data: BookingDemoInput) => {
+  const onSubmit = async (data: BookingRequestInput) => {
+    setFormError("");
+
+    if (selectedServices.length === 0) {
+      setSubmitState("error");
+      setFormError("Vui lòng chọn ít nhất một dịch vụ quan tâm.");
+      return;
+    }
+
+    if (!turnstileToken) {
+      setSubmitState("error");
+      setFormError("Vui lòng xác nhận bảo mật trước khi gửi.");
+      return;
+    }
+
     setSubmitState("loading");
 
-    // Demo-only phase: keep form state/validation shape but do not submit to API.
-    await new Promise((resolve) => setTimeout(resolve, 700));
-    setSubmitState("success");
-    reset();
-    setSelectedServices([]);
-    setMeetingType("online");
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...data,
+          phone: normalizePhone(data.phone),
+          services: selectedServices,
+          meeting_type: meetingType,
+          turnstileToken,
+        }),
+      });
+      const json = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+
+      if (!res.ok || !json.ok) {
+        throw new Error(json.error || "Không thể gửi yêu cầu tư vấn.");
+      }
+
+      setSubmitState("success");
+      reset();
+      setSelectedServices([]);
+      setMeetingType("online");
+      setTurnstileToken("");
+    } catch (error) {
+      setSubmitState("error");
+      setFormError(
+        error instanceof Error
+          ? error.message
+          : "Không thể gửi biểu mẫu. Vui lòng thử lại.",
+      );
+    }
   };
 
   if (submitState === "success") {
@@ -107,7 +179,10 @@ export function BookingForm() {
         <Button
           className="mt-8"
           variant="outline"
-          onClick={() => setSubmitState("idle")}
+          onClick={() => {
+            setSubmitState("idle");
+            setFormError("");
+          }}
         >
           Gửi yêu cầu khác
         </Button>
@@ -143,7 +218,7 @@ export function BookingForm() {
             </Field>
             <Field label="Số điện thoại" required error={errors.phone?.message}>
               <input
-                {...register("phone")}
+                {...register("phone", { setValueAs: normalizePhone })}
                 type="tel"
                 autoComplete="tel"
                 className={inputCls}
@@ -243,10 +318,15 @@ export function BookingForm() {
           </label>
           {errors.consent && <ErrorText message={errors.consent.message} />}
 
-          {submitState === "error" && (
+          <Turnstile
+            onToken={setTurnstileToken}
+            className="min-h-[65px]"
+          />
+
+          {submitState === "error" && formError && (
             <div className="flex items-start gap-2 border border-red-200 bg-red-50 p-3 text-body-sm text-red-800">
               <AlertCircle className="mt-0.5 size-4 shrink-0" />
-              <span>Không thể gửi biểu mẫu. Vui lòng thử lại.</span>
+              <span>{formError}</span>
             </div>
           )}
 

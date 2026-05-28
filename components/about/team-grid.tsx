@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
+import { PersonSocialLinks } from "@/components/about/person-social-links";
 
 interface Person {
   id: string;
@@ -13,6 +14,7 @@ interface Person {
   title: string | null;
   bio: string | null;
   avatar_url: string | null;
+  social_links: Record<string, string> | null;
   credentials: string[];
   expertise: string[];
   profile_enabled: boolean;
@@ -114,6 +116,10 @@ export function TeamGrid() {
                     {member.bio}
                   </p>
                 )}
+                <PersonSocialLinks
+                  links={member.social_links}
+                  className="mt-5 border-t border-cream-300 pt-4"
+                />
               </article>
             ))}
           </div>
