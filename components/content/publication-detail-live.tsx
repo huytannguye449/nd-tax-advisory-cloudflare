@@ -236,17 +236,18 @@ export function PublicationDetailLive({
               nay.
             </p>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button asChild variant="secondary" size="lg">
-                <Link href="/dat-lich">Đặt lịch tư vấn</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="!border-cream !text-cream hover:!bg-cream hover:!text-navy"
+              <Link
+                href="/dat-lich"
+                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:bg-cream hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               >
-                <Link href="/lien-he">Liên hệ</Link>
-              </Button>
+                Đặt lịch tư vấn
+              </Link>
+              <Link
+                href="/lien-he"
+                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:bg-cream hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              >
+                Liên hệ
+              </Link>
             </div>
           </div>
         </Container>
