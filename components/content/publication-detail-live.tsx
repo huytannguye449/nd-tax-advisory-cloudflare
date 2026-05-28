@@ -238,13 +238,13 @@ export function PublicationDetailLive({
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
                 href="/dat-lich"
-                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:bg-cream hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:border-gold hover:bg-gold hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               >
                 Đặt lịch tư vấn
               </Link>
               <Link
                 href="/lien-he"
-                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:bg-cream hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:border-gold hover:bg-gold hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               >
                 Liên hệ
               </Link>
