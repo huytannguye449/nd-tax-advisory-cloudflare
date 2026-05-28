@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Section } from "@/components/shared/section";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
-import { Button } from "@/components/shared/button";
 import { FounderSection } from "@/components/about/founder-section";
 import { TeamGrid } from "@/components/about/team-grid";
 import { ValuesGrid } from "@/components/about/values-grid";
@@ -111,17 +110,19 @@ export default function VeChungToiPage() {
               Buổi tư vấn đầu tiên 45 phút hoàn toàn miễn phí. Hãy để chúng tôi
               lắng nghe và cùng bạn xác định rõ những gì cần làm.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild variant="secondary" size="lg">
-                <Link href="/dat-lich">Đặt lịch tư vấn miễn phí</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
+              <Link
+                href="/dat-lich"
+                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:bg-cream hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               >
-                <Link href="/lien-he">Liên hệ</Link>
-              </Button>
+                Đặt lịch tư vấn miễn phí
+              </Link>
+              <Link
+                href="/lien-he"
+                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:bg-cream hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              >
+                Liên hệ
+              </Link>
             </div>
           </div>
         </Container>
