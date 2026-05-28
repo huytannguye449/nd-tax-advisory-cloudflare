@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Section } from "@/components/shared/section";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
-import { Button } from "@/components/shared/button";
 import { ServicesFaq } from "@/components/services/services-faq";
 import { ServicesLive } from "@/components/services/services-live";
 
@@ -63,12 +62,18 @@ export default function DichVuPage() {
               vi hỗ trợ phù hợp.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Button asChild variant="secondary" size="lg">
-                <Link href="/dat-lich">Đặt lịch tư vấn</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/lien-he">Liên hệ trực tiếp</Link>
-              </Button>
+              <Link
+                href="/dat-lich"
+                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:border-gold hover:bg-gold hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              >
+                Đặt lịch tư vấn
+              </Link>
+              <Link
+                href="/lien-he"
+                className="inline-flex h-14 min-h-[44px] items-center justify-center border border-cream bg-transparent px-9 text-[15px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-150 hover:border-gold hover:bg-gold hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              >
+                Liên hệ trực tiếp
+              </Link>
             </div>
           </div>
         </Container>
