@@ -14,6 +14,12 @@ interface Env {
   EMAIL_AUTOMATION_DISABLED?: string;
   RESEND_API_KEY?: string;
   RESEND_FROM_EMAIL?: string;
+  SMTP_HOST?: string;
+  SMTP_PORT?: string;
+  SMTP_SECURE?: string;
+  SMTP_USER?: string;
+  SMTP_PASS?: string;
+  SMTP_FROM_EMAIL?: string;
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
@@ -62,11 +68,14 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return json({ ok: false, error: "Chua co subscriber active" }, 400);
   }
 
-  const subject = `An pham moi: ${post.title}`;
+  const subject = `Ấn phẩm mới: ${post.title.normalize("NFC")}`;
   const siteUrl = new URL(request.url).origin;
-  const results = await Promise.allSettled(
-    recipients.map((subscriber) =>
-      sendNewsletterEmail(env, {
+  const results: PromiseSettledResult<
+    Awaited<ReturnType<typeof sendNewsletterEmail>>
+  >[] = [];
+  for (const subscriber of recipients) {
+    try {
+      const value = await sendNewsletterEmail(env, {
         to: subscriber.email,
         subject,
         html: publicationNewsletterEmail({
@@ -74,9 +83,12 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
           post,
           subscriber,
         }),
-      }),
-    ),
-  );
+      });
+      results.push({ status: "fulfilled", value });
+    } catch (reason) {
+      results.push({ status: "rejected", reason });
+    }
+  }
 
   const failureDetails = results
     .map((result, index) => {

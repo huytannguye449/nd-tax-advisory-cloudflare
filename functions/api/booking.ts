@@ -15,6 +15,12 @@ interface Env {
   RESEND_API_KEY?: string;
   RESEND_FROM_EMAIL?: string;
   RESEND_NOTIFY_EMAIL?: string;
+  SMTP_HOST?: string;
+  SMTP_PORT?: string;
+  SMTP_SECURE?: string;
+  SMTP_USER?: string;
+  SMTP_PASS?: string;
+  SMTP_FROM_EMAIL?: string;
   TURNSTILE_SECRET_KEY?: string;
 }
 

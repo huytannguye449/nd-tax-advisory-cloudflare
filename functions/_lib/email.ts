@@ -1,4 +1,6 @@
-export type EmailProvider = "mock" | "resend" | "unsupported";
+import { sendGmailSmtpEmail } from "./gmail-smtp";
+
+export type EmailProvider = "mock" | "resend" | "gmail_smtp" | "unsupported";
 export type EmailDeliveryStatus = "mocked" | "sent";
 export type EmailRuntime = "worker" | "node";
 
@@ -7,6 +9,12 @@ export interface EmailEnv {
   EMAIL_AUTOMATION_DISABLED?: string;
   RESEND_API_KEY?: string;
   RESEND_FROM_EMAIL?: string;
+  SMTP_HOST?: string;
+  SMTP_PORT?: string;
+  SMTP_SECURE?: string;
+  SMTP_USER?: string;
+  SMTP_PASS?: string;
+  SMTP_FROM_EMAIL?: string;
 }
 
 export interface SendEmailArgs {
@@ -40,6 +48,7 @@ export function resolveEmailProvider(env: EmailEnv): EmailProvider {
   const provider = env.EMAIL_PROVIDER?.trim().toLowerCase();
   if (!provider || provider === "mock") return "mock";
   if (provider === "resend") return "resend";
+  if (provider === "gmail_smtp") return "gmail_smtp";
   return "unsupported";
 }
 
@@ -122,13 +131,36 @@ export async function sendEmail(
       provider,
       runtime,
       error:
-        "Unsupported EMAIL_PROVIDER. Use EMAIL_PROVIDER=mock for local development or EMAIL_PROVIDER=resend for production email delivery.",
+        "Unsupported EMAIL_PROVIDER. Use EMAIL_PROVIDER=mock, EMAIL_PROVIDER=resend, or EMAIL_PROVIDER=gmail_smtp.",
     };
   }
 
   if (provider === "mock") {
     logMockEmail(args);
     return { ok: true, provider, runtime, status: "mocked" };
+  }
+
+  if (provider === "gmail_smtp") {
+    try {
+      const result = await sendGmailSmtpEmail(env, args);
+      return {
+        ok: true,
+        provider,
+        runtime,
+        status: "sent",
+        messageId: result.messageId,
+        accepted: result.accepted,
+        rejected: result.rejected,
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error("[email-gmail-smtp-error]", {
+        recipients: recipients(args.to),
+        subject: args.subject,
+        error: message,
+      });
+      return { ok: false, provider, runtime, error: message };
+    }
   }
 
   const apiKey = env.RESEND_API_KEY?.trim();

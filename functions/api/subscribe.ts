@@ -13,6 +13,12 @@ interface Env {
   EMAIL_AUTOMATION_DISABLED?: string;
   RESEND_API_KEY?: string;
   RESEND_FROM_EMAIL?: string;
+  SMTP_HOST?: string;
+  SMTP_PORT?: string;
+  SMTP_SECURE?: string;
+  SMTP_USER?: string;
+  SMTP_PASS?: string;
+  SMTP_FROM_EMAIL?: string;
 }
 
 const subscribeSchema = z.object({
@@ -45,7 +51,7 @@ function normalizeEmail(email: string) {
 
 function welcomeEmail(siteUrl: string, token: string) {
   const unsubUrl = `${siteUrl}/unsubscribe?token=${encodeURIComponent(token)}`;
-  return `<!DOCTYPE html><html lang="vi"><body style="margin:0;background:#FAF7F0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0F2B46"><div style="max-width:640px;margin:0 auto;padding:32px 16px"><div style="background:#fff;border:1px solid #F0EBDD;padding:40px"><p style="margin:0 0 24px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9B7A2F">NHN&D Tax Advisory</p><h1 style="font-family:Georgia,serif;font-size:26px;line-height:1.2;margin:0 0 16px">Cam on ban da dang ky.</h1><p style="font-size:15px;line-height:1.7;margin:0 0 24px">Cac an pham moi ve thue, quan tri va van hanh doanh nghiep se duoc gui truc tiep toi email cua ban.</p><p style="margin:0"><a href="${siteUrl}/an-pham" style="display:inline-block;background:#0F2B46;color:#FAF7F0;text-decoration:none;padding:12px 20px;font-weight:600">Xem an pham</a></p><p style="margin:32px 0 0;font-size:12px;color:#486581"><a href="${unsubUrl}" style="color:#486581">Huy dang ky</a></p></div></div></body></html>`;
+  return `<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"></head><body style="margin:0;background:#FAF7F0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0F2B46"><div style="max-width:640px;margin:0 auto;padding:32px 16px"><div style="background:#fff;border:1px solid #F0EBDD;padding:40px"><p style="margin:0 0 24px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9B7A2F">NHN&amp;D Tax Advisory</p><h1 style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:26px;line-height:1.2;margin:0 0 16px">Cảm ơn bạn đã đăng ký.</h1><p style="font-size:15px;line-height:1.7;margin:0 0 24px">Các ấn phẩm mới về thuế, quản trị và vận hành doanh nghiệp sẽ được gửi trực tiếp tới email của bạn.</p><p style="margin:0"><a href="${siteUrl}/an-pham" style="display:inline-block;background:#0F2B46;color:#FAF7F0;text-decoration:none;padding:12px 20px;font-weight:600">Xem ấn phẩm</a></p><p style="margin:32px 0 0;font-size:12px;color:#486581"><a href="${unsubUrl}" style="color:#486581">Hủy đăng ký</a></p></div></div></body></html>`;
 }
 
 async function sendWelcome(
@@ -54,7 +60,7 @@ async function sendWelcome(
 ) {
   const result = await sendEmail(env, {
     to: args.email,
-    subject: "Chao mung ban den voi NHN&D Insights",
+    subject: "Chào mừng bạn đến với NHN&D Insights",
     html: welcomeEmail(args.siteUrl, args.token),
   });
   if (!result.ok) console.error("[subscribe-email]", result.error);
