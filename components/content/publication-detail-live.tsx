@@ -142,7 +142,7 @@ export function PublicationDetailLive({
           </nav>
         </Container>
 
-        <Container size="narrow" className="pb-8 pt-6 md:pt-10">
+        <Container size="article" className="pb-8 pt-6 md:pt-10">
           {post.category && (
             <Eyebrow color="gold" className="mb-4">
               {post.category.name}
@@ -211,7 +211,7 @@ export function PublicationDetailLive({
           </Container>
         )}
 
-        <Container size="narrow" className="pb-16">
+        <Container size="proseWide" className="pb-16">
           <LiveArticleBody html={post.body_html || post.body_mdx} />
 
           <div className="mb-12 mt-12">

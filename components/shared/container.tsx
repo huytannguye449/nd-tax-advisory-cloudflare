@@ -2,7 +2,16 @@ import { cn } from "@/lib/utils";
 import * as React from "react";
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: "sm" | "md" | "lg" | "xl" | "narrow" | "default" | "wide";
+  size?:
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "narrow"
+    | "article"
+    | "proseWide"
+    | "default"
+    | "wide";
 }
 
 /**
@@ -12,14 +21,16 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 const SIZE = {
   // Canonical names (preferred for new code)
-  narrow: "max-w-[var(--container-prose)]", // 65ch — long-form prose
-  default: "max-w-[var(--container-default)]", // 1280px — DESIGN canonical
+  narrow: "max-w-[var(--container-prose)]", // 65ch - long-form prose
+  article: "max-w-5xl", // 1024px - editorial article header/meta
+  proseWide: "max-w-4xl", // 896px - wider long-form article body
+  default: "max-w-[var(--container-default)]", // 1280px - DESIGN canonical
   wide: "max-w-[1440px]", // edge-to-edge editorial spread
 
-  // Legacy aliases (kept for backward compat — refactor consumers in Phase B-D)
-  sm: "max-w-3xl",   // 768px
-  md: "max-w-5xl",   // 1024px
-  lg: "max-w-6xl",   // 1152px
+  // Legacy aliases (kept for backward compat - refactor consumers in Phase B-D)
+  sm: "max-w-3xl", // 768px
+  md: "max-w-5xl", // 1024px
+  lg: "max-w-6xl", // 1152px
   xl: "max-w-[var(--container-default)]", // 1280px = default
 };
 
