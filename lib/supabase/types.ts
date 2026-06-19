@@ -215,12 +215,17 @@ export interface EventRow {
   slug: string;
   title: string;
   excerpt: string | null;
+  description: string | null;
   cover_url: string | null;
   event_date: string | null;
   location: string | null;
   format: string | null;
   status: EventStatus;
   display_order: number;
+  agenda_items: string[];
+  audience_items: string[];
+  cta_label: string | null;
+  cta_href: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -229,12 +234,17 @@ export interface EventInsert {
   slug: string;
   title: string;
   excerpt?: string | null;
+  description?: string | null;
   cover_url?: string | null;
   event_date?: string | null;
   location?: string | null;
   format?: string | null;
   status?: EventStatus;
   display_order?: number;
+  agenda_items?: string[];
+  audience_items?: string[];
+  cta_label?: string | null;
+  cta_href?: string | null;
   created_at?: string;
   updated_at?: string;
 }

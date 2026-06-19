@@ -31,6 +31,7 @@ interface Field {
   type?: FieldType;
   required?: boolean;
   uploadFolder?: "people" | "services" | "events";
+  options?: Array<{ value: string; label: string }>;
 }
 
 interface Row {
@@ -422,8 +423,14 @@ function FieldControl({
         <textarea {...common} rows={field.type === "textarea" ? 4 : 5} />
       ) : field.type === "status" ? (
         <select {...common}>
-          <option value="draft">Draft</option>
-          <option value="published">Published</option>
+          {(field.options ?? [
+            { value: "draft", label: "Draft" },
+            { value: "published", label: "Published" },
+          ]).map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
       ) : field.type === "checkbox" ? (
         <label className="inline-flex min-h-[44px] items-center gap-3 text-body-md text-navy">
