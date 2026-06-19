@@ -12,14 +12,21 @@ export const metadata: Metadata = {
 };
 
 export async function generateStaticParams() {
-  const supabase = createClient();
-  const { data } = await supabase
-    .from("posts")
-    .select("slug")
-    .eq("status", "published")
-    .returns<{ slug: string }[]>();
+  // Build must not crash if Supabase env/data is unavailable at build time
+  // (e.g. missing build-time vars on the host). Fall back to no prebuilt
+  // detail pages; they get generated once env + published posts exist.
+  try {
+    const supabase = createClient();
+    const { data } = await supabase
+      .from("posts")
+      .select("slug")
+      .eq("status", "published")
+      .returns<{ slug: string }[]>();
 
-  return (data ?? []).map((p) => ({ slug: p.slug }));
+    return (data ?? []).map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
 }
 
 interface Props {

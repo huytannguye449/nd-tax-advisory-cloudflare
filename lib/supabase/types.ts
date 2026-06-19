@@ -6,11 +6,7 @@ export type PostStatus = "draft" | "scheduled" | "published";
 export type PublishStatus = "draft" | "published";
 export type EventStatus = "draft" | "published" | "upcoming" | "past";
 export type LeadStatus = "new" | "contacted" | "qualified" | "closed" | "spam";
-export type BookingStatus =
-  | "pending"
-  | "confirmed"
-  | "cancelled"
-  | "completed";
+export type BookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
 export type SubscriberStatus = "active" | "unsubscribed";
 export type MeetingType = "online" | "offline";
 
@@ -73,6 +69,7 @@ export interface PersonRow {
   title: string | null;
   bio: string | null;
   avatar_url: string | null;
+  phone: string | null;
   expertise: string[];
   credentials: string[];
   social_links: Record<string, string>;
@@ -91,6 +88,7 @@ export interface PersonInsert {
   title?: string | null;
   bio?: string | null;
   avatar_url?: string | null;
+  phone?: string | null;
   expertise?: string[];
   credentials?: string[];
   social_links?: Record<string, string>;
@@ -492,7 +490,18 @@ export type ServiceWithPeople = ServiceRow & {
     display_order: number;
     person: Pick<
       PersonRow,
-      "id" | "slug" | "name" | "title" | "avatar_url"
+      | "id"
+      | "slug"
+      | "name"
+      | "title"
+      | "bio"
+      | "avatar_url"
+      | "phone"
+      | "expertise"
+      | "credentials"
+      | "social_links"
+      | "status"
+      | "profile_enabled"
     > | null;
   }>;
 };
