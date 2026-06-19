@@ -9,6 +9,161 @@ export type LeadStatus = "new" | "contacted" | "qualified" | "closed" | "spam";
 export type BookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
 export type SubscriberStatus = "active" | "unsubscribed";
 export type MeetingType = "online" | "offline";
+export type SiteContentStatus = "draft" | "published";
+
+export interface PageSectionRow {
+  id: string;
+  page_slug: string;
+  section_key: string;
+  eyebrow: string | null;
+  title: string | null;
+  subtitle: string | null;
+  body: string | null;
+  image_url: string | null;
+  image_alt: string | null;
+  cta_label: string | null;
+  cta_href: string | null;
+  secondary_cta_label: string | null;
+  secondary_cta_href: string | null;
+  display_order: number;
+  status: SiteContentStatus;
+  created_at: string;
+  updated_at: string;
+}
+export interface PageSectionInsert {
+  id?: string;
+  page_slug: string;
+  section_key: string;
+  eyebrow?: string | null;
+  title?: string | null;
+  subtitle?: string | null;
+  body?: string | null;
+  image_url?: string | null;
+  image_alt?: string | null;
+  cta_label?: string | null;
+  cta_href?: string | null;
+  secondary_cta_label?: string | null;
+  secondary_cta_href?: string | null;
+  display_order?: number;
+  status?: SiteContentStatus;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ClientLogoRow {
+  id: string;
+  name: string;
+  logo_url: string | null;
+  website_url: string | null;
+  show_on_home: boolean;
+  display_order: number;
+  status: SiteContentStatus;
+  created_at: string;
+  updated_at: string;
+}
+export interface ClientLogoInsert {
+  id?: string;
+  name: string;
+  logo_url?: string | null;
+  website_url?: string | null;
+  show_on_home?: boolean;
+  display_order?: number;
+  status?: SiteContentStatus;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface SiteValueRow {
+  id: string;
+  key: string;
+  title: string;
+  description: string | null;
+  icon_key: string | null;
+  display_order: number;
+  status: SiteContentStatus;
+  created_at: string;
+  updated_at: string;
+}
+export interface SiteValueInsert {
+  id?: string;
+  key: string;
+  title: string;
+  description?: string | null;
+  icon_key?: string | null;
+  display_order?: number;
+  status?: SiteContentStatus;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface SiteStatRow {
+  id: string;
+  value: string;
+  label: string;
+  display_order: number;
+  status: SiteContentStatus;
+  created_at: string;
+  updated_at: string;
+}
+export interface SiteStatInsert {
+  id?: string;
+  value: string;
+  label: string;
+  display_order?: number;
+  status?: SiteContentStatus;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface TestimonialRow {
+  id: string;
+  quote: string;
+  author: string;
+  title: string | null;
+  industry: string | null;
+  display_order: number;
+  status: SiteContentStatus;
+  created_at: string;
+  updated_at: string;
+}
+export interface TestimonialInsert {
+  id?: string;
+  quote: string;
+  author: string;
+  title?: string | null;
+  industry?: string | null;
+  display_order?: number;
+  status?: SiteContentStatus;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface TimelineItemRow {
+  id: string;
+  person_id: string | null;
+  page_slug: string | null;
+  period: string;
+  title: string;
+  organization: string | null;
+  description: string | null;
+  display_order: number;
+  status: SiteContentStatus;
+  created_at: string;
+  updated_at: string;
+}
+export interface TimelineItemInsert {
+  id?: string;
+  person_id?: string | null;
+  page_slug?: string | null;
+  period: string;
+  title: string;
+  organization?: string | null;
+  description?: string | null;
+  display_order?: number;
+  status?: SiteContentStatus;
+  created_at?: string;
+  updated_at?: string;
+}
 
 export interface CategoryRow {
   id: string;
@@ -384,6 +539,42 @@ export type Database = {
   };
   public: {
     Tables: {
+      page_sections: {
+        Row: PageSectionRow;
+        Insert: PageSectionInsert;
+        Update: Partial<PageSectionInsert>;
+        Relationships: [];
+      };
+      client_logos: {
+        Row: ClientLogoRow;
+        Insert: ClientLogoInsert;
+        Update: Partial<ClientLogoInsert>;
+        Relationships: [];
+      };
+      site_values: {
+        Row: SiteValueRow;
+        Insert: SiteValueInsert;
+        Update: Partial<SiteValueInsert>;
+        Relationships: [];
+      };
+      site_stats: {
+        Row: SiteStatRow;
+        Insert: SiteStatInsert;
+        Update: Partial<SiteStatInsert>;
+        Relationships: [];
+      };
+      testimonials: {
+        Row: TestimonialRow;
+        Insert: TestimonialInsert;
+        Update: Partial<TestimonialInsert>;
+        Relationships: [];
+      };
+      timeline_items: {
+        Row: TimelineItemRow;
+        Insert: TimelineItemInsert;
+        Update: Partial<TimelineItemInsert>;
+        Relationships: [];
+      };
       categories: {
         Row: CategoryRow;
         Insert: CategoryInsert;
@@ -487,6 +678,12 @@ export type Lead = LeadRow;
 export type Booking = BookingRow;
 export type Subscriber = SubscriberRow;
 export type NewsletterSend = NewsletterSendRow;
+export type PageSection = PageSectionRow;
+export type ClientLogo = ClientLogoRow;
+export type SiteValue = SiteValueRow;
+export type SiteStat = SiteStatRow;
+export type Testimonial = TestimonialRow;
+export type TimelineItem = TimelineItemRow;
 
 export type PostWithMeta = PostRow & {
   author: Pick<AuthorRow, "name" | "slug" | "avatar_url" | "title"> | null;

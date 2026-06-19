@@ -2,11 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { TIMELINE } from "@/lib/data";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
 import { PersonSocialLinks } from "@/components/about/person-social-links";
+import { useSiteContent } from "@/components/site/site-content-context";
 
 interface Person {
   id: string;
@@ -22,6 +22,7 @@ interface Person {
 
 export function FounderSection() {
   const [people, setPeople] = useState<Person[]>([]);
+  const { timelineItems } = useSiteContent();
 
   useEffect(() => {
     let cancelled = false;
@@ -123,8 +124,8 @@ export function FounderSection() {
                   aria-hidden="true"
                 />
                 <ol className="space-y-6">
-                  {TIMELINE.map((item, i) => (
-                    <li key={i} className="relative flex items-start gap-4">
+                  {timelineItems.map((item) => (
+                    <li key={item.id} className="relative flex items-start gap-4">
                       <span
                         className="relative z-10 mt-0.5 flex size-7 shrink-0 items-center justify-center bg-navy"
                         aria-hidden="true"
@@ -138,10 +139,16 @@ export function FounderSection() {
                         <p className="mt-1 text-body-md font-semibold text-navy">
                           {item.title}
                         </p>
-                        <p className="text-body-sm text-navy/60">{item.org}</p>
-                        <p className="mt-1.5 text-body-sm leading-relaxed text-navy/70">
-                          {item.description}
-                        </p>
+                        {item.organization && (
+                          <p className="text-body-sm text-navy/60">
+                            {item.organization}
+                          </p>
+                        )}
+                        {item.description && (
+                          <p className="mt-1.5 text-body-sm leading-relaxed text-navy/70">
+                            {item.description}
+                          </p>
+                        )}
                       </div>
                     </li>
                   ))}

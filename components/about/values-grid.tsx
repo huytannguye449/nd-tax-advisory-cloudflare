@@ -1,8 +1,10 @@
+﻿"use client";
+
 import { Target, ShieldCheck, HeartHandshake, Zap } from "lucide-react";
-import { VALUES } from "@/lib/data";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
+import { useSiteContent } from "@/components/site/site-content-context";
 
 const VALUE_ICONS: Record<string, React.ReactNode> = {
   "chinh-xac": <Target className="size-6" aria-hidden="true" />,
@@ -14,44 +16,56 @@ const VALUE_ICONS: Record<string, React.ReactNode> = {
 const VALUE_NUMBERS = ["01", "02", "03", "04"];
 
 export function ValuesGrid() {
-  return (
-    <Section bg="cream" spacing="md" hairlineTop aria-labelledby="values-heading">
-      <Container size="default">
-        <div className="mb-12">
-          <Eyebrow color="gold" className="mb-3">
-            GIÁ TRỊ CỐT LÕI
-          </Eyebrow>
-          <h2
-            id="values-heading"
-            className="font-heading text-headline-md text-navy mt-2"
-          >
-            Bốn nguyên tắc dẫn lối
-          </h2>
-        </div>
+  const { loading, values } = useSiteContent();
 
-        <div className="grid gap-[var(--spacing-gutter)] md:grid-cols-2">
-          {VALUES.map((value, idx) => (
-            <div
-              key={value.key}
-              className="flex items-start gap-6 border-t-hairline border-gold pt-6"
+  if (loading) return null;
+
+  if (values.length > 0) {
+    return (
+      <Section bg="cream" spacing="md" hairlineTop aria-labelledby="values-heading">
+        <Container size="default">
+          <div className="mb-12">
+            <Eyebrow color="gold" className="mb-3">
+              Giá trị cốt lõi
+            </Eyebrow>
+            <h2
+              id="values-heading"
+              className="font-heading text-headline-md text-navy mt-2"
             >
-              {/* Numbered eyebrow */}
-              <div className="shrink-0">
-                <Eyebrow color="gold">{VALUE_NUMBERS[idx] ?? `0${idx + 1}`}</Eyebrow>
-              </div>
-              <div>
-                <div className="text-navy mb-3" aria-hidden="true">
-                  {VALUE_ICONS[value.key]}
+              Bốn nguyên tắc dẫn lối
+            </h2>
+          </div>
+          <div className="grid gap-[var(--spacing-gutter)] md:grid-cols-2">
+            {values.map((value, idx) => (
+              <div
+                key={value.id}
+                className="flex items-start gap-6 border-t-hairline border-gold pt-6"
+              >
+                <div className="shrink-0">
+                  <Eyebrow color="gold">{VALUE_NUMBERS[idx] ?? `0${idx + 1}`}</Eyebrow>
                 </div>
-                <h3 className="font-heading text-headline-sm text-navy mb-2">
-                  {value.title}
-                </h3>
-                <p className="text-body-md text-navy/70 leading-relaxed">{value.description}</p>
+                <div>
+                  {value.icon_key && VALUE_ICONS[value.icon_key] && (
+                    <div className="text-navy mb-3" aria-hidden="true">
+                      {VALUE_ICONS[value.icon_key]}
+                    </div>
+                  )}
+                  <h3 className="font-heading text-headline-sm text-navy mb-2">
+                    {value.title}
+                  </h3>
+                  {value.description && (
+                    <p className="text-body-md text-navy/70 leading-relaxed">
+                      {value.description}
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  );
+            ))}
+          </div>
+        </Container>
+      </Section>
+    );
+  }
+
+  return null;
 }
