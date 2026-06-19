@@ -132,7 +132,7 @@ function EventsSkeleton() {
 function eventFromRow(row: EventRow): EventCardData {
   return {
     title: row.title,
-    href: `/su-kien#${row.slug}`,
+    href: `/su-kien/${row.slug}`,
     excerpt: row.excerpt ?? undefined,
     date: row.event_date
       ? new Date(row.event_date).toLocaleDateString("vi-VN", {

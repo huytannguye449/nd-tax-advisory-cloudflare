@@ -107,6 +107,19 @@ function nullableDate(value: unknown): string | null {
   return Number.isNaN(date.getTime()) ? null : date.toISOString();
 }
 
+function nullableText(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
+}
+
+function stringList(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) => (typeof item === "string" ? item.trim() : ""))
+    .filter(Boolean);
+}
+
 function eventPayload(
   body: Record<string, unknown>,
   title: string,
@@ -118,25 +131,18 @@ function eventPayload(
   return {
     title,
     slug,
-    excerpt:
-      typeof body.excerpt === "string" && body.excerpt.trim()
-        ? body.excerpt.trim()
-        : null,
-    cover_url:
-      typeof body.cover_url === "string" && body.cover_url.trim()
-        ? body.cover_url.trim()
-        : null,
+    excerpt: nullableText(body.excerpt),
+    description: nullableText(body.description),
+    cover_url: nullableText(body.cover_url),
     event_date: nullableDate(body.event_date),
-    location:
-      typeof body.location === "string" && body.location.trim()
-        ? body.location.trim()
-        : null,
-    format:
-      typeof body.format === "string" && body.format.trim()
-        ? body.format.trim()
-        : null,
+    location: nullableText(body.location),
+    format: nullableText(body.format),
     status,
     display_order: Number(body.display_order ?? 0),
+    agenda_items: stringList(body.agenda_items),
+    audience_items: stringList(body.audience_items),
+    cta_label: nullableText(body.cta_label),
+    cta_href: nullableText(body.cta_href),
   };
 }
 
