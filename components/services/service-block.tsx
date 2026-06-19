@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Phone } from "lucide-react";
+import { PersonSocialLinks } from "@/components/about/person-social-links";
 import { Button } from "@/components/shared/button";
 import { Container } from "@/components/shared/container";
 import { cn } from "@/lib/utils";
@@ -19,9 +20,18 @@ type Service = {
   service_people?: Array<{
     role_label: string | null;
     person: {
+      id?: string;
+      slug?: string;
       name: string;
       title: string | null;
+      bio?: string | null;
       avatar_url?: string | null;
+      phone?: string | null;
+      expertise?: string[] | null;
+      credentials?: string[] | null;
+      social_links?: Record<string, string> | null;
+      status?: "draft" | "published";
+      profile_enabled?: boolean;
     } | null;
   }>;
   cta_label?: string | null;
@@ -38,7 +48,12 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
   const process = service.process_items ?? [];
   const deliverables = service.deliverable_items ?? [];
   const experts =
-    service.service_people?.filter((rel) => rel.person !== null) ?? [];
+    service.service_people?.filter(
+      (rel) =>
+        rel.person !== null &&
+        (rel.person.status ?? "published") === "published" &&
+        rel.person.profile_enabled !== false,
+    ) ?? [];
   const bookingHref = getServiceBookingHref(service.cta_href, service.slug);
 
   return (
@@ -111,7 +126,10 @@ export function ServiceBlock({ service, idx }: ServiceBlockProps) {
   );
 }
 
-function getServiceBookingHref(ctaHref: string | null | undefined, slug: string) {
+function getServiceBookingHref(
+  ctaHref: string | null | undefined,
+  slug: string,
+) {
   const serviceParam = encodeURIComponent(slug);
   const href = ctaHref?.trim();
 
@@ -174,40 +192,109 @@ function ExpertPanel({
         {experts.map((rel) => {
           const person = rel.person;
           if (!person) return null;
+          const credentials = person.credentials ?? [];
+          const expertise = person.expertise ?? [];
+          const phoneHref = person.phone ? phoneLink(person.phone) : null;
+          const hasSocialLinks =
+            Object.entries(person.social_links ?? {}).filter(
+              ([key, value]) => key.trim() && value.trim(),
+            ).length > 0;
           return (
             <article
-              key={`${person.name}-${rel.role_label ?? ""}`}
-              className="grid grid-cols-[56px_1fr] items-center gap-4 border border-data-row bg-cream p-4"
+              key={`${person.slug ?? person.name}-${rel.role_label ?? ""}`}
+              className="border border-data-row bg-cream p-5"
             >
-              <div className="relative size-14 overflow-hidden rounded-full bg-cream-200">
-                {person.avatar_url ? (
-                  <Image
-                    src={person.avatar_url}
-                    alt={person.name}
-                    fill
-                    className="object-cover"
-                    sizes="64px"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center font-heading text-xl text-navy/30">
-                    {person.name.slice(0, 1)}
-                  </div>
-                )}
+              <div className="grid grid-cols-[64px_1fr] items-center gap-4">
+                <div className="relative size-16 overflow-hidden rounded-full bg-cream-200">
+                  {person.avatar_url ? (
+                    <Image
+                      src={person.avatar_url}
+                      alt={person.name}
+                      fill
+                      className="object-cover"
+                      sizes="72px"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center font-heading text-xl text-navy/30">
+                      {person.name.slice(0, 1)}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <h4 className="font-heading text-headline-sm leading-tight text-navy">
+                    {person.name}
+                  </h4>
+                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-navy/50">
+                    {rel.role_label || person.title || "Responsible expert"}
+                  </p>
+                  {person.title && rel.role_label ? (
+                    <p className="mt-1 text-body-sm text-navy/58">
+                      {person.title}
+                    </p>
+                  ) : null}
+                </div>
               </div>
-              <div>
-                <h4 className="font-heading text-headline-sm leading-tight text-navy">
-                  {person.name}
-                </h4>
-                <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-navy/50">
-                  {rel.role_label || person.title || "Responsible expert"}
+
+              {credentials.length > 0 ? (
+                <ul className="mt-4 space-y-1.5 text-body-sm text-navy/70">
+                  {credentials.map((credential) => (
+                    <li key={credential} className="flex items-start gap-2">
+                      <span
+                        className="mt-0.5 shrink-0 text-gold-700"
+                        aria-hidden="true"
+                      >
+                        -
+                      </span>
+                      <span>{credential}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+
+              {person.bio ? (
+                <p className="mt-4 text-body-sm leading-relaxed text-navy/70">
+                  {person.bio}
                 </p>
-              </div>
+              ) : null}
+
+              {expertise.length > 0 ? (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {expertise.map((item) => (
+                    <span
+                      key={item}
+                      className="border border-cream-300 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-navy/55"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+
+              {(phoneHref || hasSocialLinks) && (
+                <div className="mt-5 border-t border-cream-300 pt-4">
+                  {phoneHref && person.phone ? (
+                    <a
+                      href={phoneHref}
+                      className="mb-3 inline-flex items-center gap-2 text-label-caps uppercase text-navy/60 transition-colors hover:text-gold-700"
+                    >
+                      <Phone className="size-3.5" aria-hidden="true" />
+                      {person.phone}
+                    </a>
+                  ) : null}
+                  <PersonSocialLinks links={person.social_links} />
+                </div>
+              )}
             </article>
           );
         })}
       </div>
     </section>
   );
+}
+
+function phoneLink(phone: string) {
+  const normalized = phone.trim().replace(/[^\d+]/g, "");
+  return normalized ? `tel:${normalized}` : null;
 }
 
 function ChecklistSection({

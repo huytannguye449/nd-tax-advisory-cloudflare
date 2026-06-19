@@ -9,6 +9,7 @@ interface Env {
 }
 
 type PublishStatus = "draft" | "published";
+const PHONE_PROFILE = /^\+?[0-9][0-9\s().-]{7,19}$/;
 
 function slugify(input: string): string {
   return input
@@ -43,6 +44,17 @@ function socialLinks(value: unknown): Record<string, string> {
   return Object.fromEntries(entries);
 }
 
+function nullablePhone(value: unknown): string | null {
+  if (value == null) return null;
+  if (typeof value !== "string") return null;
+  const phone = value.trim();
+  if (!phone) return null;
+  if (!PHONE_PROFILE.test(phone)) {
+    throw new Error("So dien thoai khong dung dinh dang");
+  }
+  return phone;
+}
+
 export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const auth = await requireAuth(request, env.ADMIN_JWT_SECRET);
   if (auth instanceof Response) return auth;
@@ -74,7 +86,18 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   );
   if (!slug) return json({ ok: false, error: "Slug khong hop le" }, 400);
 
-  const payload = personPayload(body, name, slug);
+  let payload: ReturnType<typeof personPayload>;
+  try {
+    payload = personPayload(body, name, slug);
+  } catch (error) {
+    return json(
+      {
+        ok: false,
+        error: error instanceof Error ? error.message : "Du lieu khong hop le",
+      },
+      400,
+    );
+  }
   const { data, error } = await adminSupabase(env)
     .from("people")
     .insert(payload)
@@ -100,10 +123,21 @@ export const onRequestPatch: PagesFunction<Env> = async ({ request, env }) => {
   );
   if (!slug) return json({ ok: false, error: "Slug khong hop le" }, 400);
 
-  const payload = {
-    ...personPayload(body, name, slug),
-    updated_at: new Date().toISOString(),
-  };
+  let payload: ReturnType<typeof personPayload> & { updated_at: string };
+  try {
+    payload = {
+      ...personPayload(body, name, slug),
+      updated_at: new Date().toISOString(),
+    };
+  } catch (error) {
+    return json(
+      {
+        ok: false,
+        error: error instanceof Error ? error.message : "Du lieu khong hop le",
+      },
+      400,
+    );
+  }
   const { error } = await adminSupabase(env)
     .from("people")
     .update(payload)
@@ -167,6 +201,7 @@ function personPayload(
       typeof body.avatar_url === "string" && body.avatar_url.trim()
         ? body.avatar_url.trim()
         : null,
+    phone: nullablePhone(body.phone),
     expertise: stringList(body.expertise),
     credentials: stringList(body.credentials),
     social_links: socialLinks(body.social_links),

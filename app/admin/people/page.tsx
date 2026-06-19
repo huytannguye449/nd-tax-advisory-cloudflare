@@ -13,6 +13,7 @@ export default function AdminPeoplePage() {
         { name: "name", label: "Tên", required: true },
         { name: "slug", label: "Slug" },
         { name: "title", label: "Chức danh" },
+        { name: "phone", label: "Số điện thoại", type: "tel" },
         { name: "status", label: "Trạng thái", type: "status" },
         { name: "display_order", label: "Thứ tự", type: "number" },
         {

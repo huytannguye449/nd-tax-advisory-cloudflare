@@ -18,6 +18,7 @@ type FieldType =
   | "textarea"
   | "number"
   | "url"
+  | "tel"
   | "status"
   | "date"
   | "checkbox"

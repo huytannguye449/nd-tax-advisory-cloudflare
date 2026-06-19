@@ -17,7 +17,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   const { data, error } = await supabase
     .from("people")
     .select(
-      "id, slug, name, title, bio, avatar_url, expertise, credentials, social_links, display_order, is_featured, profile_enabled",
+      "id, slug, name, title, bio, avatar_url, phone, expertise, credentials, social_links, display_order, is_featured, profile_enabled",
     )
     .eq("status", "published")
     .order("display_order")

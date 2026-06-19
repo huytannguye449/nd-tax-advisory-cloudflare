@@ -17,7 +17,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   const { data, error } = await supabase
     .from("services")
     .select(
-      "id, slug, title, short_description, description, cover_url, display_order, pricing, cta_label, cta_href, seo_title, seo_description, when_items, process_items, deliverable_items, service_people(role_label, display_order, person:people(id, slug, name, title, avatar_url))",
+      "id, slug, title, short_description, description, cover_url, display_order, pricing, cta_label, cta_href, seo_title, seo_description, when_items, process_items, deliverable_items, service_people(role_label, display_order, person:people(id, slug, name, title, bio, avatar_url, phone, expertise, credentials, social_links, status, profile_enabled))",
     )
     .eq("status", "published")
     .order("display_order")
