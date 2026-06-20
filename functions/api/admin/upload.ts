@@ -7,7 +7,13 @@ interface Env {
   ADMIN_JWT_SECRET: string;
 }
 
-const ALLOWED_FOLDERS = new Set(["people", "services", "events", "posts"]);
+const ALLOWED_FOLDERS = new Set([
+  "people",
+  "services",
+  "events",
+  "posts",
+  "site",
+]);
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const auth = await requireAuth(request, env.ADMIN_JWT_SECRET);

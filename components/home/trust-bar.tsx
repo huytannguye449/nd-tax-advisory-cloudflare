@@ -1,65 +1,57 @@
+﻿"use client";
+
 import { Container } from "@/components/shared/container";
 import { Section } from "@/components/shared/section";
 import { Eyebrow } from "@/components/shared/eyebrow";
-import { CLIENTS } from "@/lib/data";
+import { useSiteContent } from "@/components/site/site-content-context";
 
 export function TrustBar() {
-  // Duplicate the array so the marquee loop is seamless
-  const doubled = [...CLIENTS, ...CLIENTS];
+  const { loading, clientLogos, homeClientLogos } = useSiteContent();
 
-  return (
-    <Section bg="cream" spacing="sm" hairlineTop>
-      <Container size="default">
-        <div className="flex flex-col items-center gap-6">
-          <Eyebrow color="gold">Đối tác tin cậy</Eyebrow>
+  if (loading) return null;
 
-          {/* Desktop — marquee */}
-          <div
-            className="relative hidden w-full overflow-hidden md:block"
-            aria-label="Danh sách khách hàng"
-          >
-            {/* Fade edges — cream bg */}
-            <div
-              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-cream to-transparent"
-              aria-hidden="true"
-            />
-            <div
-              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-cream to-transparent"
-              aria-hidden="true"
-            />
+  const logos =
+    homeClientLogos.length > 0 ? homeClientLogos : clientLogos.slice(0, 8);
 
-            <div className="flex w-max animate-marquee gap-12 py-2">
-              {doubled.map((name, i) => (
-                <span
-                  key={`${name}-${i}`}
-                  className="whitespace-nowrap font-heading text-headline-sm font-bold text-navy/30 transition-colors duration-200 hover:text-navy/70"
-                  aria-hidden={i >= CLIENTS.length ? true : undefined}
-                >
-                  {name}
-                </span>
+  if (logos.length > 0) {
+    return (
+      <Section bg="cream" spacing="sm" hairlineTop>
+        <Container size="default">
+          <div className="flex flex-col items-center gap-6">
+            <Eyebrow color="gold">Đối tác tin cậy</Eyebrow>
+            <ul
+              className="grid w-full grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4 lg:grid-cols-8"
+              aria-label="Danh sách khách hàng nổi bật"
+            >
+              {logos.map((client) => (
+                <li key={client.id}>
+                  <div className="flex aspect-[3/2] items-center justify-center border-t-hairline border-gold px-3 pt-4">
+                    {client.logo_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={client.logo_url}
+                        alt={client.name}
+                        className="max-h-12 max-w-full object-contain opacity-75 transition-opacity duration-200 hover:opacity-100"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span className="text-center font-heading text-body-sm font-bold leading-tight text-navy/40 transition-colors duration-200 hover:text-navy/70">
+                        {client.name}
+                      </span>
+                    )}
+                  </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
+        </Container>
+        <div
+          className="mt-[var(--spacing-section-sm)] border-b-hairline border-gold"
+          aria-hidden="true"
+        />
+      </Section>
+    );
+  }
 
-          {/* Mobile — grid */}
-          <div
-            className="grid grid-cols-3 gap-x-6 gap-y-4 md:hidden"
-            aria-label="Danh sách khách hàng"
-          >
-            {CLIENTS.map((name) => (
-              <span
-                key={name}
-                className="text-center font-heading text-headline-sm font-bold text-navy/35 transition-colors duration-200"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
-        </div>
-      </Container>
-
-      {/* Hairline bottom */}
-      <div className="border-b-hairline border-gold mt-[var(--spacing-section-sm)]" aria-hidden="true" />
-    </Section>
-  );
+  return null;
 }

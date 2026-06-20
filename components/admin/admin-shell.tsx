@@ -13,6 +13,7 @@ import {
   Tags,
   UserPen,
   Briefcase,
+  PanelsTopLeft,
   KeyRound,
   LogOut,
   Menu,
@@ -32,6 +33,7 @@ const NAV = [
   { href: "/admin/people", label: "People", icon: UserPen },
   { href: "/admin/services", label: "Dịch vụ", icon: Briefcase },
   { href: "/admin/events", label: "Sự kiện", icon: Calendar },
+  { href: "/admin/site-content", label: "Nội dung", icon: PanelsTopLeft },
   { href: "/admin/profile", label: "Đổi mật khẩu", icon: KeyRound },
 ];
 

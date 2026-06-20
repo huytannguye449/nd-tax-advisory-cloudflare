@@ -10,6 +10,7 @@ import { BlogPreview } from "@/components/home/blog-preview";
 import { HomeSubscribe } from "@/components/home/subscribe-section";
 import { Testimonials } from "@/components/home/testimonials";
 import { FinalCta } from "@/components/home/final-cta";
+import { SiteContentProvider } from "@/components/site/site-content-context";
 
 export const metadata: Metadata = {
   title: `${SITE.name} — ${SITE.tagline}`,
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <>
+    <SiteContentProvider pageSlug="home">
       {/* 1. Hero */}
       <Hero />
 
@@ -54,6 +55,6 @@ export default function HomePage() {
 
       {/* 10. Final CTA */}
       <FinalCta />
-    </>
+    </SiteContentProvider>
   );
 }
